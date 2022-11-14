@@ -1,12 +1,15 @@
+import { registForm, loginForm } from '../templates/template_creators';
+
 const login = {
   async render() {
-    return `
-        <h2>INI LOGIN</h2>
-        `;
+    return loginForm;
   },
 
-  async afterRender() {
-    // Fungsi setelah render
+  afterRender() {
+    const btnSignIn = document.querySelector('.btn-sign-in');
+    btnSignIn.addEventListener('click', () => {
+      console.log(document.querySelector('#input-email').value);
+    });
   },
 };
 

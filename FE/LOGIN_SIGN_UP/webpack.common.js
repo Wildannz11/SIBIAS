@@ -4,6 +4,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const { loadavg } = require('os');
+const { loader } = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
@@ -37,6 +39,21 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+        use: 'file-loader',
+        // use: [
+        //   'file-loader',
+        //   {
+        //     loader: 'image-webpack-loader',
+        //     options: {
+        //       bypassOnDebug: true, // webpack@1.x
+        //       disable: true, // webpack@2.x and newer
+        //     },
+        //   },
+        // ],
       },
     ],
   },

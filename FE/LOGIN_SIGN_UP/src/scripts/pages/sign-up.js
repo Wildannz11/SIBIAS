@@ -1,12 +1,11 @@
+import { registForm } from '../templates/template_creators';
+
 const signUp = {
   async render() {
-    return `
-          <h2>INI SIGN UP</h2>
-          `;
+    return registForm;
   },
 
-  async afterRender() {
-    // Fungsi setelah render
+  afterRender() {
   },
 };
 

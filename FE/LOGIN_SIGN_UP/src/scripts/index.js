@@ -12,7 +12,6 @@ import ReactDOM from 'react-dom';
 import styles from '../styles/style.css';
 import * as bootstrap from 'bootstrap';
 import { registForm, loginForm } from './templates/template_creators';
-import * as fontawesome from '@fortawesome/fontawesome';
 import responsiveStyle from '../styles/responsive.css';
 import App from './views/app';
 

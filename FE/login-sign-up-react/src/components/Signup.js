@@ -1,35 +1,89 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import useInput from '../hooks/useInput';
+import FetchAPI from '../utils/API';
 
 function Signup() {
-    const [username, setUsername] = useState('');
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [role, setRole] = useState('Masyarakat');
     const navigate = useNavigate();
-    const [msg, setMsg] = useState('');
+    const [username, setUsername] = useInput('');
+    const [name, setName] = useInput('');
+    const [email, setEmail] = useInput('');
+    const [password, setPassword] = useInput('');
+    const [confirmPassword, setConfirmPassword] = useInput('');
+    const [role, setRole] = useInput('Masyarakat');
+    const [errors, setErrors] = useState({
+        username: '',
+        name: '',
+        email: '',
+        password: '',
+        role:'',
+      });
+      const handleError = (error, input) => {
+        setErrors((prevState) => ({ ...prevState, [input]: error }));
+      };
 
-    const Register = async (e) => {
-        e.prevenDefault();
-        try {
-            await axios.post('http://localhost:5000/users', {
-                name: name,
-                username: username,
-                email: email,
-                password: password,
-                role: role,
-            });
-            navigate.push("/");
-        } catch (error) {
-            if(error.response){
-                console.log(error.response.data.msg);
-            }
-        }
-    };
+      const validate = async (e) => {
+        e.preventDefault();
+    handleError('', 'password');
+    handleError('', 'email');
+    handleError('', 'fullname');
+
+    let isValid = true;
+    const reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w\w+)+$/;
+
+    if (!username) {
+        handleError('Username is required', 'username');
+      }
+    if (!name) {
+      handleError('fullname is required', 'fullname');
+    }
+    if (!email) {
+      handleError('email is required', 'email');
+      isValid = false;
+    }
+    if (reg.test(email) === false) {
+      handleError('Please input valid email', 'email');
+      isValid = false;
+    }
+    if (password.length <= 8) {
+      handleError('password must more than 8 character', 'password');
+      isValid = false;
+    }
+    if (confirmPassword.length <= 8) {
+        handleError('password must more than 8 character', 'password');
+        isValid = false;
+    }
+    if (isValid) {
+      const { status, message } = await FetchAPI.register({ username, name, email, password, role });
+      if (status === 'fail') {
+        alert(message);
+      }
+
+      if (status === 'success') {
+        alert(message);
+        navigate('/signin');
+      }
+    }
+      }
+
+    // const Register = async (e) => {
+    //     e.prevenDefault();
+    //     try {
+    //         await axios.post('http://localhost:5000/users', {
+    //             name: name,
+    //             username: username,
+    //             email: email,
+    //             password: password,
+    //             role: role,
+    //         });
+    //         navigate.push("/");
+    //     } catch (error) {
+    //         if(error.response){
+    //             console.log(error.response.data.msg);
+    //         }
+    //     }
+    // };
 
   return (
     <section className="hero has-background-grey-light is-fullheight is-fullwidth">
@@ -42,10 +96,10 @@ function Signup() {
                         <h3 className="title form-page-title">Sign Up</h3>
                         <p className="subtitle">Buat Akun Baru</p>
                     </div>
-                    <form className='form-input' onSubmit={Register}>
+                    <form className='form-input'>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
-                                <input className="input" type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                                <input className="username" type="text" placeholder="Username" value={username} onChange={setUsername} error={errors.username}/>
                                 <span className="icon is-small is-left">
                                 <i className="fa-solid fa-user"></i>
                                 </span>
@@ -53,7 +107,7 @@ function Signup() {
                         </div>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
-                                <input className="input" type="text" placeholder="Nama Lengkap"value={name} onChange={(e) => setName(e.target.value)}/>
+                                <input className="name" type="text" placeholder="Nama Lengkap"value={name} onChange={setName} error={errors.name}/>
                                 <span className="icon is-small is-left">
                                 <i className="fa-solid fa-user"></i>
                                 </span>
@@ -61,7 +115,7 @@ function Signup() {
                         </div>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
-                                <input className="input" type="email" placeholder="Alamat Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                                <input className="email" type="email" placeholder="Alamat Email" value={email} onChange={setEmail} error={errors.email}/>
                                 <span className="icon is-small is-left">
                                 <i className="fa-solid fa-envelope"></i>
                                 </span>
@@ -69,7 +123,7 @@ function Signup() {
                         </div>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
-                                <input type="password" className="input" placeholder='Password Anda'value={password} onChange={(e) => setPassword(e.target.value)}/>
+                                <input type="password" className="password" placeholder='Password Anda'value={password} onChange={setPassword} error={errors.password}/>
                                 <span className="icon is-small is-left">
                                 <i className="fa-solid fa-lock"></i>
                                 </span>
@@ -77,7 +131,7 @@ function Signup() {
                         </div>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
-                                <input type="password" className="input" placeholder='Ulangi Password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+                                <input type="password" className="confirm-password" placeholder='Ulangi Password' value={confirmPassword} onChange={setConfirmPassword} error={errors.confirmPassword}/>
                                 <span className="icon is-small is-left">
                                 <i className="fa-solid fa-lock"></i>
                                 </span>
@@ -85,14 +139,14 @@ function Signup() {
                         </div>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
-                                <input type="text" className="input"  value={role} onChange={(e) => setRole(e.target.value)}/>
+                                <input type="text" className="role"  value={role} onChange={setRole} error={errors.role}/>
                                 <span className="icon is-small is-left">
                                 <i className="fa-solid fa-lock"></i>
                                 </span>
                             </div>
                         </div>
                         <div className='field mt-5'>
-                          <button className='button is-success is-fullwidth'>Sign Up</button>
+                          <button className='button is-success is-fullwidth button-sin-up' onClick={validate} type="button">Sign Up</button>
                         </div>
                     </form>
                     <div className="column has-text-centered">

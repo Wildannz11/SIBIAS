@@ -99,7 +99,7 @@ function Signup() {
                     <form className='form-input'>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
-                                <input className="username" type="text" placeholder="Username" value={username} onChange={setUsername} error={errors.username}/>
+                                <input className="input username" type="text" placeholder="Username" value={username} onChange={setUsername} error={errors.username}/>
                                 <span className="icon is-small is-left">
                                 <i className="fa-solid fa-user"></i>
                                 </span>
@@ -107,7 +107,7 @@ function Signup() {
                         </div>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
-                                <input className="name" type="text" placeholder="Nama Lengkap"value={name} onChange={setName} error={errors.name}/>
+                                <input className="input name" type="text" placeholder="Nama Lengkap"value={name} onChange={setName} error={errors.name}/>
                                 <span className="icon is-small is-left">
                                 <i className="fa-solid fa-user"></i>
                                 </span>
@@ -115,7 +115,7 @@ function Signup() {
                         </div>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
-                                <input className="email" type="email" placeholder="Alamat Email" value={email} onChange={setEmail} error={errors.email}/>
+                                <input className="input email" type="email" placeholder="Alamat Email" value={email} onChange={setEmail} error={errors.email}/>
                                 <span className="icon is-small is-left">
                                 <i className="fa-solid fa-envelope"></i>
                                 </span>
@@ -123,7 +123,7 @@ function Signup() {
                         </div>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
-                                <input type="password" className="password" placeholder='Password Anda'value={password} onChange={setPassword} error={errors.password}/>
+                                <input type="password" className="input password" placeholder='Password Anda'value={password} onChange={setPassword} error={errors.password}/>
                                 <span className="icon is-small is-left">
                                 <i className="fa-solid fa-lock"></i>
                                 </span>
@@ -131,7 +131,7 @@ function Signup() {
                         </div>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
-                                <input type="password" className="confirm-password" placeholder='Ulangi Password' value={confirmPassword} onChange={setConfirmPassword} error={errors.confirmPassword}/>
+                                <input type="password" className="input confirm-password" placeholder='Ulangi Password' value={confirmPassword} onChange={setConfirmPassword} error={errors.confirmPassword}/>
                                 <span className="icon is-small is-left">
                                 <i className="fa-solid fa-lock"></i>
                                 </span>
@@ -139,9 +139,9 @@ function Signup() {
                         </div>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
-                                <input type="text" className="role"  value={role} onChange={setRole} error={errors.role}/>
+                                <input type="text" className="input role"  value={role} onChange={setRole} error={errors.role} disabled/>
                                 <span className="icon is-small is-left">
-                                <i className="fa-solid fa-lock"></i>
+                                <p>Role</p>
                                 </span>
                             </div>
                         </div>

@@ -70,7 +70,7 @@ function Signin({ onLoginSuccess }) {
                       <div className='field mt-5'>
                           <label className='label'>Password</label>
                           <div className="control has-icons-left">
-                              <input type="password" className="password" onChange={setPassword} value={password} error={errors.password}  placeholder='Password Anda'/>
+                              <input type="password" className="input password" onChange={setPassword} value={password} error={errors.password}  placeholder='Password Anda'/>
                               <span className="icon is-small is-left">
                               <i className="fa-solid fa-lock"></i>
                               </span>

@@ -151,7 +151,7 @@ function Signup() {
               confirm_password: confirmPassword,
               role: role,
             });
-            navigate("/signin");
+            navigate("/login");
           } catch (error) {
             if(error.response){
                 setMsg(error.response.data.msg);

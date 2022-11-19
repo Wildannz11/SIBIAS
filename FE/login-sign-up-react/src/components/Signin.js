@@ -81,7 +81,7 @@ function Signin({ onLoginSuccess }) {
                       </div>
                   </form>
                   <div className="column has-text-centered">
-                  <p>Belum Punya Akun? <Link to="/signup">Daftar Akun</Link></p>
+                  <p>Belum Punya Akun? <Link to="/users">Daftar Akun</Link></p>
                   </div>
               </div>
           </div>
@@ -91,8 +91,8 @@ function Signin({ onLoginSuccess }) {
   )
 }
 
-Signin.propTypes = {
-  onLoginSuccess: PropTypes.func.isRequired,
-};
+// Signin.propTypes = {
+//   onLoginSuccess: PropTypes.func.isRequired,
+// };
 
 export default Signin

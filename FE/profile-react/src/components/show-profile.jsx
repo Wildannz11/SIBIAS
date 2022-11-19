@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 // import PropTypes from 'prop-types';
 
 export default function ShowProfile(
@@ -23,7 +24,7 @@ export default function ShowProfile(
           <img src="" className="rounded" alt="..."/>
         </div>
         <div className="text-center edit-profile-btn-container mt-5">
-          <button type="" className="btn btn-primary mb-3 edit-profile-btn">Edit Profil</button>
+        <Link to='/editprofile'><button type="" className="btn btn-primary mb-3 edit-profile-btn"> Edit Profil</button></Link>
         </div>
     </div>
 

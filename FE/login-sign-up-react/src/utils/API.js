@@ -1,6 +1,6 @@
 import { getAccessToken } from "./local-storage";
 
-const baseUrl = 'disini base URL API nyah';
+const baseUrl = 'http://localhost:5000';
 
 class FetchAPI {
     static async fetchWithToken(url, options = {}) {
@@ -31,13 +31,13 @@ class FetchAPI {
         return { error: null, data: responseJson.data };
     }
 
-    static async register({ name, username, email, password, role }) {
-        const response = await fetch(`${baseUrl}/register`, {
+    static async register({ name, username, email, password, confirmPassword, role }) {
+        const response = await fetch(`${baseUrl}/users`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ username, name, email, password, role }),
+          body: JSON.stringify({ username, name, email, password, confirmPassword, role }),
         });
         const { status, message } = await response.json();
     

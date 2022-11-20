@@ -2,13 +2,18 @@
 
 body, html {
     font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
 }
-.form-page-title{
+.form-page-title, .form-label{
     color: #223263;
 }
 
 .sign-in-link{
     
+}
+
+.form-label{
+    font-weight: 700;
 }
 
 .warn-msg{
@@ -21,10 +26,9 @@ body, html {
     visibility: hidden; /* Hidden by default. Visible on click */
     min-width: 250px; /* Set a default minimum width */
     margin-left: -125px; /* Divide value of min-width by 2 */
-    /* background-color: #333; Black background color */
     color: #fff; /* White text color */
     text-align: center; /* Centered text */
-    border-radius: 2px; /* Rounded borders */
+    border-radius: 8px; /* Rounded borders */
     padding: 16px; /* Padding */
     position: fixed; /* Sit on top of the screen */
     z-index: 1; /* Add a z-index if needed */
@@ -43,3 +47,45 @@ body, html {
   .hide-password{
     cursor: pointer;
   }
+
+  .hero{
+    background-color: grey;
+    width: 100%;
+    height: 100vh;
+  }
+
+  .form-container{
+    height: fit-content;
+    width: 90%;
+    max-width: 500px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    position: absolute;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+  }
+
+  .sub-form-container{
+    width: 90%;
+  }
+
+  .btn-login, .btn-sign-up{
+    background-color: #169EDA;
+    border: none;
+  }
+
+  .btn-login:hover,
+  .btn-login:focus,
+  .btn-sign-up:hover,
+  .btn-sign-up:focus {
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    background-color: #169EDA;
+}
+
+.role-icon{
+    font-size: 9pt;
+}

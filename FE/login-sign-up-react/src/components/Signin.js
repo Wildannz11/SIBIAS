@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
+import logo from '../images/logo.png';
+import useToast from '../hooks/useToast';
 // import FetchAPI from '../utils/API';
 // import PropTypes from 'prop-types';
 import axios from 'axios';
+import HidePasswordBtn from './HidePasswordBtn';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
-function Signin({ onLoginSuccess }) {
+function Signin() {
   const navigate = useNavigate();
+  const [showToast] = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [msg, setMsg] = useState('');
@@ -51,14 +56,16 @@ function Signin({ onLoginSuccess }) {
           email: email,
           password: password,
         });
+        showToast(`Hallo Selamat Datang`, 'success');
         navigate("/dashboard");
       } catch (error) {
         if(error.response){
-            setMsg(error.response.data.msg);
+            showToast(error.response.data.msg, 'fail');
         }
       }
     }
   }
+
   return (
     <section className="hero has-background-grey-light is-fullheight is-fullwidth">
     <div className="hero-body">
@@ -66,11 +73,11 @@ function Signin({ onLoginSuccess }) {
           <div className="columns is-centered">
               <div className="column is-4-desktop box">
               <div className="column has-text-centered">
-                      <img src={require('../images/logo.png').default} alt="Logo SIBIAS" title="Logo SIBIAS" className='logo-sibias'/>
+                      <img src={logo} alt="Logo SIBIAS" title="Logo SIBIAS" className='logo-sibias'/>
                       <h3 className="title  form-page-title">Hallo Sobat SIBIAS</h3>
                       <p className="subtitle">Sign In Untuk Melanjutkan</p>
                   </div>
-                  <p className='has-text-centered'>{msg}</p>
+                  <p className='has-text-centered warn-msg'>{msg}</p>
                   <form onSubmit={validate} className='form-input'>
                       <div className='field mt-5'>
                           <label className="label">Email</label>
@@ -85,23 +92,27 @@ function Signin({ onLoginSuccess }) {
                               <span className="icon is-small is-left">
                               <i className="fa-solid fa-envelope"></i>
                               </span>
+                              
                           </div>
-                          <p>{msgEmail}</p>
+                          <p className='warn-msg'>{msgEmail}</p>
                       </div>
                       <div className='field mt-5'>
                           <label className='label'>Password</label>
-                          <div className="control has-icons-left">
+                          <div className="control has-icons-left has-icons-right">
                               <input 
                               type="password" 
-                              className="input password" 
+                              className="input password pw" 
                               onChange={(e) => setPassword(e.target.value)} 
                               value={password}   
                               placeholder='Password Anda'/>
                               <span className="icon is-small is-left">
-                              <i className="fa-solid fa-lock"></i>
+                                <i className="fa-solid fa-lock"></i>
                               </span>
+                              <span className="icon is-small is-right">
+                               <a href="hide-password"><i className="fa-solid fa-eye"></i></a> 
+                              </span>    
                           </div>
-                          <p>{msgPassword}</p>
+                          <p className='warn-msg'>{msgPassword}</p>
                       </div>
                       <div className='field mt-5'>
                         <button 

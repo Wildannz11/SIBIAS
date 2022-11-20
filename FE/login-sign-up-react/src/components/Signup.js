@@ -3,10 +3,11 @@ import { Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 // import useInput from '../hooks/useInput';
 // import FetchAPI from '../utils/API';
-// import useToast from '../hooks/useToast';
+import useToast from '../hooks/useToast';
+import logo from '../images/logo.png';
 
 function Signup() {
-  // const [showToast] = useToast();
+    const [showToast] = useToast();
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [name, setName] = useState('');
@@ -151,10 +152,11 @@ function Signup() {
               confirm_password: confirmPassword,
               role: role,
             });
+            showToast('Selamat Akun Anda Berhasil Dibuat', 'success');
             navigate("/login");
           } catch (error) {
             if(error.response){
-                setMsg(error.response.data.msg);
+              showToast(error.response.data.msg, 'fail');
             }
           }
         }
@@ -167,11 +169,11 @@ function Signup() {
             <div className="columns is-centered">
                 <div className="column is-4-desktop box">
                     <div className="column has-text-centered mb-3">
-                        <img src={require('../images/logo.png').default} alt="Logo SIBIAS" title="Logo SIBIAS" className='logo-sibias'/>
+                        <img src={logo} alt="Logo SIBIAS" title="Logo SIBIAS" className='logo-sibias'/>
                         <h3 className="title form-page-title">Sign Up</h3>
                         <p className="subtitle">Buat Akun Baru</p>
                     </div>
-                    <p className='has-text-centered'>{msg}</p>
+                    <p className='has-text-centered warn-msg'>{msg}</p>
                     <form onSubmit={Register} className='form-input'>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
@@ -188,7 +190,7 @@ function Signup() {
                                 <i className="fa-solid fa-user"></i>
                                 </span>
                             </div>
-                            <p>{msgUsername}</p>
+                            <p className='warn-msg'>{msgUsername}</p>
                         </div>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
@@ -204,7 +206,7 @@ function Signup() {
                                 <i className="fa-solid fa-user"></i>
                                 </span>
                             </div>
-                            <p>{msgName}</p>
+                            <p className='warn-msg'>{msgName}</p>
                         </div>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
@@ -220,13 +222,13 @@ function Signup() {
                                 <i className="fa-solid fa-envelope"></i>
                                 </span>
                             </div>
-                            <p>{msgEmail}</p>
+                            <p className='warn-msg'>{msgEmail}</p>
                         </div>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
                                 <input 
                                 type="password" 
-                                className="input password" placeholder='Password Anda'
+                                className="input password pw" placeholder='Password Anda'
                                 value={password} 
                                 onChange={(e) => setPassword(e.target.value)}
                                 // error={errors.password}
@@ -235,13 +237,13 @@ function Signup() {
                                 <i className="fa-solid fa-lock"></i>
                                 </span>
                             </div>
-                            <p>{msgPassword}</p>
+                            <p className='warn-msg'>{msgPassword}</p>
                         </div>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
                                 <input 
                                 type="password" 
-                                className="input confirm-password" placeholder='Ulangi Password' 
+                                className="input confirm-password pw" placeholder='Ulangi Password' 
                                 value={confirmPassword} 
                                 onChange={(e) => setConfirmPassword(e.target.value)} 
                                 // error={errors.confirmPassword}
@@ -250,7 +252,7 @@ function Signup() {
                                 <i className="fa-solid fa-lock"></i>
                                 </span>
                             </div>
-                            <p>{msgConfirmPassword}</p>
+                            <p className='warn-msg'>{msgConfirmPassword}</p>
                         </div>
                         <div className='field mt-5'>
                             <div className="control has-icons-left">

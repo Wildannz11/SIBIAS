@@ -7,8 +7,8 @@ import axios from 'axios';
 
 function Signin({ onLoginSuccess }) {
   const navigate = useNavigate();
-  const [email, setEmail] = useInput('');
-  const [password, setPassword] = useInput('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [msg, setMsg] = useState('');
   const [msgEmail, setMsgEmail] = useState('');
   const [msgPassword, setMsgPassword] = useState('');
@@ -70,17 +70,17 @@ function Signin({ onLoginSuccess }) {
                       <h3 className="title  form-page-title">Hallo Sobat SIBIAS</h3>
                       <p className="subtitle">Sign In Untuk Melanjutkan</p>
                   </div>
-                  <p className='has-text-centered'>{msgEmail}</p>
-                  <form action="POST" onSubmit={validate} className='form-input'>
+                  <p className='has-text-centered'>{msg}</p>
+                  <form onSubmit={validate} className='form-input'>
                       <div className='field mt-5'>
                           <label className="label">Email</label>
                           <div className="control has-icons-left">
                               <input 
-                              className="input" 
-                              type="email" 
-                              name='email' 
-                              placeholder="Maukkan Email Anda" onChange={(e) => {setEmail(e.target.value)}} 
-                              value={email} 
+                              className="input email" 
+                              type="text" 
+                              placeholder="Maukkan Email Anda"
+                              value={email}  
+                              onChange={(e) => setEmail(e.target.value)} 
                               />
                               <span className="icon is-small is-left">
                               <i className="fa-solid fa-envelope"></i>
@@ -94,8 +94,9 @@ function Signin({ onLoginSuccess }) {
                               <input 
                               type="password" 
                               className="input password" 
-                              onChange={(e) => {setPassword(e.target.value)}} 
-                              value={password}   placeholder='Password Anda'/>
+                              onChange={(e) => setPassword(e.target.value)} 
+                              value={password}   
+                              placeholder='Password Anda'/>
                               <span className="icon is-small is-left">
                               <i className="fa-solid fa-lock"></i>
                               </span>
@@ -103,7 +104,10 @@ function Signin({ onLoginSuccess }) {
                           <p>{msgPassword}</p>
                       </div>
                       <div className='field mt-5'>
-                        <button className='button is-success btn-login is-fullwidth' type="button">Login</button>
+                        <button 
+                        className='button is-success btn-login is-fullwidth'>
+                          Login
+                          </button>
                       </div>
                   </form>
                   <div className="column has-text-centered">

@@ -176,7 +176,9 @@ function Signup() {
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
                                 <input 
-                                className="input username" type="text" placeholder="Username" 
+                                className="input username" 
+                                type="text" 
+                                placeholder="Username" 
                                 value={username} 
                                 onChange={(e) => setUsername(e.target.value)} 
                                 // error={errors.username}
@@ -191,7 +193,8 @@ function Signup() {
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
                                 <input 
-                                className="input name" type="text" 
+                                className="input name" 
+                                type="text" 
                                 placeholder="Nama Lengkap"
                                 value={name} 
                                 onChange={(e) => setName(e.target.value)} 
@@ -206,7 +209,8 @@ function Signup() {
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
                                 <input 
-                                className="input email" type="text" 
+                                className="input email" 
+                                type="text" 
                                 placeholder="Alamat Email" 
                                 value={email} 
                                 onChange={(e) => setEmail(e.target.value)} 
@@ -251,7 +255,7 @@ function Signup() {
                         <div className='field mt-5'>
                             <div className="control has-icons-left">
                                 <input 
-                                type="" 
+                                type="text" 
                                 className="input role"  
                                 value={role} 
                                 onChange={(e) => setRole(e.target.value)} 
@@ -264,15 +268,13 @@ function Signup() {
                         </div>
                         <div className='field mt-5'>
                           <button 
-                          className='button is-success is-fullwidth button-sin-up' 
-                           
-                          >
+                          className='button is-success is-fullwidth button-sin-up'>
                             Sign Up
                           </button>
                         </div>
                     </form>
                     <div className="column has-text-centered">
-                    <p>Sudah Punya Akun? <Link to="/" className='sign-in-link'>Sign In</Link></p>
+                    <p>Sudah Punya Akun? <Link to="/login" className='sign-in-link'>Sign In</Link></p>
                     </div>
                 </div>
             </div>

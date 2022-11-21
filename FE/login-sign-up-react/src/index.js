@@ -4,6 +4,7 @@ import App from './App';
 // import 'bulma/css/bulma.css';
 import axios from 'axios';
 import mainStyle from "./styles/main.css";
+import responsiveStyle from "./styles/responsive.css";
 axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

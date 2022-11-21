@@ -5,6 +5,7 @@ import axios from 'axios';
 // import FetchAPI from '../utils/API';
 import useToast from '../hooks/useToast';
 import logo from '../images/logo.png';
+import Input from './HidePasswordBtn';
 
 function Signup() {
     const [showToast] = useToast();
@@ -15,68 +16,11 @@ function Signup() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [role, setRole] = useState('Masyarakat');
-    const [msg, setMsg] = useState('');
     const [msgUsername, setMsgUsername] = useState('');
     const [msgName, setMsgName] = useState('');
     const [msgEmail, setMsgEmail] = useState('');
     const [msgPassword, setMsgPassword] = useState('');
     const [msgConfirmPassword, setMsgConfirmPassword] = useState('');
-    // const [errors, setErrors] = useState({
-    //     username: '',
-    //     name: '',
-    //     email: '',
-    //     password: '',
-    //     confirmPassword: '',
-    //     role:'',
-    //   });
-    //   const handleError = (error, input) => {
-    //     setErrors((prevState) => ({ ...prevState, [input]: error }));
-    //   };
-
-  // const validate = async (e) => {
-  //   e.preventDefault();
-  //   handleError('', 'password');
-  //   handleError('', 'email');
-  //   handleError('', 'fullname');
-  //   handleError('', 'confirm-password');
-
-  //   let isValid = true;
-  //   const reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w\w+)+$/;
-
-  //   if (!username) {
-  //       handleError('Username is required', 'username');
-  //     }
-  //   if (!name) {
-  //     handleError('fullname is required', 'fullname');
-  //   }
-  //   if (!email) {
-  //     handleError('email is required', 'email');
-  //     isValid = false;
-  //   }
-  //   if (reg.test(email) === false) {
-  //     handleError('Please input valid email', 'email');
-  //     isValid = false;
-  //   }
-  //   if (password.length <= 8) {
-  //     handleError('password must more than 8 character', 'password');
-  //     isValid = false;
-  //   }
-  //   if (confirmPassword.length <= 8) {
-  //       handleError('password must more than 8 character', 'password');
-  //       isValid = false;
-  //   }
-  //   if (isValid) {
-  //     const { status, message } = await FetchAPI.register({ username, name, email, password, confirmPassword,role });
-  //     if (status === 'fail') {
-  //       showToast(message);
-  //     }
-
-  //     if (status === 'success') {
-  //       showToast(message);
-  //       navigate('/signin');
-  //     }
-  //   }
-  // }
 
     const Register = async (e) => {
         e.preventDefault();
@@ -166,13 +110,12 @@ function Signup() {
     <section className="hero">
       <div className="card form-container">
         <div className="card-body sub-form-container">
-          <div className="text-center mb-5 title-signup-login-container">
+          <div className="text-center mb-4 title-signup-login-container">
             <img src={logo} alt="Logo SIBIAS" title="Logo SIBIAS" className='logo-sibias mb-3'/>
             <h3 className="title form-page-title">Sign Up</h3>
             <p className="subtitle">Buat Akun Baru</p>
           </div>
           <div className="text-center">
-            <p className='warn-msg'>{msg}</p>
           </div>
 
           <form onSubmit={Register}>
@@ -182,7 +125,7 @@ function Signup() {
                   <span className="input-group-text" id="addon-wrapping"><i className="fa-solid fa-user"></i></span>
 
                   <input 
-                  className="form-control username" 
+                  className="form-control form-control-sm username" 
                   type="text" 
                   placeholder="Username" 
                   value={username} 
@@ -197,7 +140,7 @@ function Signup() {
                   <span className="input-group-text" id="addon-wrapping"><i className="fa-solid fa-user"></i></span>
 
                   <input 
-                  className="form-control name" 
+                  className="form-control form-control-sm name" 
                   type="text" 
                   placeholder="Nama Lengkap"
                   value={name} 
@@ -212,7 +155,7 @@ function Signup() {
                 <span className="input-group-text" id="addon-wrapping"><i className="fa-solid fa-envelope"></i></span>
 
                   <input
-                   className="form-control email" 
+                   className="form-control form-control-sm email" 
                    type="text" 
                    placeholder="Alamat Email" 
                    value={email} 
@@ -223,34 +166,25 @@ function Signup() {
               </div>
 
               <div className="mb-4">
-                <div className="input-group">
-                  <span className="input-group-text" id="addon-wrapping"><i className="fa-solid fa-lock"></i></span>
-                  <input
-                  type="password" 
-                  className="form-control password pw" 
-                  placeholder='Password Anda'
-                  value={password} 
+                  <Input
+                  name = 'password'
                   onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password min 8 Karakter"
+                  value={password}
+                  type="password"
                   />
-                  <span className="input-group-text hide-password" id="addon-wrapping"><i className="fa-solid fa-eye"></i></span>
-                </div>
                 <p className='warn-msg'>{msgPassword}</p>
               </div>
 
               <div className="mb-4">
-                <div className="input-group">
-                <span className="input-group-text" id="addon-wrapping"><i className="fa-solid fa-lock"></i></span>
-                
-                  <input 
-                 type="password" 
-                 className="form-control confirm-password pw" 
-                 placeholder='Ulangi Password' 
-                 value={confirmPassword} 
-                 onChange={(e) => setConfirmPassword(e.target.value)} 
+                  <Input
+                  name = 'confirm-password'
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Ulangi Password"
+                  value={confirmPassword}
+                  type="password"
                   />
-                  <span className="input-group-text hide-password" id="addon-wrapping"><i className="fa-solid fa-eye"></i></span>
-                </div>
-                <p className='warn-msg'>{msgConfirmPassword}</p> 
+                <p className='warn-msg'>{msgConfirmPassword}</p>
               </div>
 
               <div className="mb-4">
@@ -258,7 +192,7 @@ function Signup() {
                   <span className="input-group-text role-icon" id="addon-wrapping">Role</span>
                   <input
                  type="text" 
-                 className="form-control input role"  
+                 className="form-control form-control-sm role"  
                  value={role} 
                  onChange={(e) => setRole(e.target.value)}
                  disabled
@@ -266,7 +200,7 @@ function Signup() {
                 </div>
               </div>
 
-              <div className="d-grid text-center mb-5">
+              <div className="d-grid text-center mb-4">
               <button type="submit" className="btn btn-primary is-success btn-sign-up">Daftar</button>
               </div>
           </form>

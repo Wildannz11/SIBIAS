@@ -3,11 +3,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
 import logo from '../images/logo.png';
 import useToast from '../hooks/useToast';
+import PropTypes from 'prop-types';
 // import FetchAPI from '../utils/API';
 // import PropTypes from 'prop-types';
 import axios from 'axios';
 import HidePasswordBtn from './HidePasswordBtn';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import Input from './HidePasswordBtn';
+import { FaLock } from 'react-icons/fa';
 
 function Signin() {
   const navigate = useNavigate();
@@ -17,7 +20,9 @@ function Signin() {
   const [msg, setMsg] = useState('');
   const [msgEmail, setMsgEmail] = useState('');
   const [msgPassword, setMsgPassword] = useState('');
-
+  const [inputType, setInputType] = useState('');
+  const [hidePassword, setHidePassword] = React.useState(false);
+  // const input = document.querySelector('.password').type;
   const validate = async (e) => {
     e.preventDefault();
     
@@ -87,7 +92,7 @@ function Signin() {
                   <span className="input-group-text" id="addon-wrapping"><i className="fa-solid fa-envelope"></i></span>
 
                   <input 
-                  className="form-control email" 
+                  className="form-control form-control-sm email" 
                   type="text" 
                   placeholder="Maukkan Email Anda"
                   value={email}  
@@ -96,20 +101,16 @@ function Signin() {
                 </div>
                 <p className='warn-msg'>{msgEmail}</p> 
               </div>
-              
+
               <div className="mb-5">
                 <label className="form-label">Password</label>
-                <div className="input-group">
-                  <span className="input-group-text" id="addon-wrapping"><i className="fa-solid fa-lock"></i></span>
-                  <input
-                  className="form-control password"  
-                  type="password" 
-                  onChange={(e) => setPassword(e.target.value)} 
-                  value={password}   
-                  placeholder='Password Anda'
+                  <Input
+                  name = 'password'
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="min 8 character"
+                  value={password}
+                  type="password"
                   />
-                  <span className="input-group-text hide-password" id="addon-wrapping"><i className="fa-solid fa-eye"></i></span>
-                </div>
                 <p className='warn-msg'>{msgPassword}</p>
               </div>
 

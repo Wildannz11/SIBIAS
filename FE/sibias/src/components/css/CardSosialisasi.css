@@ -1,0 +1,15 @@
+.card-img-top{
+    height: 12rem;
+}
+
+.card:hover{
+    background-color: #53D1B6;
+    -webkit-transform: translate(0, -10px);
+    transform: translate(0, -10px);
+    transition: transform 0.5s ease;
+}
+
+.btn{
+    color: #fff;
+    background-color: #09bef0;
+}

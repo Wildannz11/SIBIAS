@@ -5,9 +5,9 @@ POST http://localhost:5000/users
 Content-Type: application/json
 
 {
-    "username": "maulana1234",
-    "nama": "maulana kh",
-    "email": "maulana43@gmail.com",
+    "username": "john123",
+    "nama": "john doe",
+    "email": "john123@gmail.com",
     "password": "12345",
     "confirm_password": "12345",
     "role": "rakyat"
@@ -18,9 +18,9 @@ POST http://localhost:5000/pemerintah
 Content-Type: application/json
 
 {
-    "nama_lembaga": "pemerintah bekasi",
+    "nama_lembaga": "pemerintah bali",
     "deskripsi_lembaga": "lorem epsum bla bla bla",
-    "email": "pemkotbekasi@gmail.com",
+    "email": "pemkotbali@gmail.com",
     "password": "12345",
     "confirm_password": "12345",
     "role": "pemerintah"
@@ -34,21 +34,38 @@ GET http://localhost:5000/pemerintah/pemerintah
 
 
 ###
-GET http://localhost:5000/users/a7c91d69-5df3-4fa4-89ce-f562aa8f39ca
+GET http://localhost:5000/users/rakyat/13b50edd-72b1-47be-b063-5a7f216206d7
 
 ###
-PATCH http://localhost:5000/users/a7c91d69-5df3-4fa4-89ce-f562aa8f39ca
+GET http://localhost:5000/pemerintah/pemerintah/5c403da5-6b7d-4cc4-807f-f45d5c71a656
+
+###
+PATCH http://localhost:5000/users/13b50edd-72b1-47be-b063-5a7f216206d7
 Content-Type: application/json
 
 {
-    "username": "wildann11",
-    "nama": "wildan update",
-    "email": "wildan@gmail.com",
+    "username": "maulana12",
+    "nama": "maulana",
+    "email": "maulana1@gmail.com",
     "password": "",
     "confirm_password": "",
-    "role": "rakyat"
+    "alamat": "Bandung barat",
+    "no_hp": "081297686599",
+    "tgl_lahir": "2000-11-11",
+    "pendidikan": "Sarjana"
 }
 
+###
+PATCH http://localhost:5000/pemerintah/5c403da5-6b7d-4cc4-807f-f45d5c71a656
+Content-Type: application/json
+
+{
+    "nama_lembaga": "pemerintah bekasi 2",
+    "deskripsi_lembaga": "lorem epsum bla bla bla",
+    "email": "pemkotbekasi2@gmail.com",
+    "password": "",
+    "confirm_password": ""
+}
 
 ###
 DELETE http://localhost:5000/users/a7c91d69-5df3-4fa4-89ce-f562aa8f39ca
@@ -57,11 +74,29 @@ DELETE http://localhost:5000/users/a7c91d69-5df3-4fa4-89ce-f562aa8f39ca
 // Auth User
 
 ###
-POST http://localhost:5000/login
+POST http://localhost:5000/users/login
 Content-Type: application/json
 
 {
-    "email": "fadil@gmail.com",
+    "email": "kevin123@gmail.com",
     "password": "12345"
 }
 
+###
+POST http://localhost:5000/pemerintah/login
+Content-Type: application/json
+
+{
+    "email": "pemkarawang@gmail.com",
+    "password": "12345"
+}
+
+
+###
+GET http://localhost:5000/users/me
+
+###
+GET http://localhost:5000/pemerintah/me
+
+###
+DELETE  http://localhost:5000/logout

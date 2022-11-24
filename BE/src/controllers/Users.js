@@ -37,9 +37,25 @@ export const getPemerintah = async (req, res) => {
 export const getUserById = async (req, res) => {
     try {
         const response = await Users.findOne({
-            attributes: ['uid','username','nama','email','password','role'],
+            attributes: ['uid','username','nama','email','password','alamat','no_hp','tgl_lahir','pendidikan','role'],
             where: {
-                uid: req.params.id
+                role: req.params.role,
+                uid: req.params.id,
+            }
+        });
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({msg: error.message});
+    }
+}
+
+export const getPemerintahById = async (req, res) => {
+    try {
+        const response = await Users.findOne({
+            attributes: ['uid','nama_lembaga','deskripsi_lembaga','email','password','role'],
+            where: {
+                role: req.params.role,
+                uid: req.params.id,
             }
         });
         res.status(200).json(response);
@@ -142,7 +158,7 @@ export const editUser = async (req, res) => {
         return res.status(404).json({msg: "User tidak ditemukan"});
     }
 
-    const {username, nama, email, password, confirm_password, role} = req.body;
+    const {username, nama, email, password, confirm_password, alamat, no_hp, tgl_lahir, pendidikan} = req.body;
     let hasPass;
     if (password === "" || password === null || password === undefined) {
         hasPass = user.password;
@@ -160,12 +176,56 @@ export const editUser = async (req, res) => {
             nama: nama,
             email: email,
             password: hasPass,
+            alamat: alamat,
+            no_hp: no_hp,
+            tgl_lahir: tgl_lahir,
+            pendidikan: pendidikan
         },{
             where: {
-                id: user.id
+                uid: user.uid
             }
         });
         res.status(200).json({msg: "Berhasil melakukan update"});
+    } catch (error) {
+        res.status(400).json({msg: error.message});
+    }
+}
+
+export const editPemerintah = async (req, res) => {
+    const user = await Users.findOne({
+        where: {
+            uid: req.params.id
+        }
+    });
+
+    if (!user) {
+        return res.status(404).json({msg: "User tidak ditemukan"});
+    }
+
+    const {nama_lembaga, deskripsi_lembaga, email, password, confirm_password} = req.body;
+    let hasPass;
+    if (password === "" || password === null || password === undefined) {
+        hasPass = user.password;
+    } else {
+        hasPass = await argon2.hash(password);
+    }
+
+    if (password !== confirm_password) {
+        return res.status(400).json({msg: "Password dan Confirm Password tidak cocok"});
+    }
+
+    try {
+        await Users.update({
+            nama_lembaga: nama_lembaga,
+            deskripsi_lembaga: deskripsi_lembaga,
+            email: email,
+            password: hasPass,
+        },{
+            where: {
+                uid: user.uid
+            }
+        });
+        res.status(200).json({msg: "Berhasil melakukan update pada akun ini"});
     } catch (error) {
         res.status(400).json({msg: error.message});
     }
@@ -188,7 +248,7 @@ export const deleteUser = async (req, res) => {
                 id: user.id
             }
         });
-        res.status(200).json({msg: "Berhasil menghapus user"});
+        res.status(200).json({msg: "Berhasil menghapus akun ini"});
     } catch (error) {
         res.status(400).json({msg: error.message});
     }

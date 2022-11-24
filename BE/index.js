@@ -11,10 +11,15 @@ const app = express();
 
 const sessionStore = SequelizeStore(session.Store);
 
+const storedb = new sessionStore({
+    db: db
+});
+
 app.use(session({
     secret: process.env.SESS_SECRET,
     resave: false,
     saveUninitialized: true,
+    store: storedb,
     cookie: {
         secure: 'auto'
     }
@@ -36,6 +41,8 @@ app.use(cors({
 
 app.use(express.json());
 app.use(router);
+
+storedb.sync();
 
 app.listen(process.env.APP_PORT, () =>{
     console.log(`server up and running in port ${process.env.APP_PORT} .....` );

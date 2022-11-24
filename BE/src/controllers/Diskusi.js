@@ -6,7 +6,7 @@
 // export const getDiskusi = async (req, res) => {
 //     try {
 //         let response;
-//         if (req.role === 'rakyat') {
+//         if (req.role == 'rakyat') {
 //             response = await Diskusi.findAll({
 //                 attributes: ['did','judul_diskusi'],
 //                 include:[{

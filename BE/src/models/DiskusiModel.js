@@ -20,6 +20,13 @@
 //             notEmpty: true,
 //         }
 //     },
+//     jumlah_kunjungan:{ 
+//         type: DataTypes.BIGINT, 
+//         allowNull: false,
+//         validate:{
+//             notEmpty: true,
+//         }
+//     },
 //     userId:{ 
 //         type: DataTypes.STRING, 
 //         allowNull: false,

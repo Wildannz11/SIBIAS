@@ -1,5 +1,10 @@
 import express from "express";
-import {login, logout, me} from "../controllers/Auth.js";
+import {loginPemerintah , 
+    login, 
+    logout, 
+    statusLoginPemerintah, 
+    statusLoginUser
+    } from "../controllers/Auth.js";
 // import {
 //     getDiskusi,
 //     getDiskusiById,
@@ -10,19 +15,25 @@ import {login, logout, me} from "../controllers/Auth.js";
 import {
     getUser,
     getPemerintah, 
-    getUserById, 
+    getUserById,
+    getPemerintahById, 
     createUser,
     createAkunPemerintah, 
-    editUser, 
+    editUser,
+    editPemerintah, 
     deleteUser
 } from "../controllers/Users.js"
-import { verifyUser } from "../middleware/AuthUser.js";
+import { verifyUser , rakyatOnly , pemerintahOnly } from "../middleware/AuthUser.js";
 
 const router = express.Router();
 
 // Authentication
-router.get('/me', me);
-router.post('/login', login);
+router.get('/users/me', statusLoginUser);
+router.get('/pemerintah/me', statusLoginPemerintah);
+
+router.post('/users/login', login);
+router.post('/pemerintah/login', loginPemerintah);
+
 router.delete('/logout', logout);
 
 // diskusi rakyat mengenai kebijakan
@@ -33,12 +44,18 @@ router.delete('/logout', logout);
 // router.delete('/diskusi/:id', deleteDiskusi);
 
 // CRUD Users
-router.get('/users/:role',  getUser);
-router.get('/pemerintah/:role', getPemerintah);
-router.get('/users/:id',  getUserById);
-router.post('/users',  createUser);
+router.get('/users/:role', verifyUser, rakyatOnly, getUser);
+router.get('/pemerintah/:role', verifyUser, pemerintahOnly, getPemerintah);
+
+router.get('/users/:role/:id', verifyUser, rakyatOnly, getUserById);
+router.get('/pemerintah/:role/:id', verifyUser, pemerintahOnly, getPemerintahById);
+
+router.post('/users', createUser);
 router.post('/pemerintah', createAkunPemerintah);
-router.patch('/users/:id',  editUser);
-router.delete('/users/:id',  deleteUser);
+
+router.patch('/users/:id',  verifyUser, rakyatOnly, editUser);
+router.patch('/pemerintah/:id',  verifyUser, pemerintahOnly, editPemerintah);
+
+router.delete('/users/:id',  verifyUser, deleteUser);
 
 export default router;

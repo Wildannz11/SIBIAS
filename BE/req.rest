@@ -1,6 +1,7 @@
 
 // CRUD User
 
+// create user rakyat
 POST http://localhost:5000/users
 Content-Type: application/json
 
@@ -13,6 +14,8 @@ Content-Type: application/json
     "role": "rakyat"
 }
 
+
+// create user pemerintah
 ###
 POST http://localhost:5000/pemerintah
 Content-Type: application/json
@@ -26,19 +29,28 @@ Content-Type: application/json
     "role": "pemerintah"
 }
 
+
+// get all user rakyat
 ###
 GET http://localhost:5000/users/rakyat
 
+
+// get all user pemerintah
 ###
 GET http://localhost:5000/pemerintah/pemerintah
 
 
+// get by id user rakyat
 ###
 GET http://localhost:5000/users/rakyat/13b50edd-72b1-47be-b063-5a7f216206d7
 
+
+// get by id user pemerintah
 ###
 GET http://localhost:5000/pemerintah/pemerintah/5c403da5-6b7d-4cc4-807f-f45d5c71a656
 
+
+// edit by id user rakyat
 ###
 PATCH http://localhost:5000/users/13b50edd-72b1-47be-b063-5a7f216206d7
 Content-Type: application/json
@@ -55,6 +67,8 @@ Content-Type: application/json
     "pendidikan": "Sarjana"
 }
 
+
+// edit by id user pemerintah
 ###
 PATCH http://localhost:5000/pemerintah/5c403da5-6b7d-4cc4-807f-f45d5c71a656
 Content-Type: application/json
@@ -67,12 +81,15 @@ Content-Type: application/json
     "confirm_password": ""
 }
 
+
+// Delete user (can rakyat and pemerintah)
 ###
 DELETE http://localhost:5000/users/a7c91d69-5df3-4fa4-89ce-f562aa8f39ca
 
 
 // Auth User
 
+// Login user rakyat
 ###
 POST http://localhost:5000/users/login
 Content-Type: application/json
@@ -82,6 +99,8 @@ Content-Type: application/json
     "password": "12345"
 }
 
+
+// Login user pemerintah
 ###
 POST http://localhost:5000/pemerintah/login
 Content-Type: application/json
@@ -91,12 +110,16 @@ Content-Type: application/json
     "password": "12345"
 }
 
-
+// cek status login rakyat
 ###
 GET http://localhost:5000/users/me
 
+
+// cek status login pemerintah
 ###
 GET http://localhost:5000/pemerintah/me
 
+
+// Logout user (can rakyat and pemerintah)
 ###
 DELETE  http://localhost:5000/logout

@@ -1,25 +1,40 @@
+
+// CRUD User
+
 POST http://localhost:5000/users
 Content-Type: application/json
 
 {
-    "username": "maulana123",
-    "nama": "maulana",
-    "email": "maulana@gmail.com",
+    "username": "maulana1234",
+    "nama": "maulana kh",
+    "email": "maulana43@gmail.com",
     "password": "12345",
     "confirm_password": "12345",
     "role": "rakyat"
 }
 
+###
+POST http://localhost:5000/pemerintah
+Content-Type: application/json
+
+{
+    "nama_lembaga": "pemerintah bekasi",
+    "deskripsi_lembaga": "lorem epsum bla bla bla",
+    "email": "pemkotbekasi@gmail.com",
+    "password": "12345",
+    "confirm_password": "12345",
+    "role": "pemerintah"
+}
 
 ###
-GET http://localhost:5000/users
+GET http://localhost:5000/users/rakyat
 
-
+###
+GET http://localhost:5000/pemerintah/pemerintah
 
 
 ###
 GET http://localhost:5000/users/a7c91d69-5df3-4fa4-89ce-f562aa8f39ca
-
 
 ###
 PATCH http://localhost:5000/users/a7c91d69-5df3-4fa4-89ce-f562aa8f39ca
@@ -33,3 +48,20 @@ Content-Type: application/json
     "confirm_password": "",
     "role": "rakyat"
 }
+
+
+###
+DELETE http://localhost:5000/users/a7c91d69-5df3-4fa4-89ce-f562aa8f39ca
+
+
+// Auth User
+
+###
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "fadil@gmail.com",
+    "password": "12345"
+}
+

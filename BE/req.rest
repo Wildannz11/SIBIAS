@@ -21,9 +21,9 @@ POST http://localhost:5000/pemerintah
 Content-Type: application/json
 
 {
-    "nama_lembaga": "pemerintah bali",
+    "nama_lembaga": "pemerintah karawang",
     "deskripsi_lembaga": "lorem epsum bla bla bla",
-    "email": "pemkotbali@gmail.com",
+    "email": "pemkarawang@gmail.com",
     "password": "12345",
     "confirm_password": "12345",
     "role": "pemerintah"
@@ -95,7 +95,7 @@ POST http://localhost:5000/users/login
 Content-Type: application/json
 
 {
-    "email": "kevin123@gmail.com",
+    "email": "john123@gmail.com",
     "password": "12345"
 }
 
@@ -123,3 +123,40 @@ GET http://localhost:5000/pemerintah/me
 // Logout user (can rakyat and pemerintah)
 ###
 DELETE  http://localhost:5000/logout
+
+
+
+// Discussion CRUD 
+
+// Crete Discussion
+###
+POST http://localhost:5000/diskusi
+Content-Type: application/json
+
+{
+    "judul_diskusi": "pembahasan BBM"
+}
+
+// get all discussion
+###
+GET http://localhost:5000/diskusi
+
+
+// get discussion by id
+###
+GET http://localhost:5000/diskusi/cfedc121-99fd-4b1b-a3b0-94f37f519330
+
+
+// Update discussion by id
+###
+PATCH http://localhost:5000/diskusi/cfedc121-99fd-4b1b-a3b0-94f37f519330
+Content-Type: application/json
+
+{
+    "judul_diskusi": "pembahasan BBM Rakyat"
+}
+
+
+//
+###
+DELETE http://localhost:5000/diskusi/cfedc121-99fd-4b1b-a3b0-94f37f519330

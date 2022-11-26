@@ -1,17 +1,18 @@
 import express from "express";
-import {loginPemerintah , 
+import {
+    loginPemerintah, 
     login, 
     logout, 
     statusLoginPemerintah, 
     statusLoginUser
     } from "../controllers/Auth.js";
-// import {
-//     getDiskusi,
-//     getDiskusiById,
-//     createDiskusi,
-//     editDiskusi,
-//     deleteDiskusi
-// } from "../controllers/Diskusi.js";
+import {
+    getDiskusi,
+    getDiskusiById,
+    createDiskusi,
+    editDiskusi,
+    deleteDiskusi
+} from "../controllers/Diskusi.js";
 import {
     getUser,
     getPemerintah, 
@@ -37,11 +38,11 @@ router.post('/pemerintah/login', loginPemerintah);
 router.delete('/logout', logout);
 
 // diskusi rakyat mengenai kebijakan
-// router.get('/diskusi', getDiskusi);
-// router.get('/diskusi/:id', getDiskusiById);
-// router.post('/diskusi', createDiskusi);
-// router.patch('/diskusi/:id', editDiskusi);
-// router.delete('/diskusi/:id', deleteDiskusi);
+router.get('/diskusi', verifyUser, getDiskusi);
+router.get('/diskusi/:id', verifyUser, getDiskusiById);
+router.post('/diskusi', verifyUser, rakyatOnly, createDiskusi);
+router.patch('/diskusi/:id', verifyUser, rakyatOnly, editDiskusi);
+router.delete('/diskusi/:id', verifyUser, rakyatOnly, deleteDiskusi);
 
 // CRUD Users
 router.get('/users/:role', verifyUser, rakyatOnly, getUser);

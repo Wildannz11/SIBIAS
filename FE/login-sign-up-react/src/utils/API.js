@@ -43,6 +43,18 @@ class FetchAPI {
     
         return { status, message };
     }
+
+    static async getUserLogged() {
+      const response = await this.fetchWithToken(`${baseUrl}/users/me`);
+      const responseJson = await response.json();
+    
+      if (responseJson.status !== 'success') {
+        return { error: responseJson.message, data: null };
+      }
+    
+      return { error: null, data: responseJson.data };
+    }
 }
+
 
 export default FetchAPI;

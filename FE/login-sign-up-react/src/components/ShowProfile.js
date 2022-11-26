@@ -1,0 +1,119 @@
+import React from 'react';
+import { useState } from 'react';
+import {Link} from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+// import PropTypes from 'prop-types';
+
+export default function ShowProfile() {
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [address, setAddress] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  let [uid, setUid] = useState('')
+  const navigate = useNavigate();
+
+  const validate = async (e) => {
+    e.preventDefault();
+
+    try {
+      await axios.get('http://localhost:5000/users/me')
+      .then(response => {
+        const Uid = response.data.uid;
+        try {
+          axios.get(`http://localhost:5000/users/rakyat/${Uid}`)
+          .then(response => {
+            const data = response.data;
+            setName(data.nama);
+            setUsername(data.username);
+            setEmail(data.email);
+            setAddress(data.alamat);
+            setPhoneNumber(data.no_hp);
+          })
+        } catch (error) {
+          if(error.response){
+            console.log(error.response.data.msg, 'fail');
+          }
+        }
+      })
+      navigate('/profile');
+    } catch (error) {
+      if(error.response){
+        console.log(error.response.data.msg, 'fail');
+      }
+    }
+  }
+
+
+  return (
+    <div className="profile-container">
+      <div className="show-profile-container">
+        <div className="card ini-dia">
+          <div className="card-body show-profile">
+            <div className="text-center mb-4 img-head-container">
+                <div className="text-center">
+                  <img src="" className="rounded" alt="..."/>
+                </div>
+                <div className="text-center edit-profile-btn-container mt-5">
+                <Link to='/editprofile'><button type="" className="btn btn-primary mb-3 edit-profile-btn"> Edit Profil</button></Link>
+                </div>
+            </div>
+
+            <form onLoadStart={validate}>
+                <div className="mb-3">
+                  <label className="form-label">Nama</label>
+                  <input 
+                    type="text" 
+                    className="form-control data-profile" 
+                    id="name" 
+                    // placeholder="Fadilla Rahim"
+                    value= {name} 
+                    disabled readOnly
+                  />
+                </div>
+            
+                <div className="mb-3">
+                  <label className="form-label">Username</label>
+                  <input 
+                  type="text" 
+                  className="form-control data-profile" 
+                  id="username" 
+                  // placeholder="fadillarahim07" 
+                  value={username}
+                  disabled readOnly
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Alamat</label>
+                  <input 
+                  type="text" 
+                  className="form-control data-profile" 
+                  id="address" 
+                  // placeholder="Jalan Mandor Goweng 07"
+                  value={address} 
+                  disabled readOnly/>
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Nomor Telephone</label>
+                  <input 
+                  type="text" 
+                  className="form-control data-profile" 
+                  id="telephone" 
+                  // placeholder="082298765478" 
+                  value={phoneNumber}
+                  disabled readOnly/>
+                </div>
+            
+                <div className="text-center sign-out-btn-container mt-5">
+                  <button type="" className="btn btn-primary mb-3 sign-out-btn">Sign Out</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

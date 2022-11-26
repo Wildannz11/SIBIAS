@@ -93,3 +93,61 @@ body, html {
 .role-icon{
     font-size: 9pt;
 }
+
+
+/* style for profile */
+.profile-container{
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  border: none;
+  
+}
+
+.edit-profile-container, .show-profile-container{
+  width: 100%;
+  height: fit-content;
+  left: 50%;
+  transform: translate(-50%);
+  position: absolute;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  border: none;
+}
+
+.ini-dia{
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+.edit-profile, .show-profile{
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+
+  border-radius: 10%;
+}
+
+.sign-out-btn{
+  background-color: #ED6571;
+  border: none;
+}
+
+.img-head-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #53D1B6;
+  height: 200px;
+}
+
+#name-input, #username-input, #address-input, #telephone-input{
+  background-color: white;
+  color: black;
+}
+

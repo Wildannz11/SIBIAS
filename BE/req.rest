@@ -1,0 +1,125 @@
+
+// CRUD User
+
+// create user rakyat
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "username": "john123",
+    "nama": "john doe",
+    "email": "john123@gmail.com",
+    "password": "12345",
+    "confirm_password": "12345",
+    "role": "rakyat"
+}
+
+
+// create user pemerintah
+###
+POST http://localhost:5000/pemerintah
+Content-Type: application/json
+
+{
+    "nama_lembaga": "pemerintah bali",
+    "deskripsi_lembaga": "lorem epsum bla bla bla",
+    "email": "pemkotbali@gmail.com",
+    "password": "12345",
+    "confirm_password": "12345",
+    "role": "pemerintah"
+}
+
+
+// get all user rakyat
+###
+GET http://localhost:5000/users/rakyat
+
+
+// get all user pemerintah
+###
+GET http://localhost:5000/pemerintah/pemerintah
+
+
+// get by id user rakyat
+###
+GET http://localhost:5000/users/rakyat/13b50edd-72b1-47be-b063-5a7f216206d7
+
+
+// get by id user pemerintah
+###
+GET http://localhost:5000/pemerintah/pemerintah/5c403da5-6b7d-4cc4-807f-f45d5c71a656
+
+
+// edit by id user rakyat
+###
+PATCH http://localhost:5000/users/13b50edd-72b1-47be-b063-5a7f216206d7
+Content-Type: application/json
+
+{
+    "username": "maulana12",
+    "nama": "maulana",
+    "email": "maulana1@gmail.com",
+    "password": "",
+    "confirm_password": "",
+    "alamat": "Bandung barat",
+    "no_hp": "081297686599",
+    "tgl_lahir": "2000-11-11",
+    "pendidikan": "Sarjana"
+}
+
+
+// edit by id user pemerintah
+###
+PATCH http://localhost:5000/pemerintah/5c403da5-6b7d-4cc4-807f-f45d5c71a656
+Content-Type: application/json
+
+{
+    "nama_lembaga": "pemerintah bekasi 2",
+    "deskripsi_lembaga": "lorem epsum bla bla bla",
+    "email": "pemkotbekasi2@gmail.com",
+    "password": "",
+    "confirm_password": ""
+}
+
+
+// Delete user (can rakyat and pemerintah)
+###
+DELETE http://localhost:5000/users/a7c91d69-5df3-4fa4-89ce-f562aa8f39ca
+
+
+// Auth User
+
+// Login user rakyat
+###
+POST http://localhost:5000/users/login
+Content-Type: application/json
+
+{
+    "email": "kevin123@gmail.com",
+    "password": "12345"
+}
+
+
+// Login user pemerintah
+###
+POST http://localhost:5000/pemerintah/login
+Content-Type: application/json
+
+{
+    "email": "pemkarawang@gmail.com",
+    "password": "12345"
+}
+
+// cek status login rakyat
+###
+GET http://localhost:5000/users/me
+
+
+// cek status login pemerintah
+###
+GET http://localhost:5000/pemerintah/me
+
+
+// Logout user (can rakyat and pemerintah)
+###
+DELETE  http://localhost:5000/logout

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export default function Input({
   type = 'text',
-  name = 'form-control form-control-sm',
+  name,
   value,
   placeholder,
   onChange,
@@ -17,7 +17,7 @@ export default function Input({
         <i className="fa-solid fa-lock"></i>
       </span>
         <input
-          className= {name} 
+          className= 'form-control form-control-sm' 
           onChange={onChange}
           placeholder={placeholder}
           value={value}

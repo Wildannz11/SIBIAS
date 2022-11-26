@@ -58,11 +58,15 @@ function Signin() {
 
     if(isValid) {
       try {
-        await axios.post('http://localhost:5000/login', {
+        await axios.post('http://localhost:5000/users/login', {
           email: email,
           password: password,
-        });
-        showToast(`Hallo Selamat Datang`, 'success');
+        })
+        .then (await axios.get('http://localhost:5000/users/me')
+        .then(response => {
+          const data = response.data;
+          showToast(`Hallo Selamat Datang ${data.nama}`, 'success');
+        }))
         navigate("/dashboard");
       } catch (error) {
         if(error.response){

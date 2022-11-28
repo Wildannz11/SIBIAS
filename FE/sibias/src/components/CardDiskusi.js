@@ -1,23 +1,25 @@
-// import { IconButton } from '@mui/material';
-// import {ThumbUpAltIcon, RemoveRedEyeIcon} from '@mui/icons-material/ThumbUpAlt';
-import { FontAwesomeIcon } from "@react-icons/all-files/";
+import {FaEye} from "react-icons/fa";
+import {FaCommentDots} from "react-icons/fa";
 import creatorPhoto from "./../image/creator.JPG";
 import "./css/CardDiskusi.css";
  
 const CardDiskusi = (props) => {
   return (
-    <div className="classCard">
+  <div className="classCard">
     <div className="classCard__upper">
-      <div className="classCard__className">Diskusi Kebijakan Kenaikan BBM</div>
-      <div className="classCard__creatorName">Cahya Diantoni</div>
+      <div className="classCard__className">{props.judul}</div>
+      <div className="classCard__creatorName">{props.creator} - {props.waktu} WIB</div>
       <img src={creatorPhoto} className="classCard__creatorPhoto" alt='Foto'/>
     </div>
-    <div className="classCard__middle"></div>
+    <div className="classCard__middle"> <div className="deskripsi">{props.deskripsi}</div></div>
     <div className="classCard__lower">
-        {/* <IconButton>
-            <svg data-testid="RemoveRedEyeIcon"></svg>
-        </IconButton> */}
-        <FontAwesomeIcon icon="fa-regular fa-thumbs-up" />
+      <div className="m-2">
+        <FaCommentDots size="1.5rem" className="icon"/> {props.komentar} 
+      </div>
+      <div className="m-2">
+        <FaEye size="1.5rem" className="icon"/> {props.lihat}
+      </div>
+
     </div>
   </div>
   );

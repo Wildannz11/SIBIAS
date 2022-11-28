@@ -62,11 +62,11 @@ function Signin() {
           email: email,
           password: password,
         })
-        .then (await axios.get('http://localhost:5000/users/me')
+        await axios.get('http://localhost:5000/users/me')
         .then(response => {
           const data = response.data;
           showToast(`Hallo Selamat Datang ${data.nama}`, 'success');
-        }))
+        })
         navigate("/dashboard");
       } catch (error) {
         if(error.response){

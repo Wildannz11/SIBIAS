@@ -82,9 +82,6 @@ function Signup() {
         }
 
         if(isValid) {
-          console.log(`${password} --- ${confirmPassword}`);
-          console.log(typeof(password));
-          console.log(typeof(confirmPassword));
           try {
             await axios.post('http://localhost:5000/users', {
               username:username,

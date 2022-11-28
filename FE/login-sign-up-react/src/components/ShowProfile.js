@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 // import PropTypes from 'prop-types';
+import useToast from '../hooks/useToast';
 
 export default function ShowProfile() {
   const [name, setName] = useState('');
@@ -11,8 +12,8 @@ export default function ShowProfile() {
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
-  let [uid, setUid] = useState('')
   const navigate = useNavigate();
+  const [showToast] = useToast();
 
   const validate = async (e) => {
     e.preventDefault();
@@ -45,7 +46,21 @@ export default function ShowProfile() {
     }
   }
 
-
+  const logout = async(e) => {
+    e.preventDefault();
+    try {
+      await axios.delete('http://localhost:5000/logout')
+      .then(response => {
+        const pesan = response.data.msg
+        showToast(pesan, 'success');
+      })
+      navigate('/login');
+    } catch (error) {
+      if(error.response){
+        showToast(error.response.data.msg, 'fail');
+      }
+    }
+  }
   return (
     <div className="profile-container">
       <div className="show-profile-container">
@@ -86,6 +101,18 @@ export default function ShowProfile() {
                 </div>
 
                 <div className="mb-3">
+                  <label className="form-label">Email</label>
+                  <input 
+                  type="email" 
+                  className="form-control data-profile" 
+                  id="email" 
+                  // placeholder="fadillarahim07@gmail.com" 
+                  value={email}
+                  disabled readOnly
+                  />
+                </div>
+
+                <div className="mb-3">
                   <label className="form-label">Alamat</label>
                   <input 
                   type="text" 
@@ -108,7 +135,7 @@ export default function ShowProfile() {
                 </div>
             
                 <div className="text-center sign-out-btn-container mt-5">
-                  <button type="" className="btn btn-primary mb-3 sign-out-btn">Sign Out</button>
+                  <button type="" className="btn btn-primary mb-3 sign-out-btn" onClick={logout}>Sign Out</button>
                 </div>
             </form>
           </div>

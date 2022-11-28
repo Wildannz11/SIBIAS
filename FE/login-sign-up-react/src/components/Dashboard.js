@@ -3,8 +3,10 @@ import Navbar from './Navbar';
 import ShowProfile from './ShowProfile';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import useToast from '../hooks/useToast';
 function Dashboard() {
   const navigate = useNavigate();
+  const [showToast] = useToast();
   const validate = async (e) => {
     e.preventDefault();
 
@@ -27,7 +29,23 @@ function Dashboard() {
       navigate('/profile');
     } catch (error) {
       if(error.response){
-        console.log(error.response.data.msg, 'fail');
+        console.log(error.response.data, 'fail');
+      }
+    }
+  }
+
+  const logout = async(e) => {
+    e.preventDefault();
+    try {
+      await axios.delete('http://localhost:5000/logout')
+      .then(response => {
+        const pesan = response.data.msg
+        showToast(pesan, 'success');
+      })
+      navigate('/login');
+    } catch (error) {
+      if(error.response){
+        showToast(error.response.data.msg, 'fail');
       }
     }
   }
@@ -35,6 +53,7 @@ function Dashboard() {
     <div className='box is-centered'>
     <Navbar/>
       <button className="btn btn-primary" onClick={validate}>PROFILE</button>
+      <button className='btn btn-primary' onClick={logout}>LOGOUT</button>
     </div>
   )
 }

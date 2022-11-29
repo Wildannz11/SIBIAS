@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component, useEffect} from 'react';
 import { useState } from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
@@ -15,8 +15,7 @@ export default function ShowProfile() {
   const navigate = useNavigate();
   const [showToast] = useToast();
 
-  const validate = async (e) => {
-    e.preventDefault();
+  const catchData = async (e) => {
 
     try {
       await axios.get('http://localhost:5000/users/me')
@@ -45,6 +44,10 @@ export default function ShowProfile() {
       }
     }
   }
+
+  useEffect(() => {
+    catchData()
+    }, []);
 
   const logout = async(e) => {
     e.preventDefault();
@@ -75,7 +78,7 @@ export default function ShowProfile() {
                 </div>
             </div>
 
-            <form onLoadStart={validate}>
+            <form>
                 <div className="mb-3">
                   <label className="form-label">Nama</label>
                   <input 

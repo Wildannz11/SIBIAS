@@ -13,7 +13,7 @@ function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [role, setRole] = useState('Masyarakat');
+    const [role, setRole] = useState('rakyat');
     const [msgUsername, setMsgUsername] = useState('');
     const [msgName, setMsgName] = useState('');
     const [msgEmail, setMsgEmail] = useState('');

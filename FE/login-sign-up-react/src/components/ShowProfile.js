@@ -37,7 +37,6 @@ export default function ShowProfile() {
           }
         }
       })
-      navigate('/profile');
     } catch (error) {
       if(error.response){
         console.log(error.response.data.msg, 'fail');
@@ -121,7 +120,7 @@ export default function ShowProfile() {
                   type="text" 
                   className="form-control data-profile" 
                   id="address" 
-                  // placeholder="Jalan Mandor Goweng 07"
+                  placeholder="Alamat Belum Di inputkan"
                   value={address} 
                   disabled readOnly/>
                 </div>
@@ -132,7 +131,7 @@ export default function ShowProfile() {
                   type="text" 
                   className="form-control data-profile" 
                   id="telephone" 
-                  // placeholder="082298765478" 
+                  placeholder="telephone Belum Di inputkan" 
                   value={phoneNumber}
                   disabled readOnly/>
                 </div>

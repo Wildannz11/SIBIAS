@@ -1,9 +1,11 @@
 import React from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Input from './HidePasswordBtn';
 import axios from 'axios';
 import useToast from '../hooks/useToast';
+import moment from 'moment';
+
 
 function EditProfile() {
   const [showToast] = useToast();
@@ -24,12 +26,49 @@ function EditProfile() {
   const [msgConfirmPassword, setMsgConfirmPassword] = useState('');
   const [msgTelephone, setMsgTelephone] = useState('');
 
-  const editProfile = async (e) => {
+  const catchData = async () => {
+    try {
+      await axios.get('http://localhost:5000/users/me')
+      .then(response => {
+        const Uid = response.data.uid;
+        try {
+          axios.get(`http://localhost:5000/users/rakyat/${Uid}`)
+          .then(response => {
+            const data = response.data;
+            setName(data.nama);
+            setUsername(data.username);
+            setEmail(data.email);
+            setAddress(data.alamat);
+            setPhoneNumber(data.no_hp);
+            // setPassword(data.password);
+            setPendidikan(data.pendidikan);
+            // setTglLahir(moment(data.tgl_lahir, 'dd-----yyyy'));
+            // selanjutnya lanjutin ini
+          })
+        } catch (error) {
+          if(error.response){
+            console.log(error.response.data.msg);
+          }
+        }
+      })
+    } catch (error) {
+      if(error.response){
+        console.log(error.response.data.msg);
+      }
+    }
+  }
+  
+  useEffect(() => {
+    catchData()
+    }, []);
+
+  const editData = async (e) => {
     e.preventDefault();
 
     let isValid = true;
     const reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w\w+)+$/;
-    const number = /^[0-9]+$/;
+    const number = /^[0-9]$/;
+    // var regExp = /^(\([0-9]{3}\)\s?|[0-9]{3}-)[0-9]{3}-[0-9]{4}$/
 
     if (!username) {
       setMsgUsername('Username is required');
@@ -60,72 +99,79 @@ function EditProfile() {
       }
     }
 
-    if(!phoneNumber.match(number)){
-      setMsgTelephone("Isikan Nomor Telephone yang Valid");
-      isValid = false;
-    }
+    // if(phoneNumber.match(number)){
+    //   setMsgTelephone('');
+      
+    // } else {
+    //   setMsgTelephone("Isikan Nomor Telephone yang Valid");
+    //   isValid = false;
+    // }
 
-    if(phoneNumber.length != 12 || phoneNumber.length != 11){
-      setMsgTelephone('Isikan Nomor Telephone dengan jumlah digit yang benar')
-      isValid = false
-    }
+    // if(phoneNumber.length < 10 || phoneNumber.length > 13){
+    //   setMsgTelephone('Isikan Nomor Telephone yang Valid')
+    //   isValid = false
+    // } else {
+    //   setMsgTelephone('');
+    // }
     
-    if(!password){
-      setMsgPassword('password required');
-        isValid = false;
-    } else {
-      if (password.length <= 8) {
-        setMsgPassword('password must more than 8 character');
-        isValid = false;
-      } else {
-        setMsgPassword('');
+    // if(!password){
+    //   setMsgPassword('password required');
+    //     isValid = false;
+    // } else {
+    //   if (password.length <= 8) {
+    //     setMsgPassword('password must more than 8 character');
+    //     isValid = false;
+    //   } else {
+    //     setMsgPassword('');
         
-      }
-    }
+    //   }
+    // }
     
-    if(!confirmPassword){
-      setMsgConfirmPassword('Confirm Password required');
-        isValid = false;
-    } else {
-      if (confirmPassword.length <= 8) {
-        setMsgConfirmPassword('password must more than 8 character');
-        isValid = false;
-      } else {
-        setMsgConfirmPassword('');
+    // if(!confirmPassword){
+    //   setMsgConfirmPassword('Confirm Password required');
+    //     isValid = false;
+    // } else {
+    //   if (confirmPassword.length <= 8) {
+    //     setMsgConfirmPassword('password must more than 8 character');
+    //     isValid = false;
+    //   } else {
+    //     setMsgConfirmPassword('');
         
-      }
-    }
-
+    //   }
+    // }
+    
     if(isValid){
       try {
         await axios.get('http://localhost:5000/users/me')
         .then(response => {
           const Uid = response.data.uid;
           try {
-            axios.get(`http://localhost:5000/users/rakyat/${Uid}`)
-            .then(response => {
-              const data = response.data;
-              setName(data.nama);
-              setUsername(data.username);
-              setEmail(data.email);
-              setAddress(data.alamat);
-              setPhoneNumber(data.no_hp);
-              // selanjutnya lanjutin ini
+            axios.patch(`http://localhost:5000/users/${Uid}`, {
+              username: username,
+              nama: name,
+              email: email,
+              password: '',
+              confirm_password: '',
+              alamat: address,
+              no_hp: phoneNumber,
+              tgl_lahir: '2002-11-9',//moment(tglLahir, "yyyy-mm-dd"),
+              pendidikan: pendidikan
             })
+            showToast('Selamat Data Anda Berhasil di Update', 'success');
+            navigate('/profile');
           } catch (error) {
             if(error.response){
-              console.log(error.response.data.msg, 'fail');
+              showToast(error.response.data.msg, 'fail');
             }
           }
         })
-        navigate('/profile');
       } catch (error) {
         if(error.response){
-          console.log(error.response.data.msg, 'fail');
+          showToast(error.response.data.msg, 'fail');
         }
       }
     }
-    
+
   }
 
 
@@ -142,7 +188,7 @@ function EditProfile() {
         <Link to='/editprofile'><button type="" className="btn btn-primary mb-3 edit-profile-btn"> Edit Profil</button></Link>
         </div>
     </div>
-                <form>
+                <form onSubmit={editData}>
                     <div className="mb-3">
                       <label className="form-label">Nama</label>
                       <input 
@@ -210,8 +256,9 @@ function EditProfile() {
                         type="date" 
                         className="form-control form-control-sm" 
                         id="birth-date"
-                        value={tglLahir}
-                        onChange={(e) => setTglLahir(e.target.value)} 
+                        formula='yyyy-MM-dd'
+                        // value={tglLahir}
+                        // onChange={(e) => setTglLahir(e.target.value)} 
                         placeholder="mm/dd/yyyy"/>
                       </div>
 
@@ -226,7 +273,7 @@ function EditProfile() {
                         placeholder="Jenjang Pendidikan"/>
                       </div>
 
-                      <div className="mb-3">
+                      {/* <div className="mb-3">
                       <label className="form-label">Password</label>
                         <Input
                         name = 'password'
@@ -248,12 +295,10 @@ function EditProfile() {
                           type="password"
                           />
                         <p className='warn-msg'>{msgConfirmPassword}</p>
-                      </div>
+                      </div> */}
     
                     <div className="text-center update-profile-btn-container mt-5">
-                        <button  
-                        className="btn btn-primary mb-3 update-profile-btn"
-                        onClick={editProfile()}>
+                        <button type='submit' className="btn btn-primary mb-3 update-profile-btn">
                           Update
                         </button>
                     </div>

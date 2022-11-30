@@ -33,13 +33,13 @@ export default function ShowProfile() {
           })
         } catch (error) {
           if(error.response){
-            console.log(error.response.data.msg, 'fail');
+            showToast(error.response.data.msg, 'fail');
           }
         }
       })
     } catch (error) {
       if(error.response){
-        console.log(error.response.data.msg, 'fail');
+        showToast(error.response.data.msg, 'fail');
       }
     }
   }

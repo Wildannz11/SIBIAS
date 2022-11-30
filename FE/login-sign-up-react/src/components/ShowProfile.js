@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 import useToast from '../hooks/useToast';
+import avatar2 from '../images/avatar2.png';
+
 
 export default function ShowProfile() {
   const [name, setName] = useState('');
@@ -14,6 +16,8 @@ export default function ShowProfile() {
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
   const [showToast] = useToast();
+
+
 
   const catchData = async (e) => {
 
@@ -70,9 +74,9 @@ export default function ShowProfile() {
           <div className="card-body show-profile">
             <div className="text-center mb-4 img-head-container">
                 <div className="text-center">
-                  <img src="" className="rounded" alt="..."/>
+                  <img className='img-user' src={avatar2} />
                 </div>
-                <div className="text-center edit-profile-btn-container mt-5">
+                <div className="text-center edit-profile-btn-container mt-2">
                 <Link to='/editprofile'><button type="" className="btn btn-primary mb-3 edit-profile-btn"> Edit Profil</button></Link>
                 </div>
             </div>

@@ -4,6 +4,10 @@ import ShowProfile from './ShowProfile';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useToast from '../hooks/useToast';
+import UploadAvatar from './UploadAvatar';
+import NewAvatar from './NewAvatar';
+import Coba from './Coba';
+
 function Dashboard() {
   const navigate = useNavigate();
   const [showToast] = useToast();
@@ -54,6 +58,9 @@ function Dashboard() {
     <Navbar/>
       <button className="btn btn-primary" onClick={validate}>PROFILE</button>
       <button className='btn btn-primary' onClick={logout}>LOGOUT</button>
+    <UploadAvatar/>
+    <NewAvatar/>
+    <Coba/>
     </div>
   )
 }

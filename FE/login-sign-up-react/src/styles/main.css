@@ -151,3 +151,37 @@ body, html {
   color: black;
 }
 
+
+
+/* upload image style */
+.upload-img-container{
+  width: 100%;
+  margin: 10px auto;
+}
+#upload-img{
+  /* visibility: hidden; */
+  width: fit-content;
+  margin: 0 auto;
+  padding: 0;
+  display: ;
+  
+}
+
+#upload-img.show{
+
+}
+
+.upload-img-container{
+  display: none;
+  /* display: inline-block; */
+  z-index: 2;
+}
+
+.img-user{
+  /* display: block; */
+  z-index: 1;
+  border-radius: 100%;
+  width: 130px;
+  height: 130px;
+  border: #223263 2px solid;
+}

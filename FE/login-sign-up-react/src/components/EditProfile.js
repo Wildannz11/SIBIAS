@@ -5,6 +5,8 @@ import Input from './HidePasswordBtn';
 import axios from 'axios';
 import useToast from '../hooks/useToast';
 import moment from 'moment';
+import Avatar from 'react-avatar-edit';
+import avatar2 from '../images/avatar2.png';
 
 
 function EditProfile() {
@@ -25,6 +27,31 @@ function EditProfile() {
   const [msgPassword, setMsgPassword] = useState('');
   const [msgConfirmPassword, setMsgConfirmPassword] = useState('');
   const [msgTelephone, setMsgTelephone] = useState('');
+
+  const [src, setSrc] = useState(null);
+  const [preview, setPreview] = useState(null);
+
+  const onClose = () => {
+    setPreview(null);
+  }
+  const onCrop = (view) => {
+    setPreview(view)
+  }
+
+  if(!preview){
+    setPreview(avatar2)
+  }
+
+  const action = () => {
+    const cardChoseImg = document.querySelector('.upload-img-container');
+    cardChoseImg.style.display = 'block';
+  }
+
+  const reAction = () => {
+    const cardChoseImg = document.querySelector('.upload-img-container');
+    cardChoseImg.style.display = 'none';
+    console.log(preview);
+  }
 
   const catchData = async () => {
     try {
@@ -155,10 +182,10 @@ function EditProfile() {
   <div className="card-body show-profile">
   <div className="text-center mb-4 img-head-container">
         <div className="text-center">
-          <img src="" className="rounded" alt="..."/>
+        <img className='img-user' src={preview} />
         </div>
-        <div className="text-center edit-profile-btn-container mt-5">
-        <Link to='/editprofile'><button type="" className="btn btn-primary mb-3 edit-profile-btn"> Edit Image</button></Link>
+        <div className="text-center edit-profile-btn-container mt-2">
+        <Link to='/editprofile' onClick={action}><button type="" className="btn btn-primary mb-3 edit-profile-btn"> Edit Image</button></Link>
         </div>
     </div>
                 <form onSubmit={editData}>
@@ -248,16 +275,34 @@ function EditProfile() {
                         placeholder="Jenjang Pendidikan"/>
                       </div>
     
-                    <div className="text-center update-profile-btn-container mt-5">
+                      <div className="text-center update-profile-btn-container mt-5">
                         <button type='submit' className="btn btn-primary mb-3 update-profile-btn">
                           Update
                         </button>
                     </div>
                 </form>
-  </div>
-</div>
-</div>
-</div>
+              </div>
+            </div>
+          </div>
+          <div className="upload-img-container">
+      <div className="card upload-img" id='upload-img'>
+        <div className="card-header ">
+          <h5 className="card-title text-center">Upload Foto Profile</h5>
+        </div>
+        <div className="card-body text-center">
+          <Avatar
+          className='avatar'
+          width={400}
+          height={300}
+          onClose= {onClose}
+          onCrop= {onCrop}
+          src={src}
+        />
+          <a href="#" className="btn btn-primary mt-5 btn-upload" onClick={reAction}>Upload</a>
+        </div>
+      </div>
+      </div>
+        </div>
   )
 }
 

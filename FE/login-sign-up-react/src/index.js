@@ -5,6 +5,8 @@ import App from './App';
 import axios from 'axios';
 import mainStyle from "./styles/main.css";
 import responsiveStyle from "./styles/responsive.css";
+import blogStyle from './styles/blog.css';
+
 axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

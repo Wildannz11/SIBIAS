@@ -1,0 +1,38 @@
+.blog-big-container{
+    background-color: bisque;
+    height: fit-content;
+    min-height: 100vh;
+    width: 90%;
+    margin: 10px auto;
+}
+
+.content-blog, .comment-blog, .discussion-container{
+    width: 90%;
+    margin: 10px auto;
+}
+
+.line{
+    width: 90%;
+    margin: 0 auto;
+    height: 10px;
+    border-bottom: 3px solid #A9A9A9;
+}
+
+.font-color{
+    color: #223263;
+}
+
+.add-comment-btn-container button{
+    background-color: #169EDA;
+    border: none;
+    min-width: 100px;
+}
+
+.add-comment-btn-container button:hover{
+    background-color: #223263;
+}
+
+.coment-value{
+    min-height: 500px;
+    height: fit-content;
+}

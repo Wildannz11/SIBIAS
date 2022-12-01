@@ -285,23 +285,24 @@ function EditProfile() {
             </div>
           </div>
           <div className="upload-img-container">
-      <div className="card upload-img" id='upload-img'>
-        <div className="card-header ">
-          <h5 className="card-title text-center">Upload Foto Profile</h5>
-        </div>
-        <div className="card-body text-center">
-          <Avatar
-          className='avatar'
-          width={400}
-          height={300}
-          onClose= {onClose}
-          onCrop= {onCrop}
-          src={src}
-        />
-          <a href="#" className="btn btn-primary mt-5 btn-upload" onClick={reAction}>Upload</a>
-        </div>
-      </div>
-      </div>
+            <div className="card upload-img" id='upload-img'>
+              <div className="card-header ">
+                <h5 className="card-title text-center">Upload Foto Profile</h5>
+              </div>
+              <div className="card-body text-center">
+                <Avatar
+                className='avatar'
+                width={400}
+                height={300}
+                onClose= {onClose}
+                onCrop= {onCrop}
+                src={src}
+              />
+                <a href="#" className="btn btn-primary mt-5 btn-upload" onClick={reAction}>Upload</a>
+              </div>
+            </div>
+          </div>
+          
         </div>
   )
 }

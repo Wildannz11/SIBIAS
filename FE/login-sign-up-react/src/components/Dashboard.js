@@ -58,6 +58,7 @@ function Dashboard() {
     <Navbar/>
       <button className="btn btn-primary" onClick={validate}>PROFILE</button>
       <button className='btn btn-primary' onClick={logout}>LOGOUT</button>
+      <Link to={'/blog'}><button className="btn btn-primary">BLOG</button></Link>
     <UploadAvatar/>
     <NewAvatar/>
     <Coba/>

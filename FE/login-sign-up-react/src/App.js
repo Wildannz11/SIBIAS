@@ -5,7 +5,7 @@ import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import ShowProfile from './components/ShowProfile';
 import EditProfile from './components/EditProfile';
-
+import Blog from './components/Blog';
 
 function App() {
   return (
@@ -17,6 +17,7 @@ function App() {
       <Route path='/dashboard' element={<Dashboard/>}/>
       <Route path='/profile' element={<ShowProfile/>}/>
       <Route path='/editProfile' element={<EditProfile/>}/>
+      <Route path='/blog' element={<Blog/>}/>
     </Routes>
     </BrowserRouter>
   );

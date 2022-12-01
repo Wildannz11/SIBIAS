@@ -155,15 +155,25 @@ body, html {
 
 /* upload image style */
 .upload-img-container{
-  width: 100%;
+  width: 50%;
   margin: 10px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  /* display: inline-block; */
+  z-index: 2;
+  /* left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%); */
+  /* background-color: #ED6571; */
 }
 #upload-img{
   /* visibility: hidden; */
   width: fit-content;
   margin: 0 auto;
   padding: 0;
-  display: ;
+  /* display: ; */
   
 }
 
@@ -172,9 +182,9 @@ body, html {
 }
 
 .upload-img-container{
-  display: none;
-  /* display: inline-block; */
-  z-index: 2;
+
+  
+
 }
 
 .img-user{
@@ -183,5 +193,5 @@ body, html {
   border-radius: 100%;
   width: 130px;
   height: 130px;
-  border: #223263 2px solid;
+  /* border: #223263 2px solid; */
 }

@@ -1,31 +1,37 @@
 [{
     "id": 1,
-    "text": "Devpulse"
+    "judul": "Diskusi Kebijakan Kenaikan BBM",
+    "nama": "Cahya Diantoni",
+    "waktu": "09.00 WIB",
+    "foto": "./../image/creator.JPG",
+    "komentar": 100,
+    "lihat": 3000,
+    "keterangan": "Lorem Ipsum is simply dummy keterangan of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy keterangan ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
 }, {
     "id": 2,
-    "text": "Linklinks"
+    "judul": "Diskusi Kebijakan Pemilu 2024",
+    "nama": "Fadilla Rahim",
+    "waktu": "17.00 WIB",
+    "foto": "./../image/creator.JPG",
+    "komentar": 100,
+    "lihat": 3000,
+    "keterangan": "Lorem Ipsum is simply dummy keterangan of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy keterangan ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
 }, {
     "id": 3,
-    "text": "Centizu"
+    "judul": "Diskusi Kebijakan Hari Libur",
+    "nama": "Asyifa Maulana",
+    "waktu": "12.00 WIB",
+    "foto": "./../image/creator.JPG",
+    "komentar": 100,
+    "lihat": 3000,
+    "keterangan": "Lorem Ipsum is simply dummy keterangan of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy keterangan ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
 }, {
     "id": 4,
-    "text": "Dynabox"
-}, {
-    "id": 5,
-    "text": "Avaveo"
-}, {
-    "id": 6,
-    "text": "Demivee"
-}, {
-    "id": 7,
-    "text": "Jayo"
-}, {
-    "id": 8,
-    "text": "Blognation"
-}, {
-    "id": 9,
-    "text": "Podcat"
-}, {
-    "id": 10,
-    "text": "Layo"
+    "judul": "Diskusi Kebijakan Presidensial G20",
+    "nama": "Wildan Mukholad Fauzi",
+    "waktu": "20.00 WIB",
+    "foto": "./../image/creator.JPG",
+    "komentar": 100,
+    "lihat": 3000,
+    "keterangan": "Lorem Ipsum is simply dummy keterangan of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy keterangan ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
 }] 

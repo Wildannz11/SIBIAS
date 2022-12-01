@@ -1,0 +1,13 @@
+
+
+.ini-dia{
+    width: 100%;
+    margin-top: 5%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.text-center{
+    font-size: 3rem;
+}

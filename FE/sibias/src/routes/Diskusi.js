@@ -1,8 +1,28 @@
 import Hero from "./../components/Hero"
 import {React, useState} from "react"
 import TextField from "@mui/material/TextField";
+import Button from '@mui/material/Button';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import List from "./../components/List"
 import "./css/Diskusi.css";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Link } from "react-router-dom";
+
+const theme = createTheme({
+  status: {
+    danger: '#e53e3e',
+  },
+  palette: {
+    primary: {
+      main: '#53D1B6',
+      darker: '#09bef0',
+    },
+    neutral: {
+      main: '#64748B',
+      contrastText: '#fff',
+    },
+  },
+});
 
 function Diskusi(){
     const [inputText, setInputText] = useState("");
@@ -15,9 +35,14 @@ function Diskusi(){
         <div>
             <Hero />
             <div className="main">
-                <h1>React Search</h1>
+                <h1>Diskusi Kebijakan</h1>
+                <ThemeProvider theme={theme}>
+                    <Link to="/tambah_diskusi" className="Link">
+                    <Button variant="contained" color="primary" startIcon={<AddCircleIcon />}>
+                        Buat Diskusi Baru
+                    </Button>
+                    </Link>
                 <div className="search">
-                    <button>Test</button>
                     <TextField
                     id="outlined-basic"
                     onChange={inputHandler}
@@ -26,9 +51,11 @@ function Diskusi(){
                     label="Search"
                     />
                 </div>
-                <List input={inputText} />
+                </ThemeProvider>
             </div>
+                <List input={inputText} />
         </div>
+  
     )
 }
 

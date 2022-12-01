@@ -1,24 +1,23 @@
 import { React, useState } from 'react'
 import data from "./ListData.json"
+import "./css/CardDiskusi.css";
+import CardDiskusi from "./../components/CardDiskusi"
 
 function List(props) {
-    //create a new array by filtering the original array
     const filteredData = data.filter((el) => {
-        //if no input the return the original
         if (props.input === '') {
             return el;
         }
-        //return the item which contains the user input
         else {
-            return el.text.toLowerCase().includes(props.input)
+            return el.judul.toLowerCase().includes(props.input)
         }
     })
     return (
-        <ul>
+        <div>
             {filteredData.map((item) => (
-                <li key={item.id}>{item.text}</li>
+              <CardDiskusi judul={item.judul} creator={item.nama} waktu={item.waktu} deskripsi={item.keterangan} lihat={item.lihat} komentar={item.komentar}/>
             ))}
-        </ul>
+        </div>
     )
 }
 

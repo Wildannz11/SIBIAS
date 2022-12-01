@@ -15,6 +15,8 @@ import Diskusi from "./routes/Diskusi";
 import Profile from "./routes/Profile";
 import Sosialisasi from "./routes/Sosialisasi";
 import ErrorPage from "./routes/ErrorPage";
+import TambahDiskusi from "./routes/TambahDiskusi";
+import ShowDiskusi from "./routes/ShowDiskusi";
 
 const AppLayout = () => {
     return (
@@ -45,6 +47,14 @@ const AppLayout = () => {
         {
           path: "sosialisasi",
           element: <Sosialisasi />,
+        },
+        {
+          path: "tambah_diskusi",
+          element: <TambahDiskusi />,
+        },
+        {
+          path: "show_diskusi",
+          element: <ShowDiskusi />,
         },
       ],
     },

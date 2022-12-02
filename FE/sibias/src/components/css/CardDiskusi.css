@@ -25,6 +25,7 @@
   }
   
   .classCard__middle {
+    margin: 10px;
     height: 100px;
     border-bottom: 1px solid #dcdcdc;
   }

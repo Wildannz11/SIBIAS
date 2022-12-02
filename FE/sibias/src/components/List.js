@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import data from "./ListData.json"
 import "./css/CardDiskusi.css";
 import CardDiskusi from "./../components/CardDiskusi"

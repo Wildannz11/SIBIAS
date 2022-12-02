@@ -1,10 +1,16 @@
 import { Sequelize } from "sequelize";
 import db from "../config/db.js";
 import Users from "./UserModel.js";
+import ChatDiskusi from "./ChatDiskusiModel.js";
 
 const {DataTypes} = Sequelize;
 
 const Diskusi = db.define('diskusi',{
+    id:{
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     did:{ 
         type: DataTypes.STRING,
         defaultValue: DataTypes.UUIDV4,
@@ -28,24 +34,13 @@ const Diskusi = db.define('diskusi',{
         }
     },
     userId:{ 
-        type: DataTypes.STRING, 
+        type: DataTypes.INTEGER, 
         allowNull: true,
         validate:{
             notEmpty: true,
         },
         onDelete: "CASCADE",
-        references: {
-            model: "user",
-            key: "uid",
-        }
-    }
-    // chatId:{ 
-    //     type: DataTypes.STRING, 
-    //     allowNull: false,
-    //     validate:{
-    //         notEmpty: true,
-    //     }
-    // }
+    },
 },{
     freezeTableName: true
 });
@@ -57,8 +52,21 @@ Users.hasMany(Diskusi,
 );
 Diskusi.belongsTo(Users, 
     {
-        foreignKey: 'userId',
+        foreignKey: 'userId'
     }
 );
+
+Diskusi.hasMany(ChatDiskusi,
+    {
+        foreignKey: 'diskusiId'
+    }
+);
+
+ChatDiskusi.belongsTo(Diskusi,
+    {
+        foreignKey: 'diskusiId'
+    }
+);
+
 
 export default Diskusi;

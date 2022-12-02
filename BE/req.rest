@@ -157,6 +157,11 @@ Content-Type: application/json
 }
 
 
-//
+// Delete discussion by id
 ###
 DELETE http://localhost:5000/diskusi/cfedc121-99fd-4b1b-a3b0-94f37f519330
+
+//
+###
+
+POST http://localhost:5000/chatdiskusi

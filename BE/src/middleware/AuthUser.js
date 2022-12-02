@@ -21,8 +21,12 @@ export const pemerintahOnly = async (req, res, next) =>{
             uid: req.session.uid
         }
     });
-    if(!user) return res.status(404).json({msg: "User tidak ditemukan"});
-    if(user.role != "pemerintah") return res.status(403).json({msg: "Akses terlarang bagi rakyat"});
+    if(!user) {
+        return res.status(404).json({msg: "User tidak ditemukan"});
+    }
+    if(user.role != "pemerintah" || user.role != "Pemerintah") {
+        return res.status(403).json({msg: "Akses terlarang bagi rakyat"});
+    }
     next();
 }
 
@@ -32,8 +36,14 @@ export const rakyatOnly = async (req, res, next) =>{
             uid: req.session.uid
         }
     });
-    if(!user) return res.status(404).json({msg: "User tidak ditemukan"});
-    if(user.role != "rakyat") return res.status(403).json({msg: "Akses terlarang bagi pemerintah"});
+    if(!user) {
+        return res.status(404).json({msg: "User tidak ditemukan"});
+    }    
+    if(user.role != "rakyat" || user.role != "Rakyat") {
+        return res.status(403).json({msg: "Akses terlarang bagi pemerintah"});
+    }
+    
+    
     next();
 }
 

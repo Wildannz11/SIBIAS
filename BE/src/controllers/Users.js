@@ -1,5 +1,9 @@
 import Users from "../models/UserModel.js";
 import argon2 from "argon2";
+import Kebijakan from "../models/KebijakanModel.js";
+import Diskusi from "../models/DiskusiModel.js";
+import path from "path";
+import fs from "fs";
 
 export const getUser = async (req, res) => {
     try {
@@ -8,7 +12,10 @@ export const getUser = async (req, res) => {
                 attributes: ['uid','nama','username','email','password','role'],
                 where: {
                     role: req.params.role 
-                }
+                },
+                include: [{
+                    model: Diskusi
+                }]
             }
         );
         res.status(200).json(response);
@@ -25,7 +32,10 @@ export const getPemerintah = async (req, res) => {
                 attributes: ['uid','nama_lembaga','deskripsi_lembaga','email','password','role'],
                 where: {
                     role: role 
-                }
+                },
+                include: [{
+                    model: Kebijakan
+                }]
             }
         );
         res.status(200).json(response);
@@ -41,7 +51,10 @@ export const getUserById = async (req, res) => {
             where: {
                 role: req.params.role,
                 uid: req.params.id,
-            }
+            },
+            include: [{
+                model: Diskusi
+            }]
         });
         res.status(200).json(response);
     } catch (error) {
@@ -56,7 +69,10 @@ export const getPemerintahById = async (req, res) => {
             where: {
                 role: req.params.role,
                 uid: req.params.id,
-            }
+            },
+            include: [{
+                model: Kebijakan
+            }]
         });
         res.status(200).json(response);
     } catch (error) {
@@ -243,6 +259,9 @@ export const deleteUser = async (req, res) => {
     }
 
     try {
+        const filepath = `../../public/images/users/${user.foto_data}`;
+        fs.unlinkSync(filepath);
+
         await Users.destroy({
             where:{
                 id: user.id
@@ -252,6 +271,95 @@ export const deleteUser = async (req, res) => {
     } catch (error) {
         res.status(400).json({msg: error.message});
     }
+}
+
+export const uploadImageProfileBaru = async (req, res) => {
+    if(req.files === null || req.files === undefined) {
+        return res.status(400).json({msg: "Tidak ada file photo, silahkan pilih foto terlebih dahulu"});
+    };
+
+    const file = req.files.foto;
+    const fileSize = file.data.length;
+    const ext = path.extname(file.name);
+    const fileName = file.md5 + ext;
+    const url = `${req.protocol}://${req.get("host")}/images/users/${fileName}`;
+    const allowedType = ['.png','.jpg','.jpeg'];
+    
+    if(!allowedType.includes(ext.toLowerCase())) {
+        return res.status(422).json({msg: "Foto yang anda masukkan tidak valid"});
+    }
+
+    if(fileSize > 50000000) {
+        return res.status(422).json({msg: "Ukuran foto harus kurang dari 50 MB"})
+    }
+
+    file.mv(`../../public/images/users/${fileName}`, async(err) => {
+        if(err){
+            return res.status(500).json({msg: err.message});
+        }
+        try {
+            await Users.create({foto_data: fileName, foto_url: url});
+            res.status(201).json({msg: "Sukses mengupload foto profile"});
+        } catch (error) {
+            console.log(error.message);
+            res.status(400).json({msg: error.message});
+        }
+    })
+}
+
+export const editUploadImageProfile = async (req, res) => {
+    const users = await Users.findOne({
+        where: {
+            uid: req.params.id
+        }
+    });
+
+    if (!users) {
+        return res.status(404).json({msg: "Tidak ditemukan user, harap login terlebih dahulu"});
+    }
+
+    let fileName = "";
+    if(req.files === null || req.files === undefined) {
+        fileName = users.foto_data;
+    } else {
+        const file = req.files.file;
+        const fileSize = file.data.length;
+        const ext = path.extname(file.name);
+        fileName = file.md5 + ext;
+        const allowedType = ['.png','.jpg','.jpeg'];
+
+        if(!allowedType.includes(ext.toLowerCase())) {
+            return res.status(422).json({msg: "Foto yang anda masukkan tidak valid"});
+        }
+
+        if(fileSize > 50000000) {
+            return res.status(422).json({msg: "Ukuran foto harus kurang dari 50 MB"});
+        }
+
+        // const filepath = `./public/images/${product.image}`;
+        const filepath = `../../public/images/users/${users.foto_data}`;
+        fs.unlinkSync(filepath);
+
+        file.mv(`../../public/images/users/${fileName}`, (err)=>{
+            if(err) {
+                return res.status(500).json({msg: err.message})
+            };
+        });
+    }
+    // const name = req.body.title;
+    const url = `${req.protocol}://${req.get("host")}/images/users/${fileName}`;
+    
+    try {
+        await Users.update(
+            {foto_data: fileName, foto_url: url },
+            {where: { uid: req.params.id } }
+        );
+        res.status(200).json({msg: "Sukses mengupdate foto profile"});
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({msg: error.message});
+    }
+
 }
 
 // export default { getUser, getUserById, createUser, editUser, deleteUser };

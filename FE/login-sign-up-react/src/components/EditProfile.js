@@ -7,6 +7,7 @@ import useToast from '../hooks/useToast';
 import moment from 'moment';
 import Avatar from 'react-avatar-edit';
 import avatar2 from '../images/avatar2.png';
+import FormData from 'form-data';
 
 
 function EditProfile() {
@@ -76,12 +77,12 @@ function EditProfile() {
             let mySQLDate = data.tgl_lahir
             let dateParse = new Date(mySQLDate).toISOString().split('T')[0];
             setTglLahir(dateParse);
-            const dataImage = data.foto_url;
-            if(dataImage === null){
-              setImageUser(avatar2);
-            } else{
-              setImageUser(dataImage);
-            }
+            // const dataImage = data.foto_url;
+            // if(dataImage === null){
+            //   setImageUser(avatar2);
+            // } else{
+            //   setImageUser(dataImage);
+            // }
             // selanjutnya lanjutin ini
           })
         } catch (error) {
@@ -192,20 +193,47 @@ function EditProfile() {
 
   const [image, setImages] = useState('') //untuk API
   // const [imagePreview, setImagesPreview] = useState('')
+  // const onUpload = (e) => {
+  //   e.preventDefault();
+  //   let data = new FormData();
+  //   data.append('image', image);
+
+  //     axios.get('http://localhost:5000/users/me')
+  //     .then(response => {
+  //       const Uid = response.data.uid;
+  //       axios.patch(`http://localhost:5000/images/users/${Uid}`, data, {
+  //         headers: {
+  //                     'Content-Type': `multipart/form-data boundary=${data._boundary}`,
+  //         }
+  //       })
+  //       .then(response => {
+  //         console.log('response', response)
+  //         const cardChoseImg = document.querySelector('.upload-img-container');
+  //         cardChoseImg.style.display = 'none';
+  //       })
+  //       .catch(error => {
+  //         console.log('eror', error)
+  //       })
+  //     })
+  //     .catch(error => {
+  //       console.log('eror', error)
+  //     })
+    
+  // }
   const onUpload = async (e) => {
     e.preventDefault();
     // const file_img = e.target.files[0];
     // setImages(file_img);
-
-    const data = new FormData();
-    data.append('image', image);
+    let data = new FormData();
+    // data.append('file', file, file.name);
+    data.append('image', image, image.name);
+    console.log(image.name);
 
     try {
-      await axios.get('http://localhost:5000/users/me')
-      .then(response => {
-        const Uid = response.data.uid;
+      let contoh = await axios.get('http://localhost:5000/users/me')
+      const Uid = contoh.data.uid;
         try {
-          axios.patch(`http://localhost:5000/images/users/${Uid}`, data, {
+          axios.patch(`http://localhost:5000/images/usersnew/${Uid}`, data, {
             headers:{
               'content-type': 'multipart/form-data'
             }
@@ -213,19 +241,16 @@ function EditProfile() {
           .then(response => {
             console.log('respon :', response)
           })
-          // showToast('Upload Foto Profile Success', 'success')
           const cardChoseImg = document.querySelector('.upload-img-container');
           cardChoseImg.style.display = 'none';
         } catch (error) {
           if(error.response){
             console.log(error.response.data.msg)
-            // showToast(error.response.data.msg, 'fail');
           }
         }
-      })
     } catch (error) {
       if(error.response){
-        showToast(error.response.data.msg, 'fail');
+        console.log('eror', error.response.data.msg)
       }
     }
    
@@ -239,7 +264,7 @@ function EditProfile() {
   <div className="card-body show-profile">
   <div className="text-center mb-4 img-head-container">
         <div className="text-center">
-        <img className='img-user' src={imageUser} alt='foto user'/>
+        <img className='img-user' src={avatar2} alt='foto user'/>
         </div>
         <div className="text-center edit-profile-btn-container mt-2">
         <Link to='/editprofile' onClick={action}><button type="" className="btn btn-primary mb-3 edit-profile-btn"> Edit Image</button></Link>
@@ -350,15 +375,7 @@ function EditProfile() {
                 <form onSubmit={onUpload}>
                   <label className="form-label">Small file input example</label>
                   <input className="form-control form-control-sm upload-image" id="formFileSm" type="file" onChange={(e) => setImages(e.target.files[0])}/>
-                    {/* <Avatar
-                    className='avatar'
-                    width={400}
-                    height={300}
-                    onClose= {onClose}
-                    onCrop= {onCrop}
-                    src={src}
-                  /> */}
-                    {/* <a href="#" className="btn btn-primary mt-5 btn-upload" >Upload</a> */}
+
                     <button type='submit' className="btn btn-primary mb-3 btn-upload mt-5">
                         Upload
                     </button>

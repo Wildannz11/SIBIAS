@@ -78,7 +78,8 @@ import {
     deleteUser,
     uploadImageProfileBaru,
     editUploadImageProfile,
-    deleteUserWithoutImage
+    deleteUserWithoutImage,
+    getUserImageById
 } from "../controllers/Users.js"
 
 import { verifyUser , rakyatOnly , pemerintahOnly } from "../middleware/AuthUser.js";
@@ -174,9 +175,11 @@ router.patch('/pemerintah/:id',  verifyUser, pemerintahOnly, editPemerintah);
 router.delete('/usersimg/:id',  verifyUser, deleteUser);
 router.delete('/users/:id',  verifyUser, deleteUserWithoutImage);
 
-// post user with image 
+// patch user with image 
 router.patch('/images/usersnew/:id', verifyUser, uploadImageProfileBaru);
 router.patch('/images/users/:id', verifyUser, editUploadImageProfile);
+router.get('/images/users/:id', verifyUser, getUserImageById);
+
 
 
 

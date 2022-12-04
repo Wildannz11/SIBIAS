@@ -54,6 +54,21 @@ export const getUserById = async (req, res) => {
     }
 }
 
+export const getUserImageById = async (req, res) => {
+    try {
+        const response = await Users.findOne({
+            attributes: ['foto_data','foto_url'],
+            where: {
+                role: req.params.role,
+                uid: req.params.id,
+            }
+        });
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({msg: error.message});
+    }
+}
+
 export const getPemerintahById = async (req, res) => {
     try {
         const response = await Users.findOne({

@@ -59,7 +59,6 @@ export const getUserImageById = async (req, res) => {
         const response = await Users.findOne({
             attributes: ['foto_data','foto_url'],
             where: {
-                role: req.params.role,
                 uid: req.params.id,
             }
         });

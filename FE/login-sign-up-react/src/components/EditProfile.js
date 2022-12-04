@@ -21,6 +21,7 @@ function EditProfile() {
   const [pendidikan, setPendidikan] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [imageUser, setImageUser] = useState();
   const [msgUsername, setMsgUsername] = useState('');
   const [msgName, setMsgName] = useState('');
   const [msgEmail, setMsgEmail] = useState('');
@@ -51,6 +52,9 @@ function EditProfile() {
     const cardChoseImg = document.querySelector('.upload-img-container');
     cardChoseImg.style.display = 'none';
     console.log(preview);
+    var gambar = new Image();
+    gambar.src = preview;
+    console.log(gambar);
   }
 
   const catchData = async () => {
@@ -72,6 +76,12 @@ function EditProfile() {
             let mySQLDate = data.tgl_lahir
             let dateParse = new Date(mySQLDate).toISOString().split('T')[0];
             setTglLahir(dateParse);
+            const dataImage = data.foto_url;
+            if(dataImage === null){
+              setImageUser(avatar2);
+            } else{
+              setImageUser(dataImage);
+            }
             // selanjutnya lanjutin ini
           })
         } catch (error) {
@@ -164,6 +174,12 @@ function EditProfile() {
               showToast(error.response.data.msg, 'fail');
             }
           }
+
+          // try {
+            
+          // } catch (error) {
+            
+          // }
         })
       } catch (error) {
         if(error.response){
@@ -174,6 +190,47 @@ function EditProfile() {
 
   }
 
+  const [image, setImages] = useState('') //untuk API
+  // const [imagePreview, setImagesPreview] = useState('')
+  const onUpload = async (e) => {
+    e.preventDefault();
+    // const file_img = e.target.files[0];
+    // setImages(file_img);
+
+    const data = new FormData();
+    data.append('image', image);
+
+    try {
+      await axios.get('http://localhost:5000/users/me')
+      .then(response => {
+        const Uid = response.data.uid;
+        try {
+          axios.patch(`http://localhost:5000/images/users/${Uid}`, data, {
+            headers:{
+              'content-type': 'multipart/form-data'
+            }
+          })
+          .then(response => {
+            console.log('respon :', response)
+          })
+          // showToast('Upload Foto Profile Success', 'success')
+          const cardChoseImg = document.querySelector('.upload-img-container');
+          cardChoseImg.style.display = 'none';
+        } catch (error) {
+          if(error.response){
+            console.log(error.response.data.msg)
+            // showToast(error.response.data.msg, 'fail');
+          }
+        }
+      })
+    } catch (error) {
+      if(error.response){
+        showToast(error.response.data.msg, 'fail');
+      }
+    }
+   
+  }
+
 
   return (
     <div className="profile-container">
@@ -182,7 +239,7 @@ function EditProfile() {
   <div className="card-body show-profile">
   <div className="text-center mb-4 img-head-container">
         <div className="text-center">
-        <img className='img-user' src={preview} />
+        <img className='img-user' src={imageUser} alt='foto user'/>
         </div>
         <div className="text-center edit-profile-btn-container mt-2">
         <Link to='/editprofile' onClick={action}><button type="" className="btn btn-primary mb-3 edit-profile-btn"> Edit Image</button></Link>
@@ -290,15 +347,22 @@ function EditProfile() {
                 <h5 className="card-title text-center">Upload Foto Profile</h5>
               </div>
               <div className="card-body text-center">
-                <Avatar
-                className='avatar'
-                width={400}
-                height={300}
-                onClose= {onClose}
-                onCrop= {onCrop}
-                src={src}
-              />
-                <a href="#" className="btn btn-primary mt-5 btn-upload" onClick={reAction}>Upload</a>
+                <form onSubmit={onUpload}>
+                  <label className="form-label">Small file input example</label>
+                  <input className="form-control form-control-sm upload-image" id="formFileSm" type="file" onChange={(e) => setImages(e.target.files[0])}/>
+                    {/* <Avatar
+                    className='avatar'
+                    width={400}
+                    height={300}
+                    onClose= {onClose}
+                    onCrop= {onCrop}
+                    src={src}
+                  /> */}
+                    {/* <a href="#" className="btn btn-primary mt-5 btn-upload" >Upload</a> */}
+                    <button type='submit' className="btn btn-primary mb-3 btn-upload mt-5">
+                        Upload
+                    </button>
+                </form>
               </div>
             </div>
           </div>

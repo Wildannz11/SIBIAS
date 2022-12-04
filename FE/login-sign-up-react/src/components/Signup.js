@@ -14,11 +14,13 @@ function Signup() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [role, setRole] = useState('rakyat');
+    const [photoProfile, setPhotoProfile] = useState('')
     const [msgUsername, setMsgUsername] = useState('');
     const [msgName, setMsgName] = useState('');
     const [msgEmail, setMsgEmail] = useState('');
     const [msgPassword, setMsgPassword] = useState('');
     const [msgConfirmPassword, setMsgConfirmPassword] = useState('');
+    const [msgPhotoProfile, setMsgPhotoProfile] = useState('');
 
     const Register = async (e) => {
         e.preventDefault();
@@ -79,6 +81,14 @@ function Signup() {
             setMsgConfirmPassword('');
             
           }
+        }
+
+        if (!photoProfile) {
+          setMsgPhotoProfile('Photo Profile is required');
+          
+        }else{
+          setMsgPhotoProfile('');
+          
         }
 
         if(isValid) {
@@ -194,6 +204,8 @@ function Signup() {
                   />
                 </div>
               </div>
+
+                
 
               <div className="d-grid text-center mb-4">
               <button type="submit" className="btn btn-primary is-success btn-sign-up">Daftar</button>

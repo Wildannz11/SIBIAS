@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import db from "./src/config/db.js";
 import router from "./src/routes/routes.js"
 import SequelizeStore from "connect-session-sequelize";
+import fileUpload from "express-fileupload";
 dotenv.config();
 
 const app = express();
@@ -25,21 +26,19 @@ app.use(session({
     }
 }));
 
-// (async()=>{
-//     await db.sync();
-// })();
-
-const sync = async()=>{
-    await db.sync();
+const sync = async () => {
+    await db.sync({ force: false });
 }
 sync();
 
 app.use(cors({
     credentials: true,
-    origin: ['http://localhost:8000','http://localhost:9000','http://localhost:3000'] 
+    origin: ['http://localhost:3000'], 
 }));
 
 app.use(express.json());
+app.use(fileUpload());
+app.use(express.static("public"));
 app.use(router);
 
 storedb.sync();

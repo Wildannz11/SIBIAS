@@ -71,7 +71,7 @@ function Blog() {
                 <ChatBuble
                 name={name}
                 date={date}
-                valueComent={isiComent}
+                valueComent={contentBlog}
                 imageUser={avatar2}
                 />
             </div>

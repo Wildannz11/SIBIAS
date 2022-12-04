@@ -14,6 +14,7 @@ export default function ShowProfile() {
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
+  const [imageUser, setImageUser] = useState();
   const navigate = useNavigate();
   const [showToast] = useToast();
 
@@ -34,12 +35,20 @@ export default function ShowProfile() {
             setEmail(data.email);
             setAddress(data.alamat);
             setPhoneNumber(data.no_hp);
+            const dataImage = data.foto_url;
+            if(dataImage === null){
+              setImageUser(avatar2);
+            } else{
+              setImageUser(dataImage);
+            }
+            
           })
         } catch (error) {
           if(error.response){
             showToast(error.response.data.msg, 'fail');
           }
         }
+        
       })
     } catch (error) {
       if(error.response){
@@ -74,7 +83,7 @@ export default function ShowProfile() {
           <div className="card-body show-profile">
             <div className="text-center mb-4 img-head-container">
                 <div className="text-center">
-                  <img className='img-user' src={avatar2} />
+                  <img className='img-user' src={imageUser} alt='foto user'/>
                 </div>
                 <div className="text-center edit-profile-btn-container mt-2">
                 <Link to='/editprofile'><button type="" className="btn btn-primary mb-3 edit-profile-btn"> Edit Profil</button></Link>

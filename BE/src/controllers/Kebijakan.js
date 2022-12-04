@@ -1,12 +1,13 @@
-import Kebijakan from "../models/KebijakanModel.js";
-import Users from "../models/UserModel.js";
+// import Kebijakan from "../models/KebijakanModel.js";
+// import Users from "../models/UserModel.js";
+import { Users, Kebijakans } from "../associations/Association.js";
 import { Op } from "sequelize";
 import fs from "fs";
 
 export const getKebijakan = async (req, res) => {
     try {
         let response;
-        response = await Kebijakan.findAll({
+        response = await Kebijakans.findAll({
             include:[{
                 model: Users,
                 attributes:['nama_lembaga','email']
@@ -20,7 +21,7 @@ export const getKebijakan = async (req, res) => {
 
 export const getKebijakanById = async (req, res) => {
     try {
-        const kebijakan = await Kebijakan.findOne({
+        const kebijakan = await Kebijakans.findOne({
             where:{
                 kid: req.params.id
             }
@@ -31,7 +32,7 @@ export const getKebijakanById = async (req, res) => {
         }
 
         let tambah = kebijakan.jumlah_kunjungan + 1;
-        await Kebijakan.update(
+        await Kebijakans.update(
             {
             jumlah_kunjungan: tambah
             },
@@ -43,7 +44,7 @@ export const getKebijakanById = async (req, res) => {
         );
 
         let response;
-        response = await Kebijakan.findOne({
+        response = await Kebijakans.findOne({
             attributes: ['kid','judul_kebijakan','isi_kebijakan','jumlah_kunjungan','sudah_publish'],
             where: {
                 kid: kebijakan.kid
@@ -55,7 +56,7 @@ export const getKebijakanById = async (req, res) => {
              
         });
         
-        
+        req.kid = kebijakan.kid;
         res.status(200).json(response);
     } catch (error) {
         res.status(500).json({msg: error.message});
@@ -63,10 +64,10 @@ export const getKebijakanById = async (req, res) => {
 }
 
 export const createKebijakan = async (req, res) => {
-    const {judul_Kebijakan, isi_kebijakan} = req.body;
+    const {judul_kebijakan, isi_kebijakan} = req.body;
     try {
-        await Kebijakan.create({
-            judul_Kebijakan: judul_Kebijakan,
+        await Kebijakans.create({
+            judul_kebijakan: judul_kebijakan,
             isi_kebijakan: isi_kebijakan,
             userId: req.uid
         });
@@ -78,9 +79,9 @@ export const createKebijakan = async (req, res) => {
 
 export const editKebijakan = async (req, res) => {
     try {
-        const kebijakan = await Kebijakan.findOne({
+        const kebijakan = await Kebijakans.findOne({
             where: {
-                did: req.params.id
+                kid: req.params.id
             }
         });
         
@@ -88,17 +89,17 @@ export const editKebijakan = async (req, res) => {
             return res.status(404).json({msg: "Kebijakan tidak ditemukan"});
         }
 
-        const {judul_Kebijakan, isi_kebijakan} = req.body;
+        const {judul_kebijakan, isi_kebijakan} = req.body;
         if (req.role === "rakyat") {
             if (req.uid === kebijakan.userId) {
-                await Kebijakan.update(
+                await Kebijakans.update(
                     {
-                        judul_Kebijakan: judul_Kebijakan,
+                        judul_kebijakan: judul_kebijakan,
                         isi_kebijakan: isi_kebijakan
                     },
                     { where:{
                         // id: Kebijakan.id
-                        [Op.and]: [{did: kebijakan.did}, {userId: req.uid}]
+                        [Op.and]: [{kid: kebijakan.kid}, {userId: req.uid}]
                     }
                 });
             } else {
@@ -116,9 +117,9 @@ export const editKebijakan = async (req, res) => {
 
 export const deleteKebijakan = async (req, res) => {
     try {
-        const kebijakan = await Kebijakan.findOne({
+        const kebijakan = await Kebijakans.findOne({
             where: {
-                did: req.params.id
+                kid: req.params.id
             }
         });
 
@@ -126,12 +127,12 @@ export const deleteKebijakan = async (req, res) => {
             return res.status(404).json({msg: "Kebijakan tidak ditemukan"});
         }
 
-        if (req.role === "rakyat" || req.role === "Rakyat") {
+        if (req.role === "rakyat") {
             if (req.uid === kebijakan.userId) {
                 const filepath = `../../public/images/kebijakan/${kebijakan.foto_data}`;
                 fs.unlinkSync(filepath);
 
-                await Kebijakan.destroy({ 
+                await Kebijakans.destroy({ 
                     where:{
                         // id: Kebijakan.id
                         [Op.and]: [{kid: Kebijakan.kid}, {userId: req.uid}]
@@ -153,7 +154,7 @@ export const uploadImageKebijakanBaru = async (req, res) => {
         return res.status(400).json({msg: "Tidak ada file photo, silahkan pilih foto terlebih dahulu"});
     };
 
-    const file = req.files.foto;
+    const file = req.files.fotokebijakan;
     const fileSize = file.data.length;
     const ext = path.extname(file.name);
     const fileName = file.md5 + ext;
@@ -173,8 +174,8 @@ export const uploadImageKebijakanBaru = async (req, res) => {
             return res.status(500).json({msg: err.message});
         }
         try {
-            await Users.create({foto_data: fileName, foto_url: url});
-            res.status(201).json({msg: "Sukses mengupload foto profile"});
+            await Kebijakans.create({foto_data: fileName, foto_url: url});
+            res.status(201).json({msg: "Sukses mengupload foto untuk kebijakan"});
         } catch (error) {
             console.log(error.message);
             res.status(400).json({msg: error.message});
@@ -225,7 +226,7 @@ export const editUploadImageKebijakan = async (req, res) => {
     const url = `${req.protocol}://${req.get("host")}/images/kebijakan/${fileName}`;
     
     try {
-        await Kebijakan.update(
+        await Kebijakans.update(
             { foto_data: fileName, foto_url: url },
             { where: { id: req.params.id } }
         );
@@ -248,7 +249,7 @@ export const publishKebijakan = async (req, res) => {
             return res.status(404).json({msg: "Kebijakan tidak ditemukan"});
         }
 
-        await Kebijakan.update(
+        await Kebijakans.update(
             { sudah_publish: true },
             { where: {
                 kid: kebijakan.kid

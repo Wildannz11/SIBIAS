@@ -27,7 +27,7 @@ app.use(session({
 }));
 
 const sync = async () => {
-    await db.sync({ alter: true });
+    await db.sync({ force: false });
 }
 sync();
 

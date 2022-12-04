@@ -7,5 +7,16 @@ const dbConfig = {
     dialect: "mysql",
 }
 
+
+// Pake yang ini klo mau 
+// const dbConfig = {
+//     HOST: "localhost",
+//     USER: "root",
+//     PASSWORD: "",
+//     DB: "sibias",
+//     // PORT: "3306",
+//     dialect: "mysql",
+// }
+
 export default dbConfig;
 

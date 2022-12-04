@@ -2,16 +2,17 @@ import { Sequelize } from "sequelize";
 import db from "../config/db.js";
 
 const {DataTypes} = Sequelize;
-const Tags = db.define('tags',{
-    id:{
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
+const Tags = db.define('tag',{
+    // id:{
+    //     type: DataTypes.INTEGER,
+    //     primaryKey: true,
+    //     autoIncrement: true
+    // },
     tid:{ 
         type: DataTypes.STRING,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
+        primaryKey: true,
         validate:{
             notEmpty: true
         }

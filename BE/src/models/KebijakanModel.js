@@ -1,19 +1,20 @@
 import { Sequelize } from "sequelize";
 import db from "../config/db.js";
-import Users from "./UserModel.js";
-import Tags from "./TagsModel.js";
+// import Users from "./UserModel.js";
+// import Tags from "./TagsModel.js";
 
 const {DataTypes} = Sequelize;
-const Kebijakan = db.define('kebijakan',{
-    id:{
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
+const Kebijakans = db.define('kebijakan',{
+    // id:{
+    //     type: DataTypes.INTEGER,
+    //     primaryKey: true,
+    //     autoIncrement: true
+    // },
     kid:{ 
         type: DataTypes.STRING,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
+        primaryKey: true,
         validate:{
             notEmpty: true
         }
@@ -50,27 +51,31 @@ const Kebijakan = db.define('kebijakan',{
         defaultValue: false,
     },
     userId:{ 
-        type: DataTypes.INTEGER, 
+        type: DataTypes.STRING, 
         allowNull: true,
         validate:{
             notEmpty: true,
         },
         onDelete: "CASCADE",
+        references: {
+            model: "user",
+            key: "uid"
+        }
     },
 },{
     freezeTableName: true
-})
+});
 
-Users.hasMany(Kebijakan, 
-    {
-        foreignKey: 'userId'
-    }
-);
-Kebijakan.belongsTo(Users, 
-    {
-        foreignKey: 'userId',
-    }
-);
+// Users.hasMany(Kebijakans, 
+//     {
+//         foreignKey: 'userId'
+//     }
+// );
+// Kebijakans.belongsTo(Users, 
+//     {
+//         foreignKey: 'userId',
+//     }
+// );
 
 
-export default Kebijakan;
+export default Kebijakans;

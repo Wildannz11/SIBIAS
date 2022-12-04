@@ -3,11 +3,11 @@ import db from "../config/db.js";
 
 const {DataTypes} = Sequelize;
 const Users = db.define('user',{
-    id:{
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
+    // id:{
+    //     type: DataTypes.INTEGER,
+    //     primaryKey: true,
+    //     autoIncrement: true
+    // },
     uid:{ 
         type: DataTypes.STRING,
         defaultValue: DataTypes.UUIDV4,

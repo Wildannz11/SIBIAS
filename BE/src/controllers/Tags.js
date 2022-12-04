@@ -1,6 +1,7 @@
-import Tags from "../models/tagsModel.js";
-import TagsKebijakan from "../models/Tags_KebijakanModels.js";
-import Kebijakan from "../models/KebijakanModel.js";
+// import Tags from "../models/tagsModel.js";
+// import TagsKebijakan from "../models/Tags_KebijakanModels.js";
+// import Kebijakan from "../models/KebijakanModel.js";
+import { Tags, TagsKebijakans, Kebijakans } from "../associations/Association.js";
 
 export const createTags = async (req, res) => {
     const {nama_tags} = req.body;
@@ -17,7 +18,7 @@ export const createTags = async (req, res) => {
 export const createTagsKebijakan = async (req, res) => {
     const {tagsId, kebijakanId} = req.body;
     try {
-        await TagsKebijakan.create({
+        await TagsKebijakans.create({
             tagsId: tagsId,
             kebijakanId: kebijakanId
         });
@@ -31,11 +32,26 @@ export const getTags = async (req, res) => {
     try {
         let response;
         
-        response = await TagsKebijakan.findAll({
+        response = await Tags.findAll();
+        
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({msg: error.message});
+    }
+}
+
+export const getTagsKebijakan = async (req, res) => {
+    try {
+        let response;
+        
+        response = await TagsKebijakans.findAll({
             include:[{
                 model: Tags,
-              }, {
-                model: Kebijakan,
+                through: "tagsId"
+            }],
+            include:[{
+                model: Kebijakans,
+                through: "kebijakanId"
             }],
         });
         
@@ -47,7 +63,7 @@ export const getTags = async (req, res) => {
 
 export const getTagsById = async (req, res) => {
     try {
-        const tagskebijakan = await TagsKebijakan.findOne({
+        const tagskebijakan = await TagsKebijakans.findOne({
             where:{
                 tagsId: req.params.id
             }
@@ -58,14 +74,17 @@ export const getTagsById = async (req, res) => {
         }
 
         let response;
-        response = await TagsKebijakan.findAll({
+        response = await TagsKebijakans.findAll({
             where: {
                 tagsId: tagskebijakan.tagsId
             },
             include:[{
                 model: Tags,
-            }, {
-                model: Kebijakan,
+                through: "tagsId"
+            }],
+            include:[{
+                model: Kebijakans,
+                through: "kebijakanId"
             }],
         });
 
@@ -88,7 +107,7 @@ export const editTags = async (req, res) => {
         }
 
         const {nama_tags} = req.body;
-        if (req.role === "rakyat" || req.role === "Rakyat") {
+        if (req.role === "rakyat") {
             await Tags.update(
                 {
                     nama_tags: nama_tags
@@ -112,7 +131,7 @@ export const editTags = async (req, res) => {
 
 export const editTagsKebijakan = async (req, res) => {
     try {
-        const tagskebijakan = await TagsKebijakan.findOne({
+        const tagskebijakan = await TagsKebijakans.findOne({
             where: {
                 id: req.params.id
             }
@@ -123,8 +142,8 @@ export const editTagsKebijakan = async (req, res) => {
         }
 
         const {tagsId, kebijakanId} = req.body;
-        if (req.role === "rakyat" || req.role === "Rakyat") {
-            await TagsKebijakan.update(
+        if (req.role === "rakyat") {
+            await TagsKebijakans.update(
                 {
                     tagsId: tagsId,
                     kebijakanId: kebijakanId
@@ -158,7 +177,7 @@ export const deleteTags = async (req, res) => {
             return res.status(404).json({msg: `tags dengan nama ${tags.nama_tags} tidak ditemukan`});
         }
 
-        if (req.role === "rakyat" || req.role === "Rakyat") {
+        if (req.role === "rakyat") {
             await Tags.destroy({ 
                 where:{
                     tid: tags.tid
@@ -177,7 +196,7 @@ export const deleteTags = async (req, res) => {
 
 export const deleteTagsKebijakan = async (req, res) => {
     try {
-        const tagskebijakan = await TagsKebijakan.findOne({
+        const tagskebijakan = await TagsKebijakans.findOne({
             where: {
                 id: req.params.id
             }

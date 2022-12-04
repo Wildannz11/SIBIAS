@@ -1,4 +1,4 @@
-import Users from "../models/UserModel.js";
+import {Users} from "../associations/Association.js";
 import argon2 from "argon2";
 
 export const login = async (req, res) => {
@@ -21,8 +21,10 @@ export const login = async (req, res) => {
     const nama = user.nama
     const username = user.username;
     const email = user.email;
+    const foto_data = user.foto_data;
+    const foto_url = user.foto_url;
     const role = user.role;
-    res.status(200).json({msg: "Anda Berhasil login", uid, nama, username, email, role});
+    res.status(200).json({msg: "Anda Berhasil login", uid, nama, username, email, role, foto_data, foto_url});
 }
 
 export const loginPemerintah = async (req, res) => {

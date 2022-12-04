@@ -134,7 +134,7 @@ POST http://localhost:5000/diskusi
 Content-Type: application/json
 
 {
-    "judul_diskusi": "pembahasan BBM"
+    "judul_diskusi": "pembahasan penyakit di indonesia"
 }
 
 // get all discussion
@@ -144,24 +144,162 @@ GET http://localhost:5000/diskusi
 
 // get discussion by id
 ###
-GET http://localhost:5000/diskusi/cfedc121-99fd-4b1b-a3b0-94f37f519330
+GET http://localhost:5000/diskusi/23ce7565-0353-4c4f-8768-d13fd6290a12
 
 
 // Update discussion by id
 ###
-PATCH http://localhost:5000/diskusi/cfedc121-99fd-4b1b-a3b0-94f37f519330
+PATCH http://localhost:5000/diskusi/23ce7565-0353-4c4f-8768-d13fd6290a12
 Content-Type: application/json
 
 {
-    "judul_diskusi": "pembahasan BBM Rakyat"
+    "judul_diskusi": "pembahasan penyakit kepala di indonesia"
 }
-
 
 // Delete discussion by id
 ###
-DELETE http://localhost:5000/diskusi/cfedc121-99fd-4b1b-a3b0-94f37f519330
+DELETE http://localhost:5000/diskusi/dae7d346-b714-4f12-b44f-2dfbbbaa4ed3
 
-//
+
+
+// CUD chatdiskusi 
 ###
+POST http://localhost:5000/chatdiskusi/23ce7565-0353-4c4f-8768-d13fd6290a12
+Content-Type: application/json
 
-POST http://localhost:5000/chatdiskusi
+{
+    "isi_chat": "Lorepsum ipsum bla bla bla bla bla bla bla bla"
+}
+
+// Edit chat diskusi
+###
+PATCH http://localhost:5000/chatdiskusi/23ce7565-0353-4c4f-8768-d13fd6290a12/64238973-27f2-44ae-aaf0-84a6aaaf6249
+Content-Type: application/json
+
+{
+    "isi_chat": "Perubahan Lorepsum ipsum bla bla bla bla bla bla bla bla"
+}
+
+// Deleete Chat Diskusi
+###
+DELETE http://localhost:5000/chatdiskusi/23ce7565-0353-4c4f-8768-d13fd6290a12
+
+
+// CRUD Topic
+###
+POST http://localhost:5000/topic
+Content-Type: application/json
+
+{
+    "nama_topic": "Kesehatan"
+}
+
+###
+POST http://localhost:5000/topicdiskusi
+Content-Type: application/json
+
+{
+    "topicId": "839e728b-a690-4b13-832b-216a87a15094",
+    "diskusiId": "23ce7565-0353-4c4f-8768-d13fd6290a12"
+}
+
+###
+GET http://localhost:5000/topic
+
+
+###
+GET http://localhost:5000/topicdiskusi
+
+
+
+
+// Kebijakan CRUD 
+
+// Crete kebijakan
+###
+POST http://localhost:5000/kebijakan
+Content-Type: application/json
+
+{
+    "judul_kebijakan": "pembahasan BBM",
+    "isi_kebijakan": "Lorepsum ipsum bla bla bla bla bla bla bla bla"
+}
+
+// get all kebijakan
+###
+GET http://localhost:5000/kebijakan
+
+
+// get kebijakan by id
+###
+GET http://localhost:5000/kebijakan/dae7d346-b714-4f12-b44f-2dfbbbaa4ed3
+
+
+// Update kebijakan by id
+###
+PATCH http://localhost:5000/kebijakan/dae7d346-b714-4f12-b44f-2dfbbbaa4ed3
+Content-Type: application/json
+
+{
+    "judul_kebijakan": "edited pembahasan BBM Rakyat",
+    "isi_kebijakan": "Edited Lorepsum ipsum bla bla bla bla bla bla bla bla"
+}
+
+// Delete kebijakan by id
+###
+DELETE http://localhost:5000/kebijakan/dae7d346-b714-4f12-b44f-2dfbbbaa4ed3
+
+
+
+// Upload image kebijakan 
+###
+POST http://localhost:5000/images/kebijakan
+Content-Type: multipart/form-data
+
+{
+    "fotokebijakan": {masukin foto }
+}
+
+
+// Update image kebijakan by id
+###
+PATCH http://localhost:5000/images/kebijakan/kid
+Content-Type: multipart/form-data
+
+{
+    "fotokebijakan": {masukin foto }
+}
+
+// publish kebijakan
+###
+PATCH http://localhost:5000/kebijakan/publish/kid
+
+
+// CRUD tags kebijakan
+###
+POST http://localhost:5000/tags
+Content-Type: application/json
+
+{
+    "nama_tags": "UU Pencemaran Nama Baik"
+}
+
+###
+POST http://localhost:5000/tagskebijakan
+Content-Type: application/json
+
+{
+    "tagsId": "92ef79bf-51dd-4824-b102-686523d4a89c",
+    "kebijakanId": "9ea82998-706c-4c71-b362-75daba96ff36"
+}
+
+
+###
+GET http://localhost:5000/tags
+
+###
+GET http://localhost:5000/tagskebijakan
+
+
+###
+GET http://localhost:5000/tags/92ef79bf-51dd-4824-b102-686523d4a89c

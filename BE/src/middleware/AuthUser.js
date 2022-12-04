@@ -1,4 +1,5 @@
-import Users from "../models/UserModel.js";
+// import Users from "../models/UserModel.js";
+import { Users } from "../associations/Association.js";
 
 export const verifyUser = async (req, res, next) =>{
     if(!req.session.uid){
@@ -24,7 +25,7 @@ export const pemerintahOnly = async (req, res, next) =>{
     if(!user) {
         return res.status(404).json({msg: "User tidak ditemukan"});
     }
-    if(user.role != "pemerintah" || user.role != "Pemerintah") {
+    if(user.role != "pemerintah") {
         return res.status(403).json({msg: "Akses terlarang bagi rakyat"});
     }
     next();
@@ -39,7 +40,7 @@ export const rakyatOnly = async (req, res, next) =>{
     if(!user) {
         return res.status(404).json({msg: "User tidak ditemukan"});
     }    
-    if(user.role != "rakyat" || user.role != "Rakyat") {
+    if(user.role != "rakyat") {
         return res.status(403).json({msg: "Akses terlarang bagi pemerintah"});
     }
     

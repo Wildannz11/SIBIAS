@@ -16,7 +16,8 @@ import {
     editTags,
     editTagsKebijakan,
     deleteTags,
-    deleteTagsKebijakan
+    deleteTagsKebijakan,
+    getTagsKebijakan
 } from "../controllers/Tags.js";
 
 import {
@@ -27,7 +28,8 @@ import {
     editTopic,
     editTopicDiskusi,
     deleteTopic,
-    deleteTopicDiskusi
+    deleteTopicDiskusi,
+    getTopicDiskusi
 } from "../controllers/Topic.js";
 
 import {
@@ -53,7 +55,15 @@ import {
     uploadImageKebijakanBaru,
     editUploadImageKebijakan,
     publishKebijakan
-} from "../controllers/Kebijakan.js"
+} from "../controllers/Kebijakan.js";
+
+import {
+    getCommentKebijakans,
+    getCommentKebijakansById,
+    createCommentKebijakans,
+    editCommentKebijakans,
+    deleteCommentKebijakans
+} from "../controllers/CommentKebijakan.js";
 
 import {
     getUser,
@@ -90,19 +100,23 @@ router.patch('/diskusi/:id', verifyUser, rakyatOnly, editDiskusi);
 router.delete('/diskusi/:id', verifyUser, rakyatOnly, deleteDiskusi);
 
 // CUD chat diskusi
-router.post('/chatdiskusi', verifyUser, rakyatOnly, createChatDiskusi);
-router.patch('/chatdiskusi/:id', verifyUser, rakyatOnly, editChatDiskusi);
-router.delete('/chatdiskusi/:id', verifyUser, rakyatOnly, deleteChatDiskusi);
+router.post('/chatdiskusi/:did', verifyUser, rakyatOnly, createChatDiskusi);
+router.patch('/chatdiskusi/:did/:id', verifyUser, rakyatOnly, editChatDiskusi);
+router.delete('/chatdiskusi/:did/:id', verifyUser, rakyatOnly, deleteChatDiskusi);
 
 // CRUD topic
-router.post('/topic', verifyUser, rakyatOnly, createTopic);
-router.post('/topicdiskusi', verifyUser, rakyatOnly, createTopicDiskusi);
+router.post('/topic', verifyUser, createTopic);
+router.post('/topicdiskusi', verifyUser, createTopicDiskusi);
+
 router.get('/topic', verifyUser, getTopic);
+router.get('/topicdiskusi', verifyUser, getTopicDiskusi);
 router.get('/topic/:id', verifyUser, getTopicById);
-router.patch('/topic/:id', verifyUser, rakyatOnly, editTopic);
-router.patch('/topicdiskusi/:id', verifyUser, rakyatOnly, editTopicDiskusi);
-router.delete('/topic/:id', verifyUser, rakyatOnly, deleteTopic);
-router.delete('/topicdiskusi/:id', verifyUser, rakyatOnly, deleteTopicDiskusi);
+
+router.patch('/topic/:id', verifyUser, editTopic);
+router.patch('/topicdiskusi/:id', verifyUser, editTopicDiskusi);
+
+router.delete('/topic/:id', verifyUser, deleteTopic);
+router.delete('/topicdiskusi/:id', verifyUser, deleteTopicDiskusi);
 
 // CRUD pemerintah kebijakan
 router.get('/kebijakan', verifyUser, getKebijakan);
@@ -113,20 +127,29 @@ router.delete('/kebijakan/:id', verifyUser, pemerintahOnly, deleteKebijakan);
 
 router.post('/images/kebijakan', verifyUser, uploadImageKebijakanBaru);
 router.patch('/images/kebijakan/:id', verifyUser, editUploadImageKebijakan);
-router.patch('/kebijakan/publish', verifyUser, publishKebijakan);
+router.patch('/kebijakan/publish/:id', verifyUser, publishKebijakan);
+
+router.get('/commentkebijakan', verifyUser, getCommentKebijakans);
+router.get('/commentkebijakan/:id', verifyUser, getCommentKebijakansById);
+router.post('/commentkebijakan', verifyUser, pemerintahOnly, createCommentKebijakans);
+router.patch('/commentkebijakan/:id', verifyUser, pemerintahOnly, editCommentKebijakans);
+router.delete('/commentkebijakan/:id', verifyUser, pemerintahOnly, deleteCommentKebijakans);
+
+
 
 // CRUD tags
 router.post('/tags', verifyUser, createTags);
 router.post('/tagskebijakan', verifyUser, createTagsKebijakan);
 
 router.get('/tags', verifyUser, getTags);
-router.get('/tags/:id', verifyUser, rakyatOnly, getTagsById);
+router.get('/tagskebijakan', verifyUser, getTagsKebijakan);
+router.get('/tags/:id', verifyUser, getTagsById);
 
-router.patch('/tags/:id', verifyUser, rakyatOnly, editTags);
-router.patch('/tagskebijakan/:id', verifyUser, rakyatOnly, editTagsKebijakan);
+router.patch('/tags/:id', verifyUser, editTags);
+router.patch('/tagskebijakan/:id', verifyUser, editTagsKebijakan);
 
-router.delete('/tags/:id', verifyUser, rakyatOnly, deleteTags);
-router.delete('/tagskebijakan/:id', verifyUser, rakyatOnly, deleteTagsKebijakan);
+router.delete('/tags/:id', verifyUser, deleteTags);
+router.delete('/tagskebijakan/:id', verifyUser, deleteTagsKebijakan);
 
 
 // CRUD Users
@@ -144,8 +167,8 @@ router.patch('/pemerintah/:id',  verifyUser, pemerintahOnly, editPemerintah);
 
 router.delete('/users/:id',  verifyUser, deleteUser);
 
-// Image user
-router.post('/images/users', verifyUser, uploadImageProfileBaru);
+// post user with image 
+router.post('/usersnew', uploadImageProfileBaru);
 router.patch('/images/users/:id', verifyUser, editUploadImageProfile);
 
 

@@ -1,20 +1,21 @@
 import { Sequelize } from "sequelize";
 import db from "../config/db.js";
-import Users from "./UserModel.js";
-import ChatDiskusi from "./ChatDiskusiModel.js";
+// import Users from "./UserModel.js";
+// import ChatDiskusi from "./ChatDiskusiModel.js";
 
 const {DataTypes} = Sequelize;
 
-const Diskusi = db.define('diskusi',{
-    id:{
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
+const Diskusis = db.define('diskusi',{
+    // id:{
+    //     type: DataTypes.INTEGER,
+    //     primaryKey: true,
+    //     autoIncrement: true
+    // },
     did:{ 
         type: DataTypes.STRING,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
+        primaryKey: true,
         validate:{
             notEmpty: true
         }
@@ -34,39 +35,30 @@ const Diskusi = db.define('diskusi',{
         }
     },
     userId:{ 
-        type: DataTypes.INTEGER, 
+        type: DataTypes.STRING, 
         allowNull: true,
         validate:{
             notEmpty: true,
         },
         onDelete: "CASCADE",
+        references: {
+            model: "user",
+            key: "uid"
+        }
     },
 },{
     freezeTableName: true
 });
 
-Users.hasMany(Diskusi, 
-    {
-        foreignKey: 'userId'
-    }
-);
-Diskusi.belongsTo(Users, 
-    {
-        foreignKey: 'userId'
-    }
-);
+// Users.hasMany(Diskusis, 
+//     {
+//         foreignKey: 'userId'
+//     }
+// );
+// Diskusis.belongsTo(Users, 
+//     {
+//         foreignKey: 'userId'
+//     }
+// );
 
-Diskusi.hasMany(ChatDiskusi,
-    {
-        foreignKey: 'diskusiId'
-    }
-);
-
-ChatDiskusi.belongsTo(Diskusi,
-    {
-        foreignKey: 'diskusiId'
-    }
-);
-
-
-export default Diskusi;
+export default Diskusis;

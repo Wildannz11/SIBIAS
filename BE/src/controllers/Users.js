@@ -1,7 +1,8 @@
-import Users from "../models/UserModel.js";
+// import Users from "../models/UserModel.js";
+// import Kebijakan from "../models/KebijakanModel.js";
+// import Diskusi from "../models/DiskusiModel.js";
+import { Users, Kebijakans, Diskusis } from "../associations/Association.js";
 import argon2 from "argon2";
-import Kebijakan from "../models/KebijakanModel.js";
-import Diskusi from "../models/DiskusiModel.js";
 import path from "path";
 import fs from "fs";
 
@@ -14,7 +15,7 @@ export const getUser = async (req, res) => {
                     role: req.params.role 
                 },
                 include: [{
-                    model: Diskusi
+                    model: Diskusis
                 }]
             }
         );
@@ -34,7 +35,7 @@ export const getPemerintah = async (req, res) => {
                     role: role 
                 },
                 include: [{
-                    model: Kebijakan
+                    model: Kebijakans
                 }]
             }
         );
@@ -47,13 +48,13 @@ export const getPemerintah = async (req, res) => {
 export const getUserById = async (req, res) => {
     try {
         const response = await Users.findOne({
-            attributes: ['uid','username','nama','email','password','alamat','no_hp','tgl_lahir','pendidikan','role'],
+            attributes: ['uid','username','nama','email','password','alamat','no_hp','tgl_lahir','pendidikan','role','foto_data','foto_url'],
             where: {
                 role: req.params.role,
                 uid: req.params.id,
             },
             include: [{
-                model: Diskusi
+                model: Diskusis
             }]
         });
         res.status(200).json(response);
@@ -65,13 +66,13 @@ export const getUserById = async (req, res) => {
 export const getPemerintahById = async (req, res) => {
     try {
         const response = await Users.findOne({
-            attributes: ['uid','nama_lembaga','deskripsi_lembaga','email','password','role'],
+            attributes: ['uid','nama_lembaga','deskripsi_lembaga','email','password','role','foto_data','foto_url'],
             where: {
                 role: req.params.role,
                 uid: req.params.id,
             },
             include: [{
-                model: Kebijakan
+                model: Kebijakans
             }]
         });
         res.status(200).json(response);
@@ -259,7 +260,7 @@ export const deleteUser = async (req, res) => {
     }
 
     try {
-        const filepath = `../../public/images/users/${user.foto_data}`;
+        const filepath = `./public/images/users/${user.foto_data}`;
         fs.unlinkSync(filepath);
 
         await Users.destroy({
@@ -274,6 +275,32 @@ export const deleteUser = async (req, res) => {
 }
 
 export const uploadImageProfileBaru = async (req, res) => {
+    const {username, nama, email, password, confirm_password, role} = req.body;
+    const uname = await Users.findOne({
+        where: {
+            username: username
+        },
+    });
+
+    if (uname) {
+        return res.status(400).json({msg: "username yang anda masukkan sudah dibuat sebelumnya, tolong ubah username anda "});
+    }
+
+    const uemail = await Users.findOne({
+        where: {
+            email: email
+        },
+    });
+
+    if (uemail) {
+        return res.status(400).json({msg: "email yang anda masukkan sudah dibuat sebelumnya, tolong ubah email anda "});
+    }
+    
+    if (password !== confirm_password) {
+        return res.status(400).json({msg: "Password dan Confirm Password tidak cocok"});
+    }
+    const hasPass = await argon2.hash(password);
+    
     if(req.files === null || req.files === undefined) {
         return res.status(400).json({msg: "Tidak ada file photo, silahkan pilih foto terlebih dahulu"});
     };
@@ -293,13 +320,21 @@ export const uploadImageProfileBaru = async (req, res) => {
         return res.status(422).json({msg: "Ukuran foto harus kurang dari 50 MB"})
     }
 
-    file.mv(`../../public/images/users/${fileName}`, async(err) => {
+    file.mv(`./public/images/users/${fileName}`, async(err) => {
         if(err){
             return res.status(500).json({msg: err.message});
         }
         try {
-            await Users.create({foto_data: fileName, foto_url: url});
-            res.status(201).json({msg: "Sukses mengupload foto profile"});
+            await Users.create({
+                username: username,
+                nama: nama,
+                email: email,
+                password: hasPass,
+                role: role,
+                foto_data: fileName, 
+                foto_url: url
+            });
+            res.status(201).json({msg: "Sukses mendaftarkan akun dan mengupload foto profile"});
         } catch (error) {
             console.log(error.message);
             res.status(400).json({msg: error.message});
@@ -322,7 +357,7 @@ export const editUploadImageProfile = async (req, res) => {
     if(req.files === null || req.files === undefined) {
         fileName = users.foto_data;
     } else {
-        const file = req.files.file;
+        const file = req.files.foto;
         const fileSize = file.data.length;
         const ext = path.extname(file.name);
         fileName = file.md5 + ext;
@@ -337,10 +372,10 @@ export const editUploadImageProfile = async (req, res) => {
         }
 
         // const filepath = `./public/images/${product.image}`;
-        const filepath = `../../public/images/users/${users.foto_data}`;
+        const filepath = `./public/images/users/${users.foto_data}`;
         fs.unlinkSync(filepath);
 
-        file.mv(`../../public/images/users/${fileName}`, (err)=>{
+        file.mv(`./public/images/users/${fileName}`, (err)=>{
             if(err) {
                 return res.status(500).json({msg: err.message})
             };

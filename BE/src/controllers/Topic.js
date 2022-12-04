@@ -1,11 +1,12 @@
-import Topic from "../models/TopicModel.js";
-import TopicDiskusi from "../models/Topic_DiskusiModel.js";
-import Diskusi from "../models/DiskusiModel.js";
+// import Topic from "../models/TopicModel.js";
+// import TopicDiskusi from "../models/Topic_DiskusiModel.js";
+// import Diskusi from "../models/DiskusiModel.js";
+import { Topics, TopicDiskusis, Diskusis } from "../associations/Association.js";
 
 export const createTopic = async (req, res) => {
     const {nama_topic} = req.body;
     try {
-        await Topic.create({
+        await Topics.create({
             nama_topic: nama_topic
         });
         res.status(201).json({msg: "Sukses membuat Topic baru"});
@@ -17,7 +18,7 @@ export const createTopic = async (req, res) => {
 export const createTopicDiskusi = async (req, res) => {
     const {topicId, diskusiId} = req.body;
     try {
-        await TopicDiskusi.create({
+        await TopicDiskusis.create({
             topicId: topicId,
             diskusiId: diskusiId
         });
@@ -31,11 +32,30 @@ export const getTopic = async (req, res) => {
     try {
         let response;
         
-        response = await TopicDiskusi.findAll({
+        response = await Topics.findAll();
+        
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({msg: error.message});
+    }
+}
+
+export const getTopicDiskusi = async (req, res) => {
+    try {
+        let response;
+        
+        response = await TopicDiskusis.findAll({
+            // include:[{
+            //     model: Diskusis,
+            //     // through: "topic_diskusi",
+            //     as: "topics",
+            //     // foreignKey: "diskusiId"
+            // }],
             include:[{
-                model: Topic,
-              }, {
-                model: Diskusi,
+                model: Topics
+            }],
+            include:[{
+                model: Diskusis
             }],
         });
         
@@ -47,7 +67,7 @@ export const getTopic = async (req, res) => {
 
 export const getTopicById = async (req, res) => {
     try {
-        const topicDiskusi = await TopicDiskusi.findAll({
+        const topicDiskusi = await TopicDiskusis.findAll({
             where:{
                 topicId: req.params.id
             }
@@ -58,14 +78,17 @@ export const getTopicById = async (req, res) => {
         }
 
         let response;
-        response = await TopicDiskusi.findAll({
+        response = await TopicDiskusis.findAll({
             where: {
                 topicId: topicDiskusi.topicId
             },
             include:[{
-                model: Topic,
-            }, {
-                model: Diskusi,
+                model: Topics,
+                through: "topicId"
+            }],
+            include:[{
+                model: Diskusis,
+                through: "diskusiId"
             }],
         });
 
@@ -77,7 +100,7 @@ export const getTopicById = async (req, res) => {
 
 export const editTopic = async (req, res) => {
     try {
-        const topic = await Topic.findOne({
+        const topic = await Topics.findOne({
             where: {
                 toid: req.params.id
             }
@@ -89,7 +112,7 @@ export const editTopic = async (req, res) => {
 
         const {nama_topic} = req.body;
         if (req.role === "rakyat" || req.role === "Rakyat") {
-            await Topic.update(
+            await Topics.update(
                 {
                     nama_topic: nama_topic                
                 },
@@ -112,7 +135,7 @@ export const editTopic = async (req, res) => {
 
 export const editTopicDiskusi = async (req, res) => {
     try {
-        const topicDiskusi = await TopicDiskusi.findOne({
+        const topicDiskusi = await TopicDiskusis.findOne({
             where: {
                 id: req.params.id
             }
@@ -124,7 +147,7 @@ export const editTopicDiskusi = async (req, res) => {
 
         const {topicId, diskusiId} = req.body;
         if (req.role === "rakyat" || req.role === "Rakyat") {
-            await TopicDiskusi.update(
+            await TopicDiskusis.update(
                 {
                     topicId: topicId,
                     diskusiId: diskusiId
@@ -148,7 +171,7 @@ export const editTopicDiskusi = async (req, res) => {
 
 export const deleteTopic = async (req, res) => {
     try {
-        const topic = await Topic.findOne({
+        const topic = await Topics.findOne({
             where: {
                 toid: req.params.id
             }
@@ -159,7 +182,7 @@ export const deleteTopic = async (req, res) => {
         }
 
         if (req.role === "rakyat" || req.role === "Rakyat") {
-            await Topic.destroy({ 
+            await Topics.destroy({ 
                 where:{
                     toid: topic.toid
                     // [Op.and]: [{did: diskusi.did}, {userId: req.uid}]
@@ -177,7 +200,7 @@ export const deleteTopic = async (req, res) => {
 
 export const deleteTopicDiskusi = async (req, res) => {
     try {
-        const topicDiskusi = await TopicDiskusi.findOne({
+        const topicDiskusi = await TopicDiskusis.findOne({
             where: {
                 id: req.params.id
             }
@@ -188,7 +211,7 @@ export const deleteTopicDiskusi = async (req, res) => {
         }
 
         if (req.role === "rakyat" || req.role === "Rakyat") {
-            await TopicDiskusi.destroy({ 
+            await TopicDiskusis.destroy({ 
                 where:{
                     id: topicDiskusi.id
                     // [Op.and]: [{did: diskusi.did}, {userId: req.uid}]

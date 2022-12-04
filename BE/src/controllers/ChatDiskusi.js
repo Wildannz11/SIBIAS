@@ -1,6 +1,5 @@
-import Diskusi from "../models/DiskusiModel.js";
-import Users from "../models/UserModel.js";
-import ChatDiskusi from "../models/ChatDiskusiModel.js";
+// import ChatDiskusis from "../models/ChatDiskusiModel.js";
+import { ChatDiskusis } from "../associations/Association.js";
 import { Op } from "sequelize";
 
 // export const getChatDiskusi = async (req, res) => {
@@ -72,10 +71,10 @@ import { Op } from "sequelize";
 export const createChatDiskusi = async (req, res) => {
     const {isi_chat} = req.body;
     try {
-        await ChatDiskusi.create({
+        await ChatDiskusis.create({
             isi_chat: isi_chat,
             userId: req.uid,
-            diskusiId: req.did,
+            diskusiId: req.params.did,
         });
         res.status(201).json({msg: "Sukses membuat chat diskusi baru"});
     } catch (error) {
@@ -85,8 +84,9 @@ export const createChatDiskusi = async (req, res) => {
 
 export const editChatDiskusi = async (req, res) => {
     try {
-        const chatdiskusi = await ChatDiskusi.findOne({
+        const chatdiskusi = await ChatDiskusis.findOne({
             where: {
+                diskusiId: req.params.did,
                 cdid: req.params.id,
             }
         });
@@ -98,13 +98,13 @@ export const editChatDiskusi = async (req, res) => {
         const {isi_chat} = req.body;
         if (req.role === "rakyat") {
             if (req.uid === chatdiskusi.userId) {
-                await ChatDiskusi.update(
+                await ChatDiskusis.update(
                     {
                         isi_chat: isi_chat
                     },
                     { where:{
                         // id: diskusi.id
-                        [Op.and]: [{cdid: chatdiskusi.cdid}, {userId: req.uid}, {diskusiId: req.did}]
+                        [Op.and]: [{cdid: chatdiskusi.cdid}, {userId: req.uid}]
                     }
                 });
             } else {
@@ -122,11 +122,10 @@ export const editChatDiskusi = async (req, res) => {
 
 export const deleteChatDiskusi = async (req, res) => {
     try {
-        const chatdiskusi = await ChatDiskusi.findOne({
+        const chatdiskusi = await ChatDiskusis.findOne({
             where: {
-                cdid: req.params.id,
-                userId: req.params.uid,
-                diskusiId: req.params.did
+                diskusiId: req.params.did,
+                cdid: req.params.id
             }
         });
 
@@ -136,7 +135,7 @@ export const deleteChatDiskusi = async (req, res) => {
 
         if (req.role === "rakyat") {
             if (req.uid === chatdiskusi.userId) {
-                await ChatDiskusi.destroy({ 
+                await ChatDiskusis.destroy({ 
                     where:{
                         // id: diskusi.id
                         [Op.and]: [{cdid: chatdiskusi.did}, {userId: req.uid}, {diskusiId: req.did}]

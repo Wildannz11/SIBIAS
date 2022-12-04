@@ -47,11 +47,11 @@ export const getTagsKebijakan = async (req, res) => {
         response = await TagsKebijakans.findAll({
             include:[{
                 model: Tags,
-                through: "tagsId"
+                as: "tags"
             }],
             include:[{
                 model: Kebijakans,
-                through: "kebijakanId"
+                as: "kebijakan"
             }],
         });
         
@@ -80,11 +80,11 @@ export const getTagsById = async (req, res) => {
             },
             include:[{
                 model: Tags,
-                through: "tagsId"
+                as: "tags"
             }],
             include:[{
                 model: Kebijakans,
-                through: "kebijakanId"
+                as: "kebijakan"
             }],
         });
 
@@ -207,7 +207,7 @@ export const deleteTagsKebijakan = async (req, res) => {
         }
 
         if (req.role === "rakyat" || req.role === "Rakyat") {
-            await TagsKebijakan.destroy({ 
+            await TagsKebijakans.destroy({ 
                 where:{
                     id: tagskebijakan.id
                     // [Op.and]: [{did: diskusi.did}, {userId: req.uid}]

@@ -8,13 +8,13 @@ const dbConfig = {
 }
 
 
-// Pake yang ini klo mau 
+// Pake yang ini klo mau running di locahost
 // const dbConfig = {
 //     HOST: "localhost",
 //     USER: "root",
 //     PASSWORD: "",
 //     DB: "sibias",
-//     // PORT: "3306",
+//     PORT: "3306",
 //     dialect: "mysql",
 // }
 

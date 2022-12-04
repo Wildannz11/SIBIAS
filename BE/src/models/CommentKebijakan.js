@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize";
 import db from "../config/db.js";
 
 const {DataTypes} = Sequelize;
-const CommentKebijakans = db.define('chatdiskusi',{
+const CommentKebijakans = db.define('comment_kebijakan',{
     ckid:{ 
         type: DataTypes.STRING,
         defaultValue: DataTypes.UUIDV4,

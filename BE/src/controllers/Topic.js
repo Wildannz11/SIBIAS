@@ -52,10 +52,12 @@ export const getTopicDiskusi = async (req, res) => {
             //     // foreignKey: "diskusiId"
             // }],
             include:[{
-                model: Topics
+                model: Topics,
+                as: "topic"
             }],
             include:[{
-                model: Diskusis
+                model: Diskusis,
+                as: "diskusi"
             }],
         });
         
@@ -84,11 +86,11 @@ export const getTopicById = async (req, res) => {
             },
             include:[{
                 model: Topics,
-                through: "topicId"
+                as: "topic"
             }],
             include:[{
                 model: Diskusis,
-                through: "diskusiId"
+                as: "diskusi"
             }],
         });
 
@@ -111,7 +113,7 @@ export const editTopic = async (req, res) => {
         }
 
         const {nama_topic} = req.body;
-        if (req.role === "rakyat" || req.role === "Rakyat") {
+        if (req.role === "rakyat") {
             await Topics.update(
                 {
                     nama_topic: nama_topic                
@@ -146,7 +148,7 @@ export const editTopicDiskusi = async (req, res) => {
         }
 
         const {topicId, diskusiId} = req.body;
-        if (req.role === "rakyat" || req.role === "Rakyat") {
+        if (req.role === "rakyat") {
             await TopicDiskusis.update(
                 {
                     topicId: topicId,
@@ -181,7 +183,7 @@ export const deleteTopic = async (req, res) => {
             return res.status(404).json({msg: `Topic dengan nama ${topic.nama_Topic} tidak ditemukan`});
         }
 
-        if (req.role === "rakyat" || req.role === "Rakyat") {
+        if (req.role === "rakyat") {
             await Topics.destroy({ 
                 where:{
                     toid: topic.toid
@@ -210,7 +212,7 @@ export const deleteTopicDiskusi = async (req, res) => {
             return res.status(404).json({msg: `TopicDiskusi dengan id ${topicDiskusi.id} tidak ditemukan`});
         }
 
-        if (req.role === "rakyat" || req.role === "Rakyat") {
+        if (req.role === "rakyat") {
             await TopicDiskusis.destroy({ 
                 where:{
                     id: topicDiskusi.id

@@ -107,9 +107,9 @@ export const editCommentKebijakans = async (req, res) => {
 
 export const deleteCommentKebijakans = async (req, res) => {
     try {
-        const commentKebijakan = await CommentKebijakanss.findOne({
+        const commentKebijakan = await CommentKebijakans.findOne({
             where: {
-                kebijakanId: req.params.did,
+                kebijakanId: req.params.kid,
                 ckid: req.params.id
             }
         });
@@ -123,7 +123,7 @@ export const deleteCommentKebijakans = async (req, res) => {
                 await CommentKebijakans.destroy({ 
                     where:{
                         // id: commentkebijakan.id
-                        [Op.and]: [{ckid: commentKebijakan.kid}, {userId: req.uid}]
+                        [Op.and]: [{ckid: commentKebijakan.ckid}, {userId: req.uid}]
                     }
                 });
             } else {

@@ -199,7 +199,7 @@ POST http://localhost:5000/topicdiskusi
 Content-Type: application/json
 
 {
-    "topicId": "839e728b-a690-4b13-832b-216a87a15094",
+    "topicId": "12faf995-0395-4ff2-89c1-9a68ba393636",
     "diskusiId": "23ce7565-0353-4c4f-8768-d13fd6290a12"
 }
 

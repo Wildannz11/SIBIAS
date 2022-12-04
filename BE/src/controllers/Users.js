@@ -13,10 +13,7 @@ export const getUser = async (req, res) => {
                 attributes: ['uid','nama','username','email','password','role'],
                 where: {
                     role: req.params.role 
-                },
-                include: [{
-                    model: Diskusis
-                }]
+                }
             }
         );
         res.status(200).json(response);
@@ -33,10 +30,7 @@ export const getPemerintah = async (req, res) => {
                 attributes: ['uid','nama_lembaga','deskripsi_lembaga','email','password','role'],
                 where: {
                     role: role 
-                },
-                include: [{
-                    model: Kebijakans
-                }]
+                }
             }
         );
         res.status(200).json(response);
@@ -52,10 +46,7 @@ export const getUserById = async (req, res) => {
             where: {
                 role: req.params.role,
                 uid: req.params.id,
-            },
-            include: [{
-                model: Diskusis
-            }]
+            }
         });
         res.status(200).json(response);
     } catch (error) {
@@ -70,10 +61,7 @@ export const getPemerintahById = async (req, res) => {
             where: {
                 role: req.params.role,
                 uid: req.params.id,
-            },
-            include: [{
-                model: Kebijakans
-            }]
+            }
         });
         res.status(200).json(response);
     } catch (error) {
@@ -265,7 +253,7 @@ export const deleteUser = async (req, res) => {
 
         await Users.destroy({
             where:{
-                id: user.id
+                uid: user.uid
             }
         });
         res.status(200).json({msg: "Berhasil menghapus akun ini"});
@@ -275,71 +263,52 @@ export const deleteUser = async (req, res) => {
 }
 
 export const uploadImageProfileBaru = async (req, res) => {
-    const {username, nama, email, password, confirm_password, role} = req.body;
-    const uname = await Users.findOne({
+    const users = await Users.findOne({
         where: {
-            username: username
-        },
+            uid: req.params.id
+        }
     });
 
-    if (uname) {
-        return res.status(400).json({msg: "username yang anda masukkan sudah dibuat sebelumnya, tolong ubah username anda "});
+    if (!users) {
+        return res.status(404).json({msg: "Tidak ditemukan user, harap login terlebih dahulu"});
     }
 
-    const uemail = await Users.findOne({
-        where: {
-            email: email
-        },
-    });
-
-    if (uemail) {
-        return res.status(400).json({msg: "email yang anda masukkan sudah dibuat sebelumnya, tolong ubah email anda "});
-    }
-    
-    if (password !== confirm_password) {
-        return res.status(400).json({msg: "Password dan Confirm Password tidak cocok"});
-    }
-    const hasPass = await argon2.hash(password);
-    
+    let fileName = "";
     if(req.files === null || req.files === undefined) {
-        return res.status(400).json({msg: "Tidak ada file photo, silahkan pilih foto terlebih dahulu"});
-    };
+        fileName = users.foto_data;
+    } else {
+        const file = req.files.foto;
+        const fileSize = file.data.length;
+        const ext = path.extname(file.name);
+        fileName = file.md5 + ext;
+        const allowedType = ['.png','.jpg','.jpeg'];
 
-    const file = req.files.foto;
-    const fileSize = file.data.length;
-    const ext = path.extname(file.name);
-    const fileName = file.md5 + ext;
+        if(!allowedType.includes(ext.toLowerCase())) {
+            return res.status(422).json({msg: "Foto yang anda masukkan tidak valid"});
+        }
+
+        if(fileSize > 50000000) {
+            return res.status(422).json({msg: "Ukuran foto harus kurang dari 50 MB"});
+        }
+
+        file.mv(`./public/images/users/${fileName}`, (err)=>{
+            if(err) {
+                return res.status(500).json({msg: err.message})
+            };
+        });
+    }
     const url = `${req.protocol}://${req.get("host")}/images/users/${fileName}`;
-    const allowedType = ['.png','.jpg','.jpeg'];
     
-    if(!allowedType.includes(ext.toLowerCase())) {
-        return res.status(422).json({msg: "Foto yang anda masukkan tidak valid"});
+    try {
+        await Users.update(
+            {foto_data: fileName, foto_url: url },
+            {where: { uid: req.params.id } }
+        );
+        res.status(200).json({msg: "Sukses mengupdate foto profile"});
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({msg: error.message});
     }
-
-    if(fileSize > 50000000) {
-        return res.status(422).json({msg: "Ukuran foto harus kurang dari 50 MB"})
-    }
-
-    file.mv(`./public/images/users/${fileName}`, async(err) => {
-        if(err){
-            return res.status(500).json({msg: err.message});
-        }
-        try {
-            await Users.create({
-                username: username,
-                nama: nama,
-                email: email,
-                password: hasPass,
-                role: role,
-                foto_data: fileName, 
-                foto_url: url
-            });
-            res.status(201).json({msg: "Sukses mendaftarkan akun dan mengupload foto profile"});
-        } catch (error) {
-            console.log(error.message);
-            res.status(400).json({msg: error.message});
-        }
-    })
 }
 
 export const editUploadImageProfile = async (req, res) => {
@@ -381,7 +350,7 @@ export const editUploadImageProfile = async (req, res) => {
             };
         });
     }
-    // const name = req.body.title;
+    
     const url = `${req.protocol}://${req.get("host")}/images/users/${fileName}`;
     
     try {

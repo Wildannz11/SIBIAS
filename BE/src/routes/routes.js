@@ -125,15 +125,15 @@ router.post('/kebijakan', verifyUser, pemerintahOnly, createKebijakan);
 router.patch('/kebijakan/:id', verifyUser, pemerintahOnly, editKebijakan);
 router.delete('/kebijakan/:id', verifyUser, pemerintahOnly, deleteKebijakan);
 
-router.post('/images/kebijakan', verifyUser, uploadImageKebijakanBaru);
+router.post('/kebijakansnew', verifyUser, uploadImageKebijakanBaru);
 router.patch('/images/kebijakan/:id', verifyUser, editUploadImageKebijakan);
 router.patch('/kebijakan/publish/:id', verifyUser, publishKebijakan);
 
 router.get('/commentkebijakan', verifyUser, getCommentKebijakans);
 router.get('/commentkebijakan/:id', verifyUser, getCommentKebijakansById);
-router.post('/commentkebijakan', verifyUser, pemerintahOnly, createCommentKebijakans);
-router.patch('/commentkebijakan/:id', verifyUser, pemerintahOnly, editCommentKebijakans);
-router.delete('/commentkebijakan/:id', verifyUser, pemerintahOnly, deleteCommentKebijakans);
+router.post('/commentkebijakan/:kid', verifyUser, createCommentKebijakans);
+router.patch('/commentkebijakan/:kid/:id', verifyUser, editCommentKebijakans);
+router.delete('/commentkebijakan/:kid/:id', verifyUser, deleteCommentKebijakans);
 
 
 
@@ -168,7 +168,7 @@ router.patch('/pemerintah/:id',  verifyUser, pemerintahOnly, editPemerintah);
 router.delete('/users/:id',  verifyUser, deleteUser);
 
 // post user with image 
-router.post('/usersnew', uploadImageProfileBaru);
+router.patch('/images/users/:id', verifyUser, uploadImageProfileBaru);
 router.patch('/images/users/:id', verifyUser, editUploadImageProfile);
 
 

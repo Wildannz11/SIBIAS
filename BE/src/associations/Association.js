@@ -105,7 +105,7 @@ Kebijakans.belongsTo(Users,
     }
 );
 
-// 
+// Comment kebijakan
 CommentKebijakans.belongsTo(Kebijakans,
     {
         foreignKey: 'kebijakanId'
@@ -119,7 +119,7 @@ Kebijakans.hasMany(CommentKebijakans,
 );
 
 
-// Users chatdiskusi
+// Users comment kebijakan
 Users.hasMany(CommentKebijakans,
     {
         foreignKey: 'userId'

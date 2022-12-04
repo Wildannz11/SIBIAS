@@ -144,12 +144,12 @@ GET http://localhost:5000/diskusi
 
 // get discussion by id
 ###
-GET http://localhost:5000/diskusi/23ce7565-0353-4c4f-8768-d13fd6290a12
+GET http://localhost:5000/diskusi/c3eeea8d-4702-4d6d-8391-23f7989e258b
 
 
 // Update discussion by id
 ###
-PATCH http://localhost:5000/diskusi/23ce7565-0353-4c4f-8768-d13fd6290a12
+PATCH http://localhost:5000/diskusi/c3eeea8d-4702-4d6d-8391-23f7989e258b
 Content-Type: application/json
 
 {
@@ -158,13 +158,13 @@ Content-Type: application/json
 
 // Delete discussion by id
 ###
-DELETE http://localhost:5000/diskusi/dae7d346-b714-4f12-b44f-2dfbbbaa4ed3
+DELETE http://localhost:5000/diskusi/a0420c58-55c7-42b6-9109-15bb4ea19f2d
 
 
 
 // CUD chatdiskusi 
 ###
-POST http://localhost:5000/chatdiskusi/23ce7565-0353-4c4f-8768-d13fd6290a12
+POST http://localhost:5000/chatdiskusi/c3eeea8d-4702-4d6d-8391-23f7989e258b
 Content-Type: application/json
 
 {
@@ -173,7 +173,7 @@ Content-Type: application/json
 
 // Edit chat diskusi
 ###
-PATCH http://localhost:5000/chatdiskusi/23ce7565-0353-4c4f-8768-d13fd6290a12/64238973-27f2-44ae-aaf0-84a6aaaf6249
+PATCH http://localhost:5000/chatdiskusi/c3eeea8d-4702-4d6d-8391-23f7989e258b/64238973-27f2-44ae-aaf0-84a6aaaf6249
 Content-Type: application/json
 
 {
@@ -182,7 +182,7 @@ Content-Type: application/json
 
 // Deleete Chat Diskusi
 ###
-DELETE http://localhost:5000/chatdiskusi/23ce7565-0353-4c4f-8768-d13fd6290a12
+DELETE http://localhost:5000/chatdiskusi/c3eeea8d-4702-4d6d-8391-23f7989e258b
 
 
 // CRUD Topic
@@ -199,8 +199,8 @@ POST http://localhost:5000/topicdiskusi
 Content-Type: application/json
 
 {
-    "topicId": "12faf995-0395-4ff2-89c1-9a68ba393636",
-    "diskusiId": "23ce7565-0353-4c4f-8768-d13fd6290a12"
+    "topicId": "2b5a026a-4511-496b-b466-9d7e83d8deb4",
+    "diskusiId": "c3eeea8d-4702-4d6d-8391-23f7989e258b"
 }
 
 ###
@@ -232,12 +232,12 @@ GET http://localhost:5000/kebijakan
 
 // get kebijakan by id
 ###
-GET http://localhost:5000/kebijakan/dae7d346-b714-4f12-b44f-2dfbbbaa4ed3
+GET http://localhost:5000/kebijakan/a0420c58-55c7-42b6-9109-15bb4ea19f2d
 
 
 // Update kebijakan by id
 ###
-PATCH http://localhost:5000/kebijakan/dae7d346-b714-4f12-b44f-2dfbbbaa4ed3
+PATCH http://localhost:5000/kebijakan/a0420c58-55c7-42b6-9109-15bb4ea19f2d
 Content-Type: application/json
 
 {
@@ -247,7 +247,7 @@ Content-Type: application/json
 
 // Delete kebijakan by id
 ###
-DELETE http://localhost:5000/kebijakan/dae7d346-b714-4f12-b44f-2dfbbbaa4ed3
+DELETE http://localhost:5000/kebijakan/a0420c58-55c7-42b6-9109-15bb4ea19f2d
 
 
 
@@ -272,7 +272,7 @@ Content-Type: multipart/form-data
 
 // publish kebijakan
 ###
-PATCH http://localhost:5000/kebijakan/publish/kid
+PATCH http://localhost:5000/kebijakan/publish/a0420c58-55c7-42b6-9109-15bb4ea19f2d
 
 
 // CRUD tags kebijakan
@@ -289,8 +289,8 @@ POST http://localhost:5000/tagskebijakan
 Content-Type: application/json
 
 {
-    "tagsId": "92ef79bf-51dd-4824-b102-686523d4a89c",
-    "kebijakanId": "9ea82998-706c-4c71-b362-75daba96ff36"
+    "tagsId": "4c455b28-92ed-4599-a76c-0b5463777591",
+    "kebijakanId": "a0420c58-55c7-42b6-9109-15bb4ea19f2d"
 }
 
 
@@ -303,3 +303,14 @@ GET http://localhost:5000/tagskebijakan
 
 ###
 GET http://localhost:5000/tags/92ef79bf-51dd-4824-b102-686523d4a89c
+
+
+
+
+###
+POST http://localhost:5000/commentkebijakan/a0420c58-55c7-42b6-9109-15bb4ea19f2d
+Content-Type: application/json
+
+{
+    "isi_comment": "Pendapatku kebijakan ini sangat buruk"
+}

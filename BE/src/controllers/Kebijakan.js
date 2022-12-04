@@ -1,24 +1,44 @@
 // import Kebijakan from "../models/KebijakanModel.js";
 // import Users from "../models/UserModel.js";
-import { Users, Kebijakans, CommentKebijakans } from "../associations/Association.js";
+import { Users, Kebijakans, CommentKebijakans, Tags } from "../associations/Association.js";
 import { Op } from "sequelize";
+import path from "path";
 import fs from "fs";
 
 export const getKebijakan = async (req, res) => {
     try {
         let response;
         response = await Kebijakans.findAll({
-            include:[{
-                model: Users,
-                attributes:['nama_lembaga','email']
-            }],
+            // include:[{
+            //     model: Users,
+            //     attributes:['nama_lembaga','email']
+            // }],
+            // include:[{
+            //     model: CommentKebijakans,
+            //     attributes:['isi_comment'],
+            //     include:[{
+            //         model: Users,
+            //         attributes:['nama','username','email']
+            //     }],
+            // }]
             include:[{
                 model: CommentKebijakans,
                 attributes:['isi_comment'],
                 include:[{
                     model: Users,
                     attributes:['nama','username','email']
-                }],
+                }]
+            },
+            {
+                model: Users,
+                as: 'user',
+                attributes:['nama_lembaga','email'],
+            },
+            {
+                model: Tags,
+                through: "tags_kebijakan",
+                as: "tags",
+                foreignKey: "tagsId",
             }]
         });
         res.status(200).json(response);
@@ -53,23 +73,30 @@ export const getKebijakanById = async (req, res) => {
 
         let response;
         response = await Kebijakans.findOne({
-            attributes: ['kid','judul_kebijakan','isi_kebijakan','jumlah_kunjungan','sudah_publish'],
+            attributes: ['kid','judul_kebijakan','isi_kebijakan','jumlah_kunjungan','sudah_publish','foto_data','foto_url'],
             where: {
                 kid: kebijakan.kid
             },
             include:[{
-                model: Users,
-                attributes:['nama_lembaga','email']
-            }],
-            include:[{
                 model: CommentKebijakans,
+                // as: 'commentkebijakan',
                 attributes:['isi_comment'],
                 include:[{
                     model: Users,
                     attributes:['nama','username','email']
-                }],
+                }]
+            },
+            {
+                model: Users,
+                as: 'user',
+                attributes:['nama_lembaga','email'],
+            },
+            {
+                model: Tags,
+                through: "tags_kebijakan",
+                as: "tags",
+                foreignKey: "tagsId",
             }]
-             
         });
         
         req.kid = kebijakan.kid;
@@ -131,6 +158,37 @@ export const editKebijakan = async (req, res) => {
     }
 }
 
+export const deleteKebijakanWithoutImage = async (req, res) => {
+    try {
+        const kebijakan = await Kebijakans.findOne({
+            where: {
+                kid: req.params.id
+            }
+        });
+
+        if (!kebijakan) {
+            return res.status(404).json({msg: "Kebijakan tidak ditemukan"});
+        }
+
+        if (req.role === "pemerintah") {
+            if (req.uid === kebijakan.userId) {
+                await Kebijakans.destroy({ 
+                    where:{
+                        // id: Kebijakan.id
+                        [Op.and]: [{kid: kebijakan.kid}, {userId: req.uid}]
+                    }
+                });
+            } else {
+                return res.status(403).json({msg: "Harus login dengan email dan username yang sesuai"});
+            }       
+        }
+
+        res.status(200).json({msg: "Sukses menghapus judul Kebijakan"});
+    } catch (error) {
+        res.status(500).json({msg: error.message}); 
+    }
+}
+
 export const deleteKebijakan = async (req, res) => {
     try {
         const kebijakan = await Kebijakans.findOne({
@@ -151,7 +209,7 @@ export const deleteKebijakan = async (req, res) => {
                 await Kebijakans.destroy({ 
                     where:{
                         // id: Kebijakan.id
-                        [Op.and]: [{kid: Kebijakan.kid}, {userId: req.uid}]
+                        [Op.and]: [{kid: kebijakan.kid}, {userId: req.uid}]
                     }
                 });
             } else {
@@ -180,7 +238,7 @@ export const uploadImageKebijakanBaru = async (req, res) => {
     if(req.files === null || req.files === undefined) {
         fileName = kebijakan.foto_data;
     } else {
-        const file = req.files.file;
+        const file = req.files.foto;
         const fileSize = file.data.length;
         const ext = path.extname(file.name);
         fileName = file.md5 + ext;
@@ -206,7 +264,7 @@ export const uploadImageKebijakanBaru = async (req, res) => {
     try {
         await Kebijakans.update(
             { foto_data: fileName, foto_url: url },
-            { where: { id: req.params.id } }
+            { where: { kid: req.params.id } }
         );
         res.status(200).json({msg: "Sukses memasukkan foto kebijakan"});
     } catch (error) {
@@ -230,7 +288,7 @@ export const editUploadImageKebijakan = async (req, res) => {
     if(req.files === null || req.files === undefined) {
         fileName = kebijakan.foto_data;
     } else {
-        const file = req.files.file;
+        const file = req.files.foto;
         const fileSize = file.data.length;
         const ext = path.extname(file.name);
         fileName = file.md5 + ext;
@@ -260,7 +318,7 @@ export const editUploadImageKebijakan = async (req, res) => {
     try {
         await Kebijakans.update(
             { foto_data: fileName, foto_url: url },
-            { where: { id: req.params.id } }
+            { where: { kid: req.params.id } }
         );
         res.status(200).json({msg: "Sukses mengupdate foto kebijakan"});
     } catch (error) {
@@ -271,7 +329,7 @@ export const editUploadImageKebijakan = async (req, res) => {
 
 export const publishKebijakan = async (req, res) => {
     try {
-        const kebijakan = await Kebijakan.findOne({
+        const kebijakan = await Kebijakans.findOne({
             where: {
                 kid: req.params.id
             }
@@ -287,6 +345,8 @@ export const publishKebijakan = async (req, res) => {
                 kid: kebijakan.kid
             }}
         );
+
+        res.status(200).json({msg: `Sukses melakukan publish kebijakan ${kebijakan.judul_kebijakan}` })
     } catch (error) {
         console.log(error.message);
         res.status(400).json({msg: error.message});

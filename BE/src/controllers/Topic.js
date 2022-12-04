@@ -44,21 +44,21 @@ export const getTopicDiskusi = async (req, res) => {
     try {
         let response;
         
-        response = await TopicDiskusis.findAll({
-            // include:[{
-            //     model: Diskusis,
-            //     // through: "topic_diskusi",
-            //     as: "topics",
-            //     // foreignKey: "diskusiId"
-            // }],
-            include:[{
-                model: Topics,
-                as: "topic"
-            }],
+        response = await Topics.findAll({
             include:[{
                 model: Diskusis,
-                as: "diskusi"
+                through: "topic_diskusi",
+                as: "diskusi",
+                foreignKey: "diskusiId"
             }],
+            // include:[{
+            //     model: Topics,
+            //     as: "topic"
+            // }],
+            // include:[{
+            //     model: Diskusis,
+            //     as: "diskusi"
+            // }],
         });
         
         res.status(200).json(response);
@@ -69,7 +69,7 @@ export const getTopicDiskusi = async (req, res) => {
 
 export const getTopicById = async (req, res) => {
     try {
-        const topicDiskusi = await TopicDiskusis.findAll({
+        const topicDiskusi = await Topics.findAll({
             where:{
                 topicId: req.params.id
             }
@@ -80,18 +80,24 @@ export const getTopicById = async (req, res) => {
         }
 
         let response;
-        response = await TopicDiskusis.findAll({
+        response = await Topics.findAll({
             where: {
-                topicId: topicDiskusi.topicId
+                toid: topicDiskusi.toid
             },
             include:[{
-                model: Topics,
-                as: "topic"
-            }],
-            include:[{
                 model: Diskusis,
-                as: "diskusi"
+                through: "topic_diskusi",
+                as: "diskusi",
+                foreignKey: "diskusiId"
             }],
+            // include:[{
+            //     model: Topics,
+            //     as: "topic"
+            // }],
+            // include:[{
+            //     model: Diskusis,
+            //     as: "diskusi"
+            // }],
         });
 
         res.status(200).json(response);

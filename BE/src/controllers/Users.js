@@ -236,6 +236,29 @@ export const editPemerintah = async (req, res) => {
     }
 }
 
+export const deleteUserWithoutImage = async (req, res) => {
+    const user = await Users.findOne({
+        where: {
+            uid: req.params.id
+        }
+    });
+
+    if (!user) {
+        return res.status(404).json({msg: "User tidak ditemukan"});
+    }
+
+    try {
+        await Users.destroy({
+            where:{
+                uid: user.uid
+            }
+        });
+        res.status(200).json({msg: "Berhasil menghapus akun ini"});
+    } catch (error) {
+        res.status(400).json({msg: error.message});
+    }
+}
+
 export const deleteUser = async (req, res) => {
     const user = await Users.findOne({
         where: {

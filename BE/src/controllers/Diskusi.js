@@ -14,17 +14,28 @@ export const getDiskusi = async (req, res) => {
         response = await Diskusis.findAll({
             attributes: ['did','judul_diskusi','jumlah_kunjungan'],
             include:[{
-                model: Users,
-                attributes:['nama','username','email'],
-            }],
-            include:[{
                 model: ChatDiskusis,
+                // as: 'chatdiskusi',
                 attributes:['isi_chat'],
                 include:[{
                     model: Users,
                     attributes:['nama','username','email']
                 }]
-            }]
+            },
+            {
+                model: Users,
+                as: 'user',
+                attributes:['nama','username','email'],
+            },
+            {
+                model: Topics,
+                through: "topic_diskusi",
+                as: "topics",
+                foreignKey: "topicId",
+            }
+        ],
+            
+            
         });
         
         res.status(200).json(response);
@@ -62,20 +73,31 @@ export const getDiskusiById = async (req, res) => {
             where: {
                 did: diskusi.did
             },
-            include:[{
-                model: Users
-                // attributes:['nama','username','email'],
-            }],
+            // include:[{
+            //     model: Users
+            //     // attributes:['nama','username','email'],
+            // }],
             include:[{
                 model: ChatDiskusis,
+                // as: 'chatdiskusi',
+                attributes:['isi_chat'],
                 include:[{
-                    model: Users
+                    model: Users,
+                    attributes:['nama','username','email']
                 }]
-            }],
-            // include:[{
-            //     model: TopicDiskusis
-            // }]
-        })
+            },
+            {
+                model: Users,
+                as: 'user',
+                attributes:['nama','username','email'],
+            },
+            {
+                model: Topics,
+                through: "topic_diskusi",
+                as: "topics",
+                foreignKey: "topicId",
+            }]
+        });
 
         req.did = diskusi.did;
         res.status(200).json(response);

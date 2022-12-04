@@ -44,15 +44,22 @@ export const getTagsKebijakan = async (req, res) => {
     try {
         let response;
         
-        response = await TagsKebijakans.findAll({
-            include:[{
-                model: Tags,
-                as: "tags"
-            }],
+        response = await Tags.findAll({
             include:[{
                 model: Kebijakans,
-                as: "kebijakan"
-            }],
+                through: "tags_kebijakan",
+                as: "kebijakan",
+                foreignKey: "kebijakanId",
+                attributes: ['judul_kebijakan','isi_kebijakan','sudah_publish','jumlah_kunjungan'],
+            }]
+            // include:[{
+            //     model: Tags,
+            //     as: "tags"
+            // }],
+            // include:[{
+            //     model: Kebijakans,
+            //     as: "kebijakan"
+            // }],
         });
         
         res.status(200).json(response);
@@ -63,9 +70,9 @@ export const getTagsKebijakan = async (req, res) => {
 
 export const getTagsById = async (req, res) => {
     try {
-        const tagskebijakan = await TagsKebijakans.findOne({
+        const tagskebijakan = await Tags.findOne({
             where:{
-                tagsId: req.params.id
+                tid: req.params.id
             }
         });
 
@@ -74,18 +81,17 @@ export const getTagsById = async (req, res) => {
         }
 
         let response;
-        response = await TagsKebijakans.findAll({
+        response = await Tags.findAll({
             where: {
-                tagsId: tagskebijakan.tagsId
+                tid: tagskebijakan.tid
             },
             include:[{
-                model: Tags,
-                as: "tags"
-            }],
-            include:[{
                 model: Kebijakans,
-                as: "kebijakan"
-            }],
+                through: "tags_kebijakan",
+                as: "kebijakan",
+                foreignKey: "kebijakanId",
+                attributes: ['judul_kebijakan','isi_kebijakan','sudah_publish','jumlah_kunjungan'],
+            }]
         });
 
         res.status(200).json(response);
@@ -206,7 +212,7 @@ export const deleteTagsKebijakan = async (req, res) => {
             return res.status(404).json({msg: `tagskebijakan dengan id ${tagskebijakan.id} tidak ditemukan`});
         }
 
-        if (req.role === "rakyat" || req.role === "Rakyat") {
+        if (req.role === "rakyat") {
             await TagsKebijakans.destroy({ 
                 where:{
                     id: tagskebijakan.id

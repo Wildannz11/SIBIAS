@@ -54,7 +54,8 @@ import {
     deleteKebijakan,
     uploadImageKebijakanBaru,
     editUploadImageKebijakan,
-    publishKebijakan
+    publishKebijakan,
+    deleteKebijakanWithoutImage
 } from "../controllers/Kebijakan.js";
 
 import {
@@ -76,7 +77,8 @@ import {
     editPemerintah, 
     deleteUser,
     uploadImageProfileBaru,
-    editUploadImageProfile
+    editUploadImageProfile,
+    deleteUserWithoutImage
 } from "../controllers/Users.js"
 
 import { verifyUser , rakyatOnly , pemerintahOnly } from "../middleware/AuthUser.js";
@@ -123,17 +125,21 @@ router.get('/kebijakan', verifyUser, getKebijakan);
 router.get('/kebijakan/:id', verifyUser, getKebijakanById);
 router.post('/kebijakan', verifyUser, pemerintahOnly, createKebijakan);
 router.patch('/kebijakan/:id', verifyUser, pemerintahOnly, editKebijakan);
-router.delete('/kebijakan/:id', verifyUser, pemerintahOnly, deleteKebijakan);
+router.delete('/kebijakanimg/:id', verifyUser, pemerintahOnly, deleteKebijakan);
+router.delete('/kebijakan/:id', verifyUser, pemerintahOnly, deleteKebijakanWithoutImage);
 
-router.patch('/images/kebijakan/:id', verifyUser, uploadImageKebijakanBaru);
-router.patch('/images/kebijakan/:id', verifyUser, editUploadImageKebijakan);
-router.patch('/kebijakan/publish/:id', verifyUser, publishKebijakan);
 
+router.patch('/images/kebijakannew/:id', verifyUser, pemerintahOnly, uploadImageKebijakanBaru);
+router.patch('/images/kebijakan/:id', verifyUser, pemerintahOnly, editUploadImageKebijakan);
+router.patch('/kebijakan/publish/:id', verifyUser, pemerintahOnly, publishKebijakan);
+
+
+// CRUD comment kebijakan
 router.get('/commentkebijakan', verifyUser, getCommentKebijakans);
 router.get('/commentkebijakan/:id', verifyUser, getCommentKebijakansById);
-router.post('/commentkebijakan/:kid', verifyUser, createCommentKebijakans);
-router.patch('/commentkebijakan/:kid/:id', verifyUser, editCommentKebijakans);
-router.delete('/commentkebijakan/:kid/:id', verifyUser, deleteCommentKebijakans);
+router.post('/commentkebijakan/:kid', verifyUser, rakyatOnly, createCommentKebijakans);
+router.patch('/commentkebijakan/:kid/:id', verifyUser, rakyatOnly, editCommentKebijakans);
+router.delete('/commentkebijakan/:kid/:id', verifyUser, rakyatOnly, deleteCommentKebijakans);
 
 
 
@@ -165,10 +171,11 @@ router.post('/pemerintah', createAkunPemerintah);
 router.patch('/users/:id',  verifyUser, rakyatOnly, editUser);
 router.patch('/pemerintah/:id',  verifyUser, pemerintahOnly, editPemerintah);
 
-router.delete('/users/:id',  verifyUser, deleteUser);
+router.delete('/usersimg/:id',  verifyUser, deleteUser);
+router.delete('/users/:id',  verifyUser, deleteUserWithoutImage);
 
 // post user with image 
-router.patch('/images/users/:id', verifyUser, uploadImageProfileBaru);
+router.patch('/images/usersnew/:id', verifyUser, uploadImageProfileBaru);
 router.patch('/images/users/:id', verifyUser, editUploadImageProfile);
 
 

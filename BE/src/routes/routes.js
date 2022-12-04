@@ -125,7 +125,7 @@ router.post('/kebijakan', verifyUser, pemerintahOnly, createKebijakan);
 router.patch('/kebijakan/:id', verifyUser, pemerintahOnly, editKebijakan);
 router.delete('/kebijakan/:id', verifyUser, pemerintahOnly, deleteKebijakan);
 
-router.post('/kebijakansnew', verifyUser, uploadImageKebijakanBaru);
+router.patch('/images/kebijakan/:id', verifyUser, uploadImageKebijakanBaru);
 router.patch('/images/kebijakan/:id', verifyUser, editUploadImageKebijakan);
 router.patch('/kebijakan/publish/:id', verifyUser, publishKebijakan);
 

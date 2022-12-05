@@ -3,6 +3,7 @@ import { useState } from 'react';
 import avatar2 from '../images/avatar2.png';
 import chatBuble from '../styles/chatBuble.css';
 import PropTypes from 'prop-types';
+import { showFormattedDate, showFromattedTime } from '../utils/showFormatDate.js';
 
 function ChatBuble({
     name, 

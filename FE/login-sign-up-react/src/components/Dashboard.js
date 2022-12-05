@@ -5,8 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useToast from '../hooks/useToast';
 import UploadAvatar from './UploadAvatar';
-import NewAvatar from './NewAvatar';
-import Coba from './Coba';
+
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -60,8 +59,7 @@ function Dashboard() {
       <button className='btn btn-primary' onClick={logout}>LOGOUT</button>
       <Link to={'/blog'}><button className="btn btn-primary">BLOG</button></Link>
     <UploadAvatar/>
-    <NewAvatar/>
-    <Coba/>
+    
     </div>
   )
 }

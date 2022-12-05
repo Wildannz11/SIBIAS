@@ -19,10 +19,6 @@ function UploadAvatar() {
     setPreview(avatar2)
   }
 
-  // useEffect(() => {
-  //   console.log(preview)
-  // }, {preview})
-
   const action = () => {
     const cardChoseImg = document.querySelector('.upload-img-container');
     cardChoseImg.style.display = 'block';

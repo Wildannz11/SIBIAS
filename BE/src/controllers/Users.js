@@ -250,28 +250,28 @@ export const editPemerintah = async (req, res) => {
     }
 }
 
-export const deleteUserWithoutImage = async (req, res) => {
-    const user = await Users.findOne({
-        where: {
-            uid: req.params.id
-        }
-    });
+// export const deleteUserWithoutImage = async (req, res) => {
+//     const user = await Users.findOne({
+//         where: {
+//             uid: req.params.id
+//         }
+//     });
 
-    if (!user) {
-        return res.status(404).json({msg: "User tidak ditemukan"});
-    }
+//     if (!user) {
+//         return res.status(404).json({msg: "User tidak ditemukan"});
+//     }
 
-    try {
-        await Users.destroy({
-            where:{
-                uid: user.uid
-            }
-        });
-        res.status(200).json({msg: "Berhasil menghapus akun ini"});
-    } catch (error) {
-        res.status(400).json({msg: error.message});
-    }
-}
+//     try {
+//         await Users.destroy({
+//             where:{
+//                 uid: user.uid
+//             }
+//         });
+//         res.status(200).json({msg: "Berhasil menghapus akun ini"});
+//     } catch (error) {
+//         res.status(400).json({msg: error.message});
+//     }
+// }
 
 export const deleteUser = async (req, res) => {
     const user = await Users.findOne({
@@ -285,8 +285,11 @@ export const deleteUser = async (req, res) => {
     }
 
     try {
-        const filepath = `./public/images/users/${user.foto_data}`;
-        fs.unlinkSync(filepath);
+        const fotodata  = user.foto_data === "" && user.foto_url === "";
+        if (!fotodata){
+            const filepath = `./public/images/users/${user.foto_data}`;
+            fs.unlinkSync(filepath);
+        }
 
         await Users.destroy({
             where:{

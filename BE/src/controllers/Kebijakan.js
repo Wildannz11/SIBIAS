@@ -149,43 +149,12 @@ export const editKebijakan = async (req, res) => {
                 return res.status(403).json({msg: "Harus login dengan email dan username yang sesuai"});
             }       
         } else {
-            return res.status(404).json({msg: "Pemerintah tidak dapat mengupdate judul Kebijakan"})
+            return res.status(404).json({msg: "Rakyat tidak dapat mengupdate judul Kebijakan"})
         }
 
         res.status(200).json({msg: "Sukses mengedit judul Kebijakan"});
     } catch (error) {
         res.status(500).json({msg: error.message});
-    }
-}
-
-export const deleteKebijakanWithoutImage = async (req, res) => {
-    try {
-        const kebijakan = await Kebijakans.findOne({
-            where: {
-                kid: req.params.id
-            }
-        });
-
-        if (!kebijakan) {
-            return res.status(404).json({msg: "Kebijakan tidak ditemukan"});
-        }
-
-        if (req.role === "pemerintah") {
-            if (req.uid === kebijakan.userId) {
-                await Kebijakans.destroy({ 
-                    where:{
-                        // id: Kebijakan.id
-                        [Op.and]: [{kid: kebijakan.kid}, {userId: req.uid}]
-                    }
-                });
-            } else {
-                return res.status(403).json({msg: "Harus login dengan email dan username yang sesuai"});
-            }       
-        }
-
-        res.status(200).json({msg: "Sukses menghapus judul Kebijakan"});
-    } catch (error) {
-        res.status(500).json({msg: error.message}); 
     }
 }
 
@@ -203,8 +172,11 @@ export const deleteKebijakan = async (req, res) => {
 
         if (req.role === "pemerintah") {
             if (req.uid === kebijakan.userId) {
-                const filepath = `./public/images/kebijakan/${kebijakan.foto_data}`;
-                fs.unlinkSync(filepath);
+                const fotodata  = kebijakan.foto_data === "" && kebijakan.foto_url === "";
+                if (!fotodata){
+                    const filepath = `./public/images/kebijakan/${kebijakan.foto_data}`;
+                    fs.unlinkSync(filepath);
+                }
 
                 await Kebijakans.destroy({ 
                     where:{
@@ -231,7 +203,7 @@ export const editUploadImageKebijakan = async (req, res) => {
     });
 
     if (!kebijakan) {
-        return res.status(404).json({msg: "Tidak ditemukan user, harap login terlebih dahulu"});
+        return res.status(404).json({msg: "Tidak ditemukan kebijakan, harap buat baru kebijakan terlebih dahulu"});
     }
 
     let fileName = "";

@@ -52,7 +52,7 @@ import {
     createKebijakan,
     editKebijakan,
     deleteKebijakan,
-    uploadImageKebijakanBaru,
+    // uploadImageKebijakanBaru,
     editUploadImageKebijakan,
     publishKebijakan,
     deleteKebijakanWithoutImage
@@ -76,7 +76,7 @@ import {
     editUser,
     editPemerintah, 
     deleteUser,
-    uploadImageProfileBaru,
+    // uploadImageProfileBaru,
     editUploadImageProfile,
     deleteUserWithoutImage,
     getUserImageById
@@ -85,6 +85,14 @@ import {
 import { verifyUser , rakyatOnly , pemerintahOnly } from "../middleware/AuthUser.js";
 
 const router = express.Router();
+
+const getHome = async (req, res) => {
+    res.status(200).send('This is home menu of SIBIAS BE Apps');
+    console.log("This is home menu of SIBIAS BE Apps");
+}    
+
+// Home
+router.get('/', getHome)
 
 // Authentication
 router.get('/users/me', statusLoginUser);
@@ -130,7 +138,7 @@ router.delete('/kebijakanimg/:id', verifyUser, pemerintahOnly, deleteKebijakan);
 router.delete('/kebijakan/:id', verifyUser, pemerintahOnly, deleteKebijakanWithoutImage);
 
 
-router.patch('/images/kebijakannew/:id', verifyUser, pemerintahOnly, uploadImageKebijakanBaru);
+// router.patch('/images/kebijakannew/:id', verifyUser, pemerintahOnly, uploadImageKebijakanBaru);
 router.patch('/images/kebijakan/:id', verifyUser, pemerintahOnly, editUploadImageKebijakan);
 router.patch('/kebijakan/publish/:id', verifyUser, pemerintahOnly, publishKebijakan);
 
@@ -176,7 +184,7 @@ router.delete('/usersimg/:id',  verifyUser, deleteUser);
 router.delete('/users/:id',  verifyUser, deleteUserWithoutImage);
 
 // patch user with image 
-router.patch('/images/usersnew/:id', verifyUser, uploadImageProfileBaru);
+// router.patch('/images/usersnew/:id', verifyUser, uploadImageProfileBaru);
 router.patch('/images/users/:id', verifyUser, editUploadImageProfile);
 router.get('/images/users/:id', verifyUser, getUserImageById);
 

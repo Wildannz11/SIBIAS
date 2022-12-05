@@ -13,7 +13,7 @@ function List(props) {
         }
     })
     return (
-        <div>
+        <div className='container'>
             {filteredData.map((item) => (
               <CardDiskusi judul={item.judul} creator={item.nama} waktu={item.waktu} deskripsi={item.keterangan} lihat={item.lihat} komentar={item.komentar}/>
             ))}

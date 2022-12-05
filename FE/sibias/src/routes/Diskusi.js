@@ -34,11 +34,11 @@ function Diskusi(){
     return (
         <div>
             <Hero />
-            <div className="main">
+            <div className="main container text-center">
                 <h1>Diskusi Kebijakan</h1>
                 <ThemeProvider theme={theme}>
                     <Link to="/tambah_diskusi" className="Link">
-                    <Button variant="contained" color="primary" startIcon={<AddCircleIcon />}>
+                    <Button variant="contained" className="mb-2" startIcon={<AddCircleIcon />}>
                         Buat Diskusi Baru
                     </Button>
                     </Link>

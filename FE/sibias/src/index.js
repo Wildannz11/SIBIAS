@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from "./components/Navbar";
-import "./App.css";
+import "./styles/App.css";
 import Home from "./routes/Home";
 import Diskusi from "./routes/Diskusi";
 import Profile from "./routes/Profile";
@@ -17,6 +17,7 @@ import Sosialisasi from "./routes/Sosialisasi";
 import ErrorPage from "./routes/ErrorPage";
 import TambahDiskusi from "./routes/TambahDiskusi";
 import ShowDiskusi from "./routes/ShowDiskusi";
+import ShowSosialisasi from "./routes/ShowSosialisasi";
 
 const AppLayout = () => {
     return (
@@ -55,6 +56,10 @@ const AppLayout = () => {
         {
           path: "show_diskusi",
           element: <ShowDiskusi />,
+        },
+        {
+          path: "show_sosialisasi",
+          element: <ShowSosialisasi />,
         },
       ],
     },

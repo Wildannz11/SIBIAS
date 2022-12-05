@@ -51,17 +51,6 @@ function Navbar() {
               </li>
               <li className="nav-item">
                 <NavLink
-                  to="/profile"
-                  className={({ isActive }) =>
-                    "nav-links" + (isActive ? " activated" : "")
-                  }
-                  onClick={closeMobileMenu}
-                >
-                  Profile
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
                   to="/sosialisasi"
                   className={({ isActive }) =>
                     "nav-links" + (isActive ? " activated" : "")
@@ -69,6 +58,17 @@ function Navbar() {
                   onClick={closeMobileMenu}
                 >
                   Sosialisasi
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  to="/profile"
+                  className={({ isActive }) =>
+                    "nav-links" + (isActive ? " activated" : "")
+                  }
+                  onClick={closeMobileMenu}
+                >
+                  Profile
                 </NavLink>
               </li>
             </ul>

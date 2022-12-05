@@ -56,25 +56,48 @@
 
   .deskripsi {
     margin-right: 100px;
+    overflow: hidden;
+     text-overflow: ellipsis;
+     display: -webkit-box;
+     -webkit-line-clamp: 3;
+             line-clamp: 3; 
+     -webkit-box-orient: vertical;
   }
 
   @media screen and (max-width: 960px) {
+    .classCard {
+      margin: 1%;
+      width: 100%;
+      border: 1px solid #dcdcdc;
+      border-radius: 5px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    
     .classCard__className {
-      font-weight: 300;
+      font-weight: 300px;
       font-size: 20px;
     }
     .classCard__creatorPhoto {
       position: absolute;
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       right: 5px;
       border-radius: 9999px;
     }
 
     .classCard__middle {
-      text-align: justify;
-      height: 100px;
+      height: 90px;
       border-bottom: 1px solid #dcdcdc;
+    }
+
+    .deskripsi {
+      margin-top: 20px;
+      margin-right: 0px;
+    }
+
+    .classCard__creatorName {
+      margin-right: 60px;
     }
   }
 

@@ -17,7 +17,7 @@ const CommentDiskusi = (props) => {
     <div className="classCard__lower">
         <FaTelegramPlane className="icon m-2" size="2rem"/>
         <input type="text" className="form-control m-2" id="name-input" placeholder="Masukan Komentar"/>
-        <img src={creatorPhoto} className="foto_komen" alt='Foto'/>
+        {/* <img src={creatorPhoto} className="foto_komen" alt='Foto'/> */}
     </div>
   </div>
   );

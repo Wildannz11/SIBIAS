@@ -3,16 +3,18 @@ import "./css/CardSosialisasi.css";
  
 const CardSosialisasi = (props) => {
   return (
-  <Card style={{ width: '18rem'}}>
-    <Card.Img variant="top" src={props.image} />
-    <Card.Body>
-      <Card.Title>{props.judul}</Card.Title>
-      <Card.Text>
-        {props.isi}
-      </Card.Text>
-      <Button variant="primary">Go somewhere</Button>
-    </Card.Body>
-  </Card>
+  <article className="list-item">
+    <a href="/show_sosialisasi">
+            <div className="list-thumbnail">
+                <img className="lazyload list-item__thumbnail card-image" tabindex="0" crossorigin="anonymous" alt={props.name || '-'} src={props.image}/>
+                <p className="list-city">Sosialisasi</p>
+            </div>
+            <div className="list-item__content">
+                <h2 className="list-item__title">{props.judul || '-'}</h2>
+                <p className="list-item__description">{props.isi || '-'}...</p>
+            </div>
+    </a>
+  </article>
   );
 }
   

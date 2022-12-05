@@ -36,7 +36,7 @@ export default function ShowProfile() {
             setAddress(data.alamat);
             setPhoneNumber(data.no_hp);
             const dataImage = data.foto_url;
-            if(dataImage === null){
+            if(!dataImage){
               setImageUser(avatar2);
             } else{
               setImageUser(dataImage);

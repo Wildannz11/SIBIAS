@@ -1,6 +1,25 @@
 import React from 'react'
-
+import axios from 'axios'
 function Coba() {
+  const editImageIfNull = (uid, data) => {
+    axios.patch(`http://localhost:5000/images/users/${uid}`, data, {
+          headers: {
+            'accept': 'application/json',
+            'Accept-Language': 'en-US,en;q=0.8',
+            'Content-Type': `multipart/form-data boundary=${data._boundary}`,
+          }
+        })
+  }
+
+  const editImageIfNotNull = (uid, data) => {
+    axios.patch(`http://localhost:5000/images/usersnew/${uid}`, data, {
+          headers: {
+            'accept': 'application/json',
+            'Accept-Language': 'en-US,en;q=0.8',
+            'Content-Type': `multipart/form-data boundary=${data._boundary}`,
+          }
+        })
+  }
   return (
     <div>
 

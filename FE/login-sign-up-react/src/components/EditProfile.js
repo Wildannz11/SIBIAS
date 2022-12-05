@@ -10,7 +10,7 @@ import avatar2 from '../images/avatar2.png';
 import FormData from 'form-data';
 
 
-function EditProfile() {
+export default function EditProfile() {
   const [showToast] = useToast();
   const navigate = useNavigate();
   const [name, setName] = useState('');
@@ -77,12 +77,12 @@ function EditProfile() {
             let mySQLDate = data.tgl_lahir
             let dateParse = new Date(mySQLDate).toISOString().split('T')[0];
             setTglLahir(dateParse);
-            // const dataImage = data.foto_url;
-            // if(dataImage === null){
-            //   setImageUser(avatar2);
-            // } else{
-            //   setImageUser(dataImage);
-            // }
+            const dataImage = data.foto_url;
+            if(dataImage === null){
+              setImageUser(avatar2);
+            } else{
+              setImageUser(dataImage);
+            }
             // selanjutnya lanjutin ini
           })
         } catch (error) {
@@ -138,18 +138,20 @@ function EditProfile() {
       }
     }
 
-    
-    if(phoneNumber.match(number)){
-      if(phoneNumber.length < 10 || phoneNumber.length > 13){
-        setMsgTelephone('Isikan Nomor Telephone yang Valid')
-        isValid = false
+    if(phoneNumber){
+      if(phoneNumber.match(number)){
+        if(phoneNumber.length < 10 || phoneNumber.length > 13){
+          setMsgTelephone('Isikan Nomor Telephone yang Valid')
+          isValid = false
+        } else {
+          setMsgTelephone('');
+        }
       } else {
-        setMsgTelephone('');
+        setMsgTelephone('Mohon Hanya isikan angka');
+        isValid = false;
       }
-    } else {
-      setMsgTelephone('Mohon Hanya isikan angka');
-      isValid = false;
     }
+    
     
     if(isValid){
       try {
@@ -175,12 +177,6 @@ function EditProfile() {
               showToast(error.response.data.msg, 'fail');
             }
           }
-
-          // try {
-            
-          // } catch (error) {
-            
-          // }
         })
       } catch (error) {
         if(error.response){
@@ -192,69 +188,103 @@ function EditProfile() {
   }
 
   const [image, setImages] = useState('') //untuk API
-  // const [imagePreview, setImagesPreview] = useState('')
+  const onUpload = (e) => {
+    e.preventDefault();
+    let data = new FormData();
+    data.append('foto', image);
+
+    axios.get('http://localhost:5000/users/me')
+    .then(response => {
+      const Uid = response.data.uid;
+
+      axios.get(`http://localhost:5000/users/rakyat/${Uid}`)
+      .then(response => {
+        const url_foto = response.data.foto_url
+        const coba = (f) => {
+          if(!f){
+              return `usersnew`
+          }else {
+              return `users`
+          }
+        }
+
+        axios.patch(`http://localhost:5000/images/${coba(url_foto)}/${Uid}`, data, {
+          headers: {
+                          'accept': 'application/json',
+                          'Accept-Language': 'en-US,en;q=0.8',
+                          'Content-Type': `multipart/form-data boundary=${data._boundary}`,
+          }
+        })
+        .then(response => {
+          axios.get(`http://localhost:5000/users/rakyat/${Uid}`)
+          .then(response => {
+            const data = response.data;
+            const dataImage = data.foto_url;
+            if(!dataImage){
+              setImageUser(avatar2);
+            } else{
+              setImageUser(dataImage);
+            }
+            showToast('Foto Profile Berhasil diperbaharui', 'success');
+          console.log('response', response)
+          const cardChoseImg = document.querySelector('.upload-img-container');
+          cardChoseImg.style.display = 'none';
+          })
+          .catch(error => {
+            console.log('eror', error)
+          })
+      })
+      .catch(error => {
+        console.log('eror', error)
+      })
+    })
+    .catch(error => {
+      console.log('eror', error)
+    })
+    })
+}
   // const onUpload = (e) => {
   //   e.preventDefault();
   //   let data = new FormData();
-  //   data.append('image', image);
+  //   data.append('foto', image);
 
   //     axios.get('http://localhost:5000/users/me')
   //     .then(response => {
   //       const Uid = response.data.uid;
   //       axios.patch(`http://localhost:5000/images/users/${Uid}`, data, {
   //         headers: {
-  //                     'Content-Type': `multipart/form-data boundary=${data._boundary}`,
+  //           'accept': 'application/json',
+  //           'Accept-Language': 'en-US,en;q=0.8',
+  //           'Content-Type': `multipart/form-data boundary=${data._boundary}`,
   //         }
   //       })
   //       .then(response => {
+  //         axios.get(`http://localhost:5000/users/rakyat/${Uid}`)
+  //         .then(response => {
+  //           const data = response.data;
+  //           const dataImage = data.foto_url;
+  //           if(dataImage === null){
+  //             setImageUser(avatar2);
+  //           } else{
+  //             setImageUser(dataImage);
+  //           }
+  //         })
+  //         .catch(error => {
+  //           showToast(error.data.msg, 'fail');
+  //         })
+  //         showToast('Foto Profile Berhasil diperbaharui', 'success');
   //         console.log('response', response)
   //         const cardChoseImg = document.querySelector('.upload-img-container');
   //         cardChoseImg.style.display = 'none';
   //       })
   //       .catch(error => {
-  //         console.log('eror', error)
+  //         showToast('terjadi kesalahan', 'fail');
   //       })
   //     })
   //     .catch(error => {
-  //       console.log('eror', error)
-  //     })
-    
+  //       showToast('Gambar Gagal di Edit', 'fail');
+  //     }) 
   // }
-  const onUpload = async (e) => {
-    e.preventDefault();
-    // const file_img = e.target.files[0];
-    // setImages(file_img);
-    let data = new FormData();
-    // data.append('file', file, file.name);
-    data.append('image', image, image.name);
-    console.log(image.name);
-
-    try {
-      let contoh = await axios.get('http://localhost:5000/users/me')
-      const Uid = contoh.data.uid;
-        try {
-          axios.patch(`http://localhost:5000/images/usersnew/${Uid}`, data, {
-            headers:{
-              'content-type': 'multipart/form-data'
-            }
-          })
-          .then(response => {
-            console.log('respon :', response)
-          })
-          const cardChoseImg = document.querySelector('.upload-img-container');
-          cardChoseImg.style.display = 'none';
-        } catch (error) {
-          if(error.response){
-            console.log(error.response.data.msg)
-          }
-        }
-    } catch (error) {
-      if(error.response){
-        console.log('eror', error.response.data.msg)
-      }
-    }
-   
-  }
 
 
   return (
@@ -264,7 +294,7 @@ function EditProfile() {
   <div className="card-body show-profile">
   <div className="text-center mb-4 img-head-container">
         <div className="text-center">
-        <img className='img-user' src={avatar2} alt='foto user'/>
+        <img className='img-user' src={imageUser} alt='foto user'/>
         </div>
         <div className="text-center edit-profile-btn-container mt-2">
         <Link to='/editprofile' onClick={action}><button type="" className="btn btn-primary mb-3 edit-profile-btn"> Edit Image</button></Link>
@@ -387,5 +417,3 @@ function EditProfile() {
         </div>
   )
 }
-
-export default EditProfile;

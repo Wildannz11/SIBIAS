@@ -4,6 +4,7 @@ import axios from 'axios';
 import useToast from '../hooks/useToast';
 import logo from '../images/logo.png';
 import Input from './HidePasswordBtn';
+import mainStyle from "../styles/main.css";
 
 function Signup() {
     const [showToast] = useToast();

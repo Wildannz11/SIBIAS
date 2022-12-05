@@ -1,0 +1,39 @@
+
+
+.ini-dia{
+    width: 100%;
+    margin-top: 2%;
+    padding : 5%;
+    box-sizing: border-box;
+    display: flex;
+    /* align-items: center; */
+}
+
+.ini-dia:hover{
+    background-color: #53D1B6;
+}
+
+.kembali:hover{
+    color: #044b5d;
+    cursor: pointer;
+}
+
+.text-center{
+    font-size: 3rem;
+}
+
+.btn{
+    color: aliceblue;
+    background-color: #09bef0;
+}
+
+.btn:hover{
+    color: aliceblue;
+    background-color: #045267;
+}
+
+@media screen and (max-width: 960px) {
+    .text-center{
+        font-size: 2rem;
+    }
+}

@@ -1,0 +1,35 @@
+.main {
+    display: flex;
+    margin-top: 50px;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Link{
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+.search {
+    width: 70%;
+}
+
+ul li {
+    font-size: 20px;
+} 
+
+@media screen and (max-width: 960px) {
+
+    h1 {
+        margin:0px;
+        font-size: 40px;
+    }
+
+    .search {
+        width: 100%;
+    }
+}

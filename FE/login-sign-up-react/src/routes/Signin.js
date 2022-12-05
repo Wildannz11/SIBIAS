@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import useInput from '../hooks/useInput';
-import logo from '../images/logo.png';
+
+import logo from '../image/logo.png';
 import useToast from '../hooks/useToast';
-import PropTypes from 'prop-types';
-// import FetchAPI from '../utils/API';
-// import PropTypes from 'prop-types';
+
 import axios from 'axios';
-import HidePasswordBtn from './HidePasswordBtn';
-import { FiEye, FiEyeOff } from 'react-icons/fi';
-import Input from './HidePasswordBtn';
-import { FaLock } from 'react-icons/fa';
-import mainStyle from "../styles/main.css";
+
+
+import Input from '../components/HidePasswordBtn';
+
+import mainStyle from "./css/main.css";
+import responsive from "./css/responsive.css";
 
 function Signin() {
   const navigate = useNavigate();
@@ -21,9 +20,7 @@ function Signin() {
   const [msg, setMsg] = useState('');
   const [msgEmail, setMsgEmail] = useState('');
   const [msgPassword, setMsgPassword] = useState('');
-  const [inputType, setInputType] = useState('');
-  const [hidePassword, setHidePassword] = React.useState(false);
-  // const input = document.querySelector('.password').type;
+
   const validate = async (e) => {
     e.preventDefault();
     
@@ -132,9 +129,5 @@ function Signin() {
     </section>
   )
 }
-
-// Signin.propTypes = {
-//   onLoginSuccess: PropTypes.func.isRequired,
-// };
 
 export default Signin

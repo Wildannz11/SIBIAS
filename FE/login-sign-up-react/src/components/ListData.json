@@ -1,0 +1,37 @@
+[{
+    "id": 1,
+    "judul": "Diskusi Kebijakan Kenaikan BBM",
+    "nama": "Cahya Diantoni",
+    "waktu": "09.00",
+    "foto": "./../image/creator.JPG",
+    "komentar": 100,
+    "lihat": 3000,
+    "keterangan": "Lorem Ipsum is simply dummy keterangan of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy keterangan ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+}, {
+    "id": 2,
+    "judul": "Diskusi Kebijakan Pemilu 2024",
+    "nama": "Fadilla Rahim",
+    "waktu": "17.00",
+    "foto": "./../image/creator.JPG",
+    "komentar": 100,
+    "lihat": 3000,
+    "keterangan": "Lorem Ipsum is simply dummy keterangan of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy keterangan ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+}, {
+    "id": 3,
+    "judul": "Diskusi Kebijakan Hari Libur",
+    "nama": "Asyifa Maulana",
+    "waktu": "12.00",
+    "foto": "./../image/creator.JPG",
+    "komentar": 100,
+    "lihat": 3000,
+    "keterangan": "Lorem Ipsum is simply dummy keterangan of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy keterangan ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+}, {
+    "id": 4,
+    "judul": "Diskusi Kebijakan Presidensial G20",
+    "nama": "Wildan Mukholad Fauzi",
+    "waktu": "20.00",
+    "foto": "./../image/creator.JPG",
+    "komentar": 100,
+    "lihat": 3000,
+    "keterangan": "Lorem Ipsum is simply dummy keterangan of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy keterangan ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+}] 

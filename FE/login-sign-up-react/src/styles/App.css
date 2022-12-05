@@ -1,0 +1,39 @@
+
+.profile,
+.sosialisasi, 
+.diskusi{
+  display: flex;
+  height: 90vh;
+  /* align-items: center; */
+  justify-content: center;
+  font-size: 3rem;
+  background-color: #fff;
+  color: #000;
+}
+
+.page-icon {
+  margin-left: 1rem;
+  font-size: 100px;
+}
+
+#error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+@media screen and (max-width: 960px) {
+
+    .profile,
+    .sosialisasi, 
+    .diskusi{
+    font-size: 2.5rem;
+  }
+
+  .page-icon {
+    margin-left: 1rem;
+    font-size: 80px;
+  }
+}

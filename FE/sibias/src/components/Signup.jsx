@@ -94,7 +94,7 @@ function Signup() {
 
         if(isValid) {
           try {
-            await axios.post('http://localhost:5000/users', {
+            await axios.post('https:/sibias.up.railway.app/users', {
               username:username,
               nama: name,
               email: email,

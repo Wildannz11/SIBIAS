@@ -1,4 +1,4 @@
-import react from "react"
+import React from "react"
 import "./css/TambahDiskusi.css"
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { Link } from "react-router-dom";

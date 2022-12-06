@@ -59,11 +59,11 @@ function Signin() {
 
     if(isValid) {
       try {
-        await axios.post('http://localhost:5000/users/login', {
+        await axios.post('https:/sibias.up.railway.app/users/login', {
           email: email,
           password: password,
         })
-        await axios.get('http://localhost:5000/users/me')
+        await axios.get('https:/sibias.up.railway.app/users/me')
         .then(response => {
           const data = response.data;
           showToast(`Hallo Selamat Datang ${data.nama}`, 'success');

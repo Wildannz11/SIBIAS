@@ -22,7 +22,6 @@ function Blog() {
     const getUserLogged = () => {
       axios.get(`${baseUrl}/users/me`)
       .then(response => {
-        const Uid = response.data.uid
         const dataImage = response.data.foto_url;
         if(!dataImage){
           setImageUser(avatar2);

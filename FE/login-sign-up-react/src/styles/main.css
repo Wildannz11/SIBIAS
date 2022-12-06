@@ -102,6 +102,7 @@ body, html {
   padding: 0;
   border: none;
   
+  
 }
 
 .edit-profile-container, .show-profile-container{
@@ -115,21 +116,31 @@ body, html {
   justify-content: center;
   align-items: center;
   border: none;
+  
 }
 
 .ini-dia{
-  width: 100%;
+  width: 60%;
   margin: 0 auto;
+  top: 40px;
+  bottom: 40px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  /* background-color: #ED6571; */
 }
 .edit-profile, .show-profile{
   width: 100%;
-  max-width: 500px;
+  /* max-width: 500px; */
   height: 100%;
+  margin: 0;
+  padding: 10px;
+  /* background-color: #ED6571; */
+  
+}
 
-  border-radius: 10%;
+.form-profile{
+  padding: 20px;
 }
 
 .sign-out-btn{
@@ -199,6 +210,15 @@ body, html {
 .img-preview{
   width: 400px;
   height: 300px;
+}
+
+.cancel-update-profile-btn{
+  background-color: #ED6571;
+  border: none;
+}
+
+.update-profile-btn{
+  border: none;
 }
 
 /* .upload-image{

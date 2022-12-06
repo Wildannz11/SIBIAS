@@ -57,6 +57,10 @@ function Blog() {
         const data = response.data
         setContentBlog(data.isi_kebijakan)
         setTitleKebijakan(data.judul_kebijakan)
+        let mySQLDate = data.updatedAt
+        let dateParse = new Date(mySQLDate).toISOString().split('T')[0];
+        setDate(dateParse);
+
       })
       .catch(error => {
         console.log(error.response.data.msg)
@@ -100,16 +104,7 @@ function Blog() {
                         onChange={(e)=>setAddComentValue(e.target.value)}
                         ></textarea>
                     </div>
-                    <div className="mb-3 add-comentar-container">
-                        <label className="form-label">Tags</label>
-                        <input 
-                        type="text" 
-                        className="form-control tags-coment" 
-                        id="tags-coment" 
-                        placeholder="#RecoverTogether"
-                        value={tags}
-                        onChange={(e)=>setTags(e.target.value)}/>
-                    </div>
+                    
                     <div className="add-comment-btn-container mt-5">
                         <button 
                         type='submit' 

@@ -1,0 +1,58 @@
+.chat-buble{
+    background-color: #dcdbdb;
+}
+/*
+--------------RESPONSIVIDADE-----------------
+*/
+
+
+@media (max-width: 660px) {
+    /* khusus untuk ChatBuble2 */
+    .img-user-coment{
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+    }
+
+    .img-user-author{
+        width: 60px;
+        height: 60px;
+        border-radius: 100%;
+    }
+}
+
+@media (min-width: 660px) {
+    .img-user-coment{
+        width: 80px;
+        height: 80px;
+        border-radius: 100%;
+    }
+
+    .img-user-author{
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+    }
+}
+
+
+
+/* khusus untuk ChatBuble2 */
+.img-user-coment-container{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.coment-value-real{
+    font-size: 10pt;
+}
+
+.date-coment{
+    font-size: 10pt;
+}
+
+.date-author-create-blog{
+    font-size: 10pt;
+}
+

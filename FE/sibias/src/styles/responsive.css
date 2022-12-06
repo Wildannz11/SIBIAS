@@ -1,0 +1,28 @@
+@media screen and (max-width: 380px){
+    .form-container{
+        height: 100%;
+        width: 100%;
+        border: none;
+    }
+    .hero{
+        border: none;
+    }
+}
+
+@media screen and (min-width: 380px){
+    .form-container{
+        height: 100%;
+        width: 100%;
+        border-radius: 0;
+    }
+
+}
+
+@media screen and (min-width: 661px){
+    .form-container{
+        height: fit-content;
+        width: 90%;
+        border-radius: 10px;
+    }
+
+}

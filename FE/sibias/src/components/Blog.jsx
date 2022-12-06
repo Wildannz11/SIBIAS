@@ -4,6 +4,7 @@ import avatar2 from '../images/avatar2.png';
 // import  from '../hooks/DATA.json';
 import ChatBuble from './ChatBuble';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 function Blog() {
     const [name, setName] = useState('Fadilla Rahim');
@@ -79,6 +80,7 @@ function Blog() {
             </div>
         </div>
       </div>
+      <Footer/>
     </div>
   )
 }

@@ -6,6 +6,7 @@ import "./css/Diskusi.css";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import { Link } from "react-router-dom";
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const theme = createTheme({
   status: {
@@ -48,6 +49,7 @@ function Sosialisasi(){
                 </ThemeProvider>
             </div>
                 <ListSosialisasi input={inputText} />
+            <Footer/>
         </div>
   
     )

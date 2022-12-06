@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import useToast from '../hooks/useToast';
 import avatar2 from '../images/avatar2.png';
 import Navbar from './Navbar';
+import Footer from './Footer';
 
 
 export default function ShowProfile() {
@@ -160,6 +161,7 @@ export default function ShowProfile() {
         </div>
       </div>
     </div>
+    <Footer/>
     </>
   )
 }

@@ -7,6 +7,8 @@ import EditProfile from './components/EditProfile';
 import Blog from './components/Blog';
 import Home from "./routes/Home";
 import Diskusi from "./routes/Diskusi";
+import ShowDiskusi from "./routes/ShowDiskusi";
+import TambahDiskusi from "./routes/TambahDiskusi";
 import Sosialisasi from "./routes/Sosialisasi";
 
 function App() {
@@ -19,10 +21,12 @@ function App() {
       <Route path='/users' element={<Signup/>}/>
       <Route path='/dashboard' element={<Home/>}/>
       <Route path='/diskusi' element={<Diskusi/>}/>
+      <Route path='/show_diskusi' element={<ShowDiskusi/>}/>
+      <Route path='/tambah_diskusi' element={<TambahDiskusi/>}/>
       <Route path='/profile' element={<ShowProfile/>}/>
       <Route path='/editProfile' element={<EditProfile/>}/>
       <Route path='/sosialisasi' element={<Sosialisasi/>}/>
-      <Route path='/showsosialisasi' element={<Blog/>}/>
+      <Route path='/show_sosialisasi' element={<Blog/>}/>
     </Routes>
     </BrowserRouter>
   );

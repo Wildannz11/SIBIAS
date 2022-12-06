@@ -14,9 +14,14 @@ function ListSosialisasi(props) {
     })
     return (
         <div className='container'>
+            <div className='row'>
             {filteredData.map((item) => (
-              <CardSosialisasi image="./../images/Kebijakan/1.jpg" judul={item.judul} isi={item.isi}/>
+            
+            <div className="col-md-4 col-sm-6 mb-3 mt-3">
+              <CardSosialisasi image={item.image} judul={item.judul} isi={item.isi}/>
+            </div>
             ))}
+            </div>
         </div>
     )
 }

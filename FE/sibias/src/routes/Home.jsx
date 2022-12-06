@@ -5,6 +5,7 @@ import sos1 from "./../images/Kebijakan/1.jpg"
 import sos2 from "./../images/Kebijakan/2.jpeg"
 import sos3 from "./../images/Kebijakan/3.jpg"
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 function Home() {
     return (
@@ -49,6 +50,7 @@ function Home() {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }

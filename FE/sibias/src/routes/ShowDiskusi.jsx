@@ -4,6 +4,7 @@ import 'semantic-ui-css/semantic.min.css'
 import CommentDiskusi from "../components/CommentDiskusi";
 import { Button, Comment, Form, Header } from 'semantic-ui-react'
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 function ShowDiskusi(){
     return (
@@ -87,6 +88,7 @@ function ShowDiskusi(){
                 </Form>
             </Comment.Group>
         </div>
+        <Footer/>
         </>
   )
 }

@@ -10,7 +10,7 @@ function Blog() {
     const [name, setName] = useState('Fadilla Rahim');
     const [date, setDate] = useState('November, 20 2022');
     const [addComentValue, setAddComentValue] = useState('');
-    const [tags, setTags] = useState('');
+    const [imageUser, setImageUser] = useState('');
     const baseUrl = 'http://localhost:3000';
     const idKebijakan = 'e375a49c-f5cb-4164-8148-40b44e78ab8c';
     const [contentBlog, setContentBlog] = useState('');
@@ -18,11 +18,17 @@ function Blog() {
     const[isiComent, setIsiComent] = useState('jahsgfdyfsedfrs');
     const [showToast] = useToast();
     
+    
     const getUserLogged = () => {
       axios.get(`${baseUrl}/users/me`)
       .then(response => {
         const Uid = response.data.uid
-        return Uid;
+        const dataImage = response.data.foto_url;
+        if(!dataImage){
+          setImageUser(avatar2);
+        } else{
+          setImageUser(dataImage);
+        }
       })
       .catch(error => {
         console.log(error.response.data.msg)
@@ -63,13 +69,13 @@ function Blog() {
 
       })
       .catch(error => {
-        console.log(error.response.data.msg)
+        console.log(error)
       })
     }
 
     useEffect(() => {
       catchKebijakan();
-      
+      getUserLogged();
       console.log();
       }, []);
   return (
@@ -81,7 +87,7 @@ function Blog() {
             </div>
             <div className="author-blog text-center">
                 <div className="text-center">
-                  <img className='img-user-author' src={avatar2} />
+                  <img className='img-user-author' src={imageUser} />
                 </div>
                 <h5 className='title font-color mt-2'>{name}</h5>
                 <p className="subtitle date-author-create-blog text-muted fst-italic">{date}</p>

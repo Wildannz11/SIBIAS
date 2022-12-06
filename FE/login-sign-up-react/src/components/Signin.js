@@ -13,7 +13,7 @@ import Input from './HidePasswordBtn';
 import { FaLock } from 'react-icons/fa';
 import mainStyle from "../styles/main.css";
 
-function Signin() {
+function Signin({ onLoginSuccess }) {
   const navigate = useNavigate();
   const [showToast] = useToast();
   const [email, setEmail] = useState('');
@@ -24,6 +24,7 @@ function Signin() {
   const [inputType, setInputType] = useState('');
   const [hidePassword, setHidePassword] = React.useState(false);
   // const input = document.querySelector('.password').type;
+  const baseUrl = 'http://localhost:3000';
   const validate = async (e) => {
     e.preventDefault();
     
@@ -58,22 +59,41 @@ function Signin() {
     }
 
     if(isValid) {
-      try {
-        await axios.post('http://localhost:5000/users/login', {
+      axios.post(`${baseUrl}/users/login`, {
           email: email,
           password: password,
-        })
-        await axios.get('http://localhost:5000/users/me')
+      })
+      .then(response => {
+        onLoginSuccess(response.data);
+        axios.get(`${baseUrl}/users/me`)
         .then(response => {
           const data = response.data;
           showToast(`Hallo Selamat Datang ${data.nama}`, 'success');
+          navigate("/dashboard");
         })
-        navigate("/dashboard");
-      } catch (error) {
-        if(error.response){
-            showToast(error.response.data.msg, 'fail');
-        }
-      }
+        .catch(error => {
+          showToast(error.response.data.msg, 'fail')
+        })
+      })
+      .catch(error=> {
+        showToast(error.response.data.msg, 'fail')
+      })
+      // try {
+      //   axios.post('http://localhost:5000/users/login', {
+      //     email: email,
+      //     password: password,
+      //   })
+      //   await axios.get('http://localhost:5000/users/me')
+      //   .then(response => {
+      //     const data = response.data;
+      //     showToast(`Hallo Selamat Datang ${data.nama}`, 'success');
+      //   })
+      //   navigate("/dashboard");
+      // } catch (error) {
+      //   if(error.response){
+      //       showToast(error.response.data.msg, 'fail');
+      //   }
+      // }
     }
   }
 
@@ -133,8 +153,8 @@ function Signin() {
   )
 }
 
-// Signin.propTypes = {
-//   onLoginSuccess: PropTypes.func.isRequired,
-// };
+Signin.propTypes = {
+  onLoginSuccess: PropTypes.func.isRequired,
+};
 
 export default Signin

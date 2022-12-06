@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 import useToast from '../hooks/useToast';
 import avatar2 from '../images/avatar2.png';
+import Navbar from './Navbar';
 
 
 export default function ShowProfile() {
@@ -17,17 +18,18 @@ export default function ShowProfile() {
   const [imageUser, setImageUser] = useState();
   const navigate = useNavigate();
   const [showToast] = useToast();
+  const baseUrl = 'http://localhost:3000';
 
 
 
   const catchData = async (e) => {
 
     try {
-      await axios.get('http://localhost:5000/users/me')
+      await axios.get(`${baseUrl}/users/me`)
       .then(response => {
         const Uid = response.data.uid;
         try {
-          axios.get(`http://localhost:5000/users/rakyat/${Uid}`)
+          axios.get(`${baseUrl}/users/rakyat/${Uid}`)
           .then(response => {
             const data = response.data;
             setName(data.nama);
@@ -64,12 +66,12 @@ export default function ShowProfile() {
   const logout = async(e) => {
     e.preventDefault();
     try {
-      await axios.delete('http://localhost:5000/logout')
+      await axios.delete(`${baseUrl}/logout`)
       .then(response => {
         const pesan = response.data.msg
         showToast(pesan, 'success');
       })
-      navigate('/login');
+      navigate('/');
     } catch (error) {
       if(error.response){
         showToast(error.response.data.msg, 'fail');
@@ -77,6 +79,8 @@ export default function ShowProfile() {
     }
   }
   return (
+    <div>
+      <Navbar/>
     <div className="profile-container">
       <div className="show-profile-container">
         <div className="card ini-dia">
@@ -157,5 +161,6 @@ export default function ShowProfile() {
         </div>
       </div>
     </div>
+  </div>
   )
 }

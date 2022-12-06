@@ -29,7 +29,7 @@ export default function EditProfile() {
   const [msgPassword, setMsgPassword] = useState('');
   const [msgConfirmPassword, setMsgConfirmPassword] = useState('');
   const [msgTelephone, setMsgTelephone] = useState('');
-
+  const baseUrl = 'http://localhost:3000';
   const [src, setSrc] = useState(null);
   const [preview, setPreview] = useState(null);
 
@@ -60,11 +60,11 @@ export default function EditProfile() {
 
   const catchData = async () => {
     try {
-      await axios.get('http://localhost:5000/users/me')
+      await axios.get(`${baseUrl}/users/me`)
       .then(response => {
         const Uid = response.data.uid;
         try {
-          axios.get(`http://localhost:5000/users/rakyat/${Uid}`)
+          axios.get(`${baseUrl}/users/rakyat/${Uid}`)
           .then(response => {
             const data = response.data;
             setName(data.nama);
@@ -155,11 +155,11 @@ export default function EditProfile() {
     
     if(isValid){
       try {
-        await axios.get('http://localhost:5000/users/me')
+        await axios.get(`${baseUrl}/users/me`)
         .then(response => {
           const Uid = response.data.uid;
           try {
-            axios.patch(`http://localhost:5000/users/${Uid}`, {
+            axios.patch(`${baseUrl}/users/${Uid}`, {
               username: username,
               nama: name,
               email: email,
@@ -193,32 +193,20 @@ export default function EditProfile() {
     let data = new FormData();
     data.append('foto', image);
 
-    axios.get('http://localhost:5000/users/me')
+    axios.get(`${baseUrl}/users/me`)
     .then(response => {
       const Uid = response.data.uid;
-
-      axios.get(`http://localhost:5000/users/rakyat/${Uid}`)
-      .then(response => {
-        const url_foto = response.data.foto_url
-        const coba = (f) => {
-          if(!f){
-              return `usersnew`
-          }else {
-              return `users`
-          }
-        }
-
-        axios.patch(`http://localhost:5000/images/${coba(url_foto)}/${Uid}`, data, {
+      axios.patch(`${baseUrl}/images/users/${Uid}`, data, {
           headers: {
-                          'accept': 'application/json',
-                          'Accept-Language': 'en-US,en;q=0.8',
-                          'Content-Type': `multipart/form-data boundary=${data._boundary}`,
+              'accept': 'application/json',
+              'Accept-Language': 'en-US,en;q=0.8',
+              'Content-Type': `multipart/form-data boundary=${data._boundary}`,
           }
-        })
+      })
+      .then(response => {
+        axios.get(`${baseUrl}/users/rakyat/${Uid}`)
         .then(response => {
-          axios.get(`http://localhost:5000/users/rakyat/${Uid}`)
-          .then(response => {
-            const data = response.data;
+          const data = response.data;
             const dataImage = data.foto_url;
             if(!dataImage){
               setImageUser(avatar2);
@@ -229,10 +217,10 @@ export default function EditProfile() {
           console.log('response', response)
           const cardChoseImg = document.querySelector('.upload-img-container');
           cardChoseImg.style.display = 'none';
-          })
-          .catch(error => {
-            console.log('eror', error)
-          })
+        })
+        .catch(error => {
+          console.log('eror', error)
+        })
       })
       .catch(error => {
         console.log('eror', error)
@@ -241,7 +229,41 @@ export default function EditProfile() {
     .catch(error => {
       console.log('eror', error)
     })
-    })
+
+    // axios.get('https://sibias.up.railway.app//users/me')
+    // .then(response => {
+    //   const Uid = response.data.uid;
+    //   axios.patch(`https://sibias.up.railway.app//images/users/${Uid}`, data, {
+    //       headers: {
+    //           'accept': 'application/json',
+    //           'Accept-Language': 'en-US,en;q=0.8',
+    //           'Content-Type': `multipart/form-data boundary=${data._boundary}`,
+    //       }
+    //     })
+    //     .then(response => {
+    //       axios.get(`https://sibias.up.railway.app//users/rakyat/${Uid}`)
+    //       .then(response => {
+    //         const data = response.data;
+    //         const dataImage = data.foto_url;
+    //         if(!dataImage){
+    //           setImageUser(avatar2);
+    //         } else{
+    //           setImageUser(dataImage);
+    //         }
+    //         showToast('Foto Profile Berhasil diperbaharui', 'success');
+    //       console.log('response', response)
+    //       const cardChoseImg = document.querySelector('.upload-img-container');
+    //       cardChoseImg.style.display = 'none';
+    //       })
+    //       .catch(error => {
+    //         console.log('eror', error)
+    //       })
+    //   })
+    // })
+    // .catch(error => {
+    //   console.log('eror', error)
+    // })
+    
 }
   // const onUpload = (e) => {
   //   e.preventDefault();

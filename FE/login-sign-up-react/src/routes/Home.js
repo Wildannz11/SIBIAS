@@ -4,10 +4,12 @@ import CardDiskusi from "./../components/CardDiskusi"
 import sos1 from "./../images/Kebijakan/1.jpg"
 import sos2 from "./../images/Kebijakan/2.jpeg"
 import sos3 from "./../images/Kebijakan/3.jpg"
+import Navbar from "../components/Navbar"
 
 function Home() {
     return (
       <div>
+        <Navbar/>
         <Hero />
         <div className="container">
           <div className="row">

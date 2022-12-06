@@ -31,10 +31,12 @@ const sync = async () => {
 }
 sync();
 
-app.use(cors({
-    credentials: true,
-    origin: ['*'], 
-}));
+// app.use(cors({
+//     credentials: true,
+//     origin: ['*'], 
+// }));
+
+app.use(cors());
 
 app.use(express.json());
 app.use(fileUpload());

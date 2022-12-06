@@ -250,29 +250,6 @@ export const editPemerintah = async (req, res) => {
     }
 }
 
-// export const deleteUserWithoutImage = async (req, res) => {
-//     const user = await Users.findOne({
-//         where: {
-//             uid: req.params.id
-//         }
-//     });
-
-//     if (!user) {
-//         return res.status(404).json({msg: "User tidak ditemukan"});
-//     }
-
-//     try {
-//         await Users.destroy({
-//             where:{
-//                 uid: user.uid
-//             }
-//         });
-//         res.status(200).json({msg: "Berhasil menghapus akun ini"});
-//     } catch (error) {
-//         res.status(400).json({msg: error.message});
-//     }
-// }
-
 export const deleteUser = async (req, res) => {
     const user = await Users.findOne({
         where: {
@@ -331,7 +308,7 @@ export const editUploadImageProfile = async (req, res) => {
             return res.status(422).json({msg: "Ukuran foto harus kurang dari 50 MB"});
         }
 
-        const fotodata  = users.foto_data === "" && users.foto_url === "";
+        const fotodata  = users.foto_data === null && users.foto_url === null;
         if (!fotodata){
             const filepath = `./public/images/users/${users.foto_data}`;
             fs.unlinkSync(filepath);

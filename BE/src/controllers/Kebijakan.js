@@ -224,7 +224,7 @@ export const editUploadImageKebijakan = async (req, res) => {
             return res.status(422).json({msg: "Ukuran foto harus kurang dari 50 MB"});
         }
 
-        const fotodata  = kebijakan.foto_data === "" && kebijakan.foto_url === "";
+        const fotodata  = kebijakan.foto_data === null && kebijakan.foto_url === null;
         if (!fotodata){
             const filepath = `./public/images/kebijakan/${kebijakan.foto_data}`;
             fs.unlinkSync(filepath);

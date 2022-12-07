@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import CardSosialisasi from './CardSosialisasi';
 
@@ -10,7 +10,7 @@ export default class ListSosialisasi extends React.Component {
   componentDidMount() {
     axios.get(`http://localhost:3000/kebijakan`)
       .then(res => {
-        const Kebijakans = res.data;
+        const Kebijakans = res.data.data;
         this.setState({ Kebijakans });
       })
   }

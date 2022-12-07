@@ -3,7 +3,7 @@ import {React, useState} from "react"
 import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import FilterKebijakan from "../components/FilterKebijakan"
+import FilterDiskusi from "../components/FilterDiskusi"
 import "./css/Diskusi.css";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
@@ -56,7 +56,7 @@ function Diskusi(){
                 </div>
                 </ThemeProvider>
             </div>
-                <FilterKebijakan input={inputText} />
+                <FilterDiskusi input={inputText} />
             <Footer/>
         </div>
   

@@ -1,29 +1,46 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import CardDiskusi from './CardDiskusi';
+import { DataUsageRounded } from '@mui/icons-material';
 
 export default class ListDiskusi extends React.Component {
   state = {
-    Diskusies: []
+    Diskusies: [],
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:3000/kebijakan`)
+    axios.get(`http://localhost:3000/diskusi`)
       .then(res => {
         const Diskusies = res.data;
         this.setState({ Diskusies });
       })
   }
+  
+  getImage(id){
+    axios.get(`http://localhost:3000/users/rakyat/${id}`)
+      .then(res => {
+        const foto = res.foto_url;
+        return foto;
+      })
+  }
+  
+  getNama(id){
+    axios.get(`http://localhost:3000/users/rakyat/${id}`)
+      .then(res => {
+        const nama = res.nama;
+        console.log(nama);
+      })
+  }
 
   render() {
     return (
-        <>
+      <>
         {
           this.state.Diskusies
-            .map(Diskusi =>
+          .map(Diskusi =>
               <div className="row">
                 <div className="col-12">
-                  <CardDiskusi judul={Diskusi} creator="Cahya Diantoni" waktu="09.00" deskripsi="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." lihat="1000" komentar="30"/>
+                  <CardDiskusi judul={Diskusi.judul_diskusi} creator={this.getNama(Diskusi.userId)} foto={this.getImage(Diskusi.userId)} lihat={Diskusi.jumlah_kunjungan}/>
                 </div>
               </div>
             )

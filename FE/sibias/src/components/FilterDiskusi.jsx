@@ -1,10 +1,13 @@
-import { React } from 'react'
-import data from "./ListData.json"
+import React, {useState, useEffect} from 'react'
 import "./css/CardDiskusi.css";
+import useToast from '../hooks/useToast';
 import CardDiskusi from "./CardDiskusi"
+import Data from "./ListData.json"
+import axios from 'axios';
 
-function FilterKebijakan(props) {
-    const filteredData = data.filter((el) => {
+function FilterDiskusi(props) {
+
+    const filteredData = Data.filter((el) => {
         if (props.input === '') {
             return el;
         }
@@ -21,4 +24,4 @@ function FilterKebijakan(props) {
     )
 }
 
-export default FilterKebijakan
+export default FilterDiskusi

@@ -1,10 +1,10 @@
-import { React } from 'react'
-import data from "./ListDataSosialisasi.json"
-import "./css/CardSosialisasi.css";
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import CardSosialisasi from './CardSosialisasi';
+import Data from "./ListDataSosialisasi.json"
 
-function ListSosialisasi(props) {
-    const filteredData = data.filter((el) => {
+function FilterSosialisasi (props) {
+    const filteredData = Data.filter((el) => {
         if (props.input === '') {
             return el;
         }
@@ -14,16 +14,12 @@ function ListSosialisasi(props) {
     })
     return (
         <div className='container'>
-            <div className='row'>
             {filteredData.map((item) => (
-            
-            <div className="col-md-4 col-sm-6 mb-3 mt-3">
-              <CardSosialisasi image={item.image} judul={item.judul} isi={item.isi}/>
-            </div>
+                <div className="col-md-4 col-sm-6 mb-3">
+                    <CardSosialisasi image={item.image} judul={item.judul} isi={item.isi} />
+                </div>
             ))}
-            </div>
         </div>
     )
 }
-
-export default ListSosialisasi
+export default FilterSosialisasi;

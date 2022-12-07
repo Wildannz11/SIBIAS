@@ -86,15 +86,6 @@ function App() {
         <Route path='/' element={<Signin onLoginSuccess={onLoginSuccess}/>}/>
       </Routes>
     )}
-    {/* <Routes>
-      <Route path='/' element={<Signin/>}/>
-      <Route path='/login' element={<Signin/>}/>
-      <Route path='/users' element={<Signup/>}/>
-      <Route path='/dashboard' element={<Home/>}/>
-      <Route path='/profile' element={<ShowProfile/>}/>
-      <Route path='/editProfile' element={<EditProfile/>}/>
-      <Route path='/blog' element={<Blog/>}/>
-    </Routes> */}
     </BrowserRouter>
   );
 }

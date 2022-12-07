@@ -1,7 +1,7 @@
 import Hero from "../components/Hero"
 import {React, useState} from "react"
 import TextField from "@mui/material/TextField";
-import ListSosialisasi from "../components/ListSosialisasi"
+import FilterSosialisasi from "../components/FilterSosialisasi"
 import "./css/Diskusi.css";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import { Link } from "react-router-dom";
@@ -48,7 +48,7 @@ function Sosialisasi(){
                 </div>
                 </ThemeProvider>
             </div>
-                <ListSosialisasi input={inputText} />
+                <FilterSosialisasi input={inputText} />
             <Footer/>
         </div>
   

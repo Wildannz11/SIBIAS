@@ -22,9 +22,12 @@ function Signup() {
     const [msgPassword, setMsgPassword] = useState('');
     const [msgConfirmPassword, setMsgConfirmPassword] = useState('');
     const [msgPhotoProfile, setMsgPhotoProfile] = useState('');
+    // const baseUrl = 'https://sibias.up.railway.app'
+    const baseUrl = 'http://localhost:3000';
 
     const Register = async (e) => {
         e.preventDefault();
+
 
         let isValid = true;
         const reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w\w+)+$/;
@@ -94,7 +97,7 @@ function Signup() {
 
         if(isValid) {
           try {
-            await axios.post('https:/sibias.up.railway.app/users', {
+            await axios.post(`${baseUrl}/users`, {
               username:username,
               nama: name,
               email: email,
@@ -103,7 +106,7 @@ function Signup() {
               role: role,
             });
             showToast('Selamat Akun Anda Berhasil Dibuat', 'success');
-            navigate("/login");
+            navigate("/");
           } catch (error) {
             if(error.response){
               showToast(error.response.data.msg, 'fail');

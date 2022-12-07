@@ -3,7 +3,7 @@ import data from "./ListData.json"
 import "./css/CardDiskusi.css";
 import CardDiskusi from "./CardDiskusi"
 
-function List(props) {
+function FilterKebijakan(props) {
     const filteredData = data.filter((el) => {
         if (props.input === '') {
             return el;
@@ -21,4 +21,4 @@ function List(props) {
     )
 }
 
-export default List
+export default FilterKebijakan

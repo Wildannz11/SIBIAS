@@ -20,3 +20,9 @@ footer .footer_logo {
     font-size: 1.2em;
     font-family: 'Pacifico', cursive;
 }
+
+@media screen and (max-width: 960px) {
+    footer{
+        font-size: 0.8em;
+    }
+}

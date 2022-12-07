@@ -55,8 +55,15 @@
     border: none;
 }
 
+.btn-buat-diskusi{
+    width: 120px;
+}
+
 @media screen and (max-width: 960px) {
     .text-center{
         font-size: 2rem;
+    }
+    .tambah-diskusi{
+        background-color: #53D1B6;
     }
 }

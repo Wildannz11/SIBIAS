@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import avatar2 from '../images/avatar2.png';
-import ChatBuble from './ChatBuble';
+import ChatBuble from '../components/ChatBuble';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios';

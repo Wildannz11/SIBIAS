@@ -23,7 +23,7 @@ export default class ListDiskusi extends React.Component {
           .map(Diskusi =>
               <div className="row">
                 <div className="col-12">
-                  <CardDiskusi judul={Diskusi.judul_diskusi} creator={Diskusi.user.nama} foto={Diskusi.user.foto_url} lihat={Diskusi.jumlah_kunjungan}/>
+                  <CardDiskusi judul={Diskusi.judul_diskusi} creator={Diskusi.user.nama} foto={Diskusi.user.foto_url} lihat={Diskusi.jumlah_kunjungan} link={Diskusi.did} />
                 </div>
               </div>
             )

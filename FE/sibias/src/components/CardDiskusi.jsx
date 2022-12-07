@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const CardDiskusi = (props) => {
   return (
   <div className="classCard">
-    <Link to="/show_diskusi" className="Link">
+    <Link to={`/detail_diskusi/${props.link}`} className="Link">
     <div className="classCard__upper">
       <div className="classCard__className">{props.judul}</div>
       <img src={props.foto} className="classCard__creatorPhoto" alt='Foto'/>

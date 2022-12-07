@@ -10,7 +10,8 @@ import Blog from './components/Blog';
 import Home from "./routes/Home";
 import Diskusi from "./routes/Diskusi";
 import ShowDiskusi from "./routes/ShowDiskusi";
-import DetailSosialisasi from "./components/DetailSosialisasi";
+import DetailSosialisasi from "./routes/DetailSosialisasi";
+import DetailDiskusi from "./routes/DetailDiskusi";
 import TambahDiskusi from "./routes/TambahDiskusi";
 import Sosialisasi from "./routes/Sosialisasi";
 import axios from 'axios';
@@ -84,7 +85,8 @@ function App() {
         <Route path='/tambah_diskusi' element={<TambahDiskusi/>}/>
         <Route path='/sosialisasi' element={<Sosialisasi/>}/>
         <Route path='/show_sosialisasi' element={<Blog/>}/>
-        <Route path='/show_sosialisasi/:id' element={<DetailSosialisasi/>} />
+        <Route path='/detail_sosialisasi/:id' element={<DetailSosialisasi/>} />
+        <Route path='/detail_diskusi/:id' element={<DetailDiskusi/>} />
         <Route path='/' element={<Signin onLoginSuccess={onLoginSuccess}/>}/>
       </Routes>
     )}

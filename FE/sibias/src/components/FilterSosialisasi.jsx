@@ -19,7 +19,7 @@ function FilterSosialisasi (props) {
             <div className='row'>
             {filteredData.map((item) => (
                 <div className="col-md-4 col-sm-6 mb-3 mt-3">
-                    <CardSosialisasi image={item.image} judul={item.judul} isi={item.isi} />
+                    <CardSosialisasi image={item.image} judul={item.judul} isi={item.isi}/>
                 </div>
             ))}
             </div>

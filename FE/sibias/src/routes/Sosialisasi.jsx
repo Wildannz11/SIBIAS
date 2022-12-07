@@ -48,7 +48,7 @@ function Sosialisasi(){
                 </div>
                 </ThemeProvider>
             </div>
-                <FilterSosialisasi input={inputText}/>
+                  <FilterSosialisasi input={inputText}/>
             <Footer/>
         </div>
   

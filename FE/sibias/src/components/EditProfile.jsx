@@ -8,6 +8,7 @@ import moment from 'moment';
 import Avatar from 'react-avatar-edit';
 import avatar2 from '../images/avatar2.png';
 import FormData from 'form-data';
+import Navbar from './Navbar';
 
 
 export default function EditProfile() {
@@ -29,7 +30,7 @@ export default function EditProfile() {
   const [msgPassword, setMsgPassword] = useState('');
   const [msgConfirmPassword, setMsgConfirmPassword] = useState('');
   const [msgTelephone, setMsgTelephone] = useState('');
-
+  const baseUrl = 'http://localhost:3000';
   const [src, setSrc] = useState(null);
   const [preview, setPreview] = useState(null);
 
@@ -60,11 +61,11 @@ export default function EditProfile() {
 
   const catchData = async () => {
     try {
-      await axios.get('http://localhost:5000/users/me')
+      await axios.get(`${baseUrl}/users/me`)
       .then(response => {
         const Uid = response.data.uid;
         try {
-          axios.get(`http://localhost:5000/users/rakyat/${Uid}`)
+          axios.get(`${baseUrl}/users/rakyat/${Uid}`)
           .then(response => {
             const data = response.data;
             setName(data.nama);
@@ -155,11 +156,11 @@ export default function EditProfile() {
     
     if(isValid){
       try {
-        await axios.get('http://localhost:5000/users/me')
+        await axios.get(`${baseUrl}/users/me`)
         .then(response => {
           const Uid = response.data.uid;
           try {
-            axios.patch(`http://localhost:5000/users/${Uid}`, {
+            axios.patch(`${baseUrl}/users/${Uid}`, {
               username: username,
               nama: name,
               email: email,
@@ -193,32 +194,20 @@ export default function EditProfile() {
     let data = new FormData();
     data.append('foto', image);
 
-    axios.get('http://localhost:5000/users/me')
+    axios.get(`${baseUrl}/users/me`)
     .then(response => {
       const Uid = response.data.uid;
-
-      axios.get(`http://localhost:5000/users/rakyat/${Uid}`)
-      .then(response => {
-        const url_foto = response.data.foto_url
-        const coba = (f) => {
-          if(!f){
-              return `usersnew`
-          }else {
-              return `users`
-          }
-        }
-
-        axios.patch(`http://localhost:5000/images/${coba(url_foto)}/${Uid}`, data, {
+      axios.patch(`${baseUrl}/images/users/${Uid}`, data, {
           headers: {
-                          'accept': 'application/json',
-                          'Accept-Language': 'en-US,en;q=0.8',
-                          'Content-Type': `multipart/form-data boundary=${data._boundary}`,
+              'accept': 'application/json',
+              'Accept-Language': 'en-US,en;q=0.8',
+              'Content-Type': `multipart/form-data boundary=${data._boundary}`,
           }
-        })
+      })
+      .then(response => {
+        axios.get(`${baseUrl}/users/rakyat/${Uid}`)
         .then(response => {
-          axios.get(`http://localhost:5000/users/rakyat/${Uid}`)
-          .then(response => {
-            const data = response.data;
+          const data = response.data;
             const dataImage = data.foto_url;
             if(!dataImage){
               setImageUser(avatar2);
@@ -229,10 +218,10 @@ export default function EditProfile() {
           console.log('response', response)
           const cardChoseImg = document.querySelector('.upload-img-container');
           cardChoseImg.style.display = 'none';
-          })
-          .catch(error => {
-            console.log('eror', error)
-          })
+        })
+        .catch(error => {
+          console.log('eror', error)
+        })
       })
       .catch(error => {
         console.log('eror', error)
@@ -241,54 +230,14 @@ export default function EditProfile() {
     .catch(error => {
       console.log('eror', error)
     })
-    })
+    
 }
-  // const onUpload = (e) => {
-  //   e.preventDefault();
-  //   let data = new FormData();
-  //   data.append('foto', image);
-
-  //     axios.get('http://localhost:5000/users/me')
-  //     .then(response => {
-  //       const Uid = response.data.uid;
-  //       axios.patch(`http://localhost:5000/images/users/${Uid}`, data, {
-  //         headers: {
-  //           'accept': 'application/json',
-  //           'Accept-Language': 'en-US,en;q=0.8',
-  //           'Content-Type': `multipart/form-data boundary=${data._boundary}`,
-  //         }
-  //       })
-  //       .then(response => {
-  //         axios.get(`http://localhost:5000/users/rakyat/${Uid}`)
-  //         .then(response => {
-  //           const data = response.data;
-  //           const dataImage = data.foto_url;
-  //           if(dataImage === null){
-  //             setImageUser(avatar2);
-  //           } else{
-  //             setImageUser(dataImage);
-  //           }
-  //         })
-  //         .catch(error => {
-  //           showToast(error.data.msg, 'fail');
-  //         })
-  //         showToast('Foto Profile Berhasil diperbaharui', 'success');
-  //         console.log('response', response)
-  //         const cardChoseImg = document.querySelector('.upload-img-container');
-  //         cardChoseImg.style.display = 'none';
-  //       })
-  //       .catch(error => {
-  //         showToast('terjadi kesalahan', 'fail');
-  //       })
-  //     })
-  //     .catch(error => {
-  //       showToast('Gambar Gagal di Edit', 'fail');
-  //     }) 
-  // }
 
 
   return (
-    <div className="profile-container">
+    <div>
+      <Navbar/>
+      <div className="profile-container">
       <div className="show-profile-container">
     <div className="card ini-dia">
   <div className="card-body show-profile">
@@ -300,7 +249,7 @@ export default function EditProfile() {
         <Link to='/editprofile' onClick={action}><button type="" className="btn btn-primary mb-3 edit-profile-btn"> Edit Image</button></Link>
         </div>
     </div>
-                <form onSubmit={editData}>
+                <form onSubmit={editData} className='form-profile'>
                     <div className="mb-3">
                       <label className="form-label">Nama</label>
                       <input 
@@ -388,10 +337,14 @@ export default function EditProfile() {
                       </div>
     
                       <div className="text-center update-profile-btn-container mt-5">
+                        <button type='submit' className="btn btn-primary mb-3 me-5 cancel-update-profile-btn" onClick={() =>  navigate('/profile')}>
+                            Cancel
+                        </button>
+
                         <button type='submit' className="btn btn-primary mb-3 update-profile-btn">
                           Update
                         </button>
-                    </div>
+                      </div>
                 </form>
               </div>
             </div>
@@ -415,5 +368,6 @@ export default function EditProfile() {
           </div>
           
         </div>
+      </div>
   )
 }

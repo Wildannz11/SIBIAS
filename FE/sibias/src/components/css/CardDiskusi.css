@@ -26,7 +26,7 @@
   
   .classCard__middle {
     margin: 10px;
-    height: 20px;
+    height: 50px;
     border-bottom: 1px solid #dcdcdc;
   }
   
@@ -44,9 +44,10 @@
   }
   
   .classCard__creatorName {
-    position: absolute;
     bottom: 12px;
     font-size: 15px;
+    color: black;
+
   }
   
   .classCard__lower {

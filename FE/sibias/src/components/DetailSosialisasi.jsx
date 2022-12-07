@@ -1,33 +1,55 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import avatar2 from '../images/avatar2.png';
 // import  from '../hooks/DATA.json';
 import ChatBuble from './ChatBuble';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import axios from 'axios';
 
-function Blog(porps) {
-    const [name, setName] = useState('Fadilla Rahim');
-    const [date, setDate] = useState('November, 20 2022');
+function DetailSosialisasi () {
+    const { id } = useParams()
+    const [judul, setJudul] = useState('');
+    const [name, setName] = useState('');
+    const [date, setDate] = useState('');
+    const [foto, setFoto] = useState('');
     const [addComentValue, setAddComentValue] = useState('');
-    const [contentBlog, setContentBlog] = useState('akarta, CNN Indonesia -- Penelitian data awal oleh Organisasi Kesehatan Dunia (WHO) menunjukkan Covid-19 varian Omicron lebih cepat menular ketimbang Delta dan dapat melemahkan vaksin yang ada saat ini. "Berdasarkan data yang ada saat ini, Omicron kemungkinan bakal mengalahkan varian Delta di tempat di mana terjadi penularan antar-masyarakat," demikian pernyataan WHO yang dikutip AFP, Minggu (12/12). Merujuk pada data yang dihimpun WHO, saat ini Omicron sudah menyebar di 63 negara. Mereka melihat Omicron cepat menyebar di Afrika Selatan, di mana varian Delta tak mendominasi. Namun, mereka juga mencatat penyebaran cepat Covid-19 varian Omicron di Inggris, yang kasusnya secara keseluruhan sebenarnya masih didominasi Delta. Meski demikian, WHO menegaskan bahwa data yang ada saat ini masih kurang. Mereka pun belum dapat memastikan tingkat penularan Omicron tinggi karena lebih mudah menembus respons imun atau memang lebih cepat menular. Selain itu, WHO juga menyatakan bahwa data awal menunjukkan Omicron menyebabkan "pengurangan efikasi vaksin terjadi infeksi dan penularan [Covid-19]." Terlepas dari temuan tersebut, WHO menekankan bahwa infeksi virus corona varian Omicron sejauh ini hanya menyebabkan gejala ringan. Mereka masih mengumpulkan data untuk menentukan tingkat keparahan klinis Omicron. Penelitian ini masih terus dilakukan setelah Afrika Selatan melaporkan temuan varian baru tersebut ke WHO pada 24 November lalu. Sejak saat itu, banyak pakar memang menyebut Omicron lebih cepat menular dan kemungkinan dapat melemahkan vaksin yang sudah ada saat ini. Kendati demikian, sejumlah produsen vaksin menyatakan bahwa suntikan mereka masih efektif melawan Omicron. Pfizer/BioNTech bahkan menyebut tiga dosis vaksin mereka efektif menangkal varian baru itu.');
+    const [contentBlog, setContentBlog] = useState('');
+    const baseUrl = "http://localhost:3000";
 
     const[isiComent, setIsiComent] = useState('Capek banget ngerjain capstone, tugas mingguan kampus, tugas besar, proyek, laporan, presentasi, bikin web 3 macam itu harus combain ama machine learning and Decision suport System jugaa... Hadeuuhhhh Balaaa balaaa');
-    
+    const catchData = async (e) => {
+        try {
+            axios.get(`${baseUrl}/kebijakan/${id}`)
+            .then(response => {
+                const Data = response.data;
+                setName(Data.user.nama);
+                setJudul(Data.judul_kebijakan);
+                setDate(Data.createdAt);
+                setFoto(Data.user.foto_url);
+                setContentBlog(Data.isi_kebijakan);
+            })
+          } catch (error) {
+            return error;
+        }
+    }
+
+    useEffect(() => {
+    catchData()
+    }, []);
+
   return (
     <div>
       <Navbar/>
       <div className="blog-big-container">
         <div className="card blog-inner-container">
             <div className="title-blog-container">
-                <h1>
-                  {porps.id}
-                </h1>
-                <h1 className="title-blog font-color text-center mt-5 mb-3">Sosialisasi Kebijakan Pemerintah</h1>
+                <h1 className="title-blog font-color text-center mt-5 mb-3">{judul}</h1>
             </div>
             <div className="author-blog text-center">
                 <div className="text-center">
-                  <img className='img-user-author' src={avatar2} />
+                  <img src={foto} className="img-user-author" />
                 </div>
                 <h5 className='title font-color mt-2'>{name}</h5>
                 <p className="subtitle date-author-create-blog text-muted fst-italic">{date}</p>
@@ -87,5 +109,4 @@ function Blog(porps) {
     </div>
   )
 }
-
-export default Blog
+export default DetailSosialisasi;

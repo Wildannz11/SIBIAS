@@ -17,9 +17,6 @@ const CardDiskusi = (props) => {
     <div className="classCard__middle"> <div className="deskripsi">{props.deskripsi}</div></div>
     <div className="classCard__lower">
       <div className="m-2">
-        <FaCommentDots size="1.5rem" className="icon"/> {props.komentar} 
-      </div>
-      <div className="m-2">
         <FaEye size="1.5rem" className="icon"/> {props.lihat}
       </div>
 

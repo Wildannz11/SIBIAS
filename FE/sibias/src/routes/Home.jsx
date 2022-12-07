@@ -1,11 +1,9 @@
 import Hero from "../components/Hero"
 import CardSosialisasi from "../components/CardSosialisasi"
 import CardDiskusi from "../components/CardDiskusi"
-import sos1 from "./../images/Kebijakan/1.jpg"
-import sos2 from "./../images/Kebijakan/2.jpeg"
-import sos3 from "./../images/Kebijakan/3.jpg"
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import ListSosialisasi from "../components/ListSosialisasi"
 
 function Home() {
     return (
@@ -19,15 +17,7 @@ function Home() {
             </div>
           </div>
           <div className="row">
-            <div className="col-md-4 col-sm-6 mb-3">
-              <CardSosialisasi image={sos1} judul="KTT G20" isi="Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs."/>
-            </div>
-            <div className="col-md-4 col-sm-6 mb-3">
-              <CardSosialisasi image={sos2} judul="Kampus Merdeka" isi="Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs." />
-            </div>
-            <div className="col-md-4 col-sm-6 mb-3">
-              <CardSosialisasi image={sos3} judul="Ekonomi Kreatif" isi="Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs." />
-            </div>
+            <ListSosialisasi/>
           </div>
           <div className="row">
             <div className="col-12 text-center my-5">

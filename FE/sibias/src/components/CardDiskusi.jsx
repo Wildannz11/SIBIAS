@@ -1,5 +1,4 @@
 import {FaEye} from "react-icons/fa";
-import {FaCommentDots} from "react-icons/fa";
 import "./css/CardDiskusi.css";
 import { Link } from "react-router-dom";
  

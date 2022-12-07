@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import avatar2 from '../images/avatar2.png';
-// import  from '../hooks/DATA.json';
 import ChatBuble from './ChatBuble';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -14,6 +13,7 @@ function DetailSosialisasi () {
     const [name, setName] = useState('');
     const [date, setDate] = useState('');
     const [foto, setFoto] = useState('');
+    const [fotoContent, setFotoKebijakan] = useState('');
     const [addComentValue, setAddComentValue] = useState('');
     const [contentBlog, setContentBlog] = useState('');
     const baseUrl = "http://localhost:3000";
@@ -28,6 +28,7 @@ function DetailSosialisasi () {
                 setJudul(Data.judul_kebijakan);
                 setDate(Data.createdAt);
                 setFoto(Data.user.foto_url);
+                setFotoKebijakan(Data.foto_url);
                 setContentBlog(Data.isi_kebijakan);
             })
           } catch (error) {
@@ -55,6 +56,9 @@ function DetailSosialisasi () {
                 <p className="subtitle date-author-create-blog text-muted fst-italic">{date}</p>
             </div>
             <div className="content-blog mt-4">
+                {/* <div className="text-center">
+                    <img src={fotoContent} />
+                </div> */}
                 <p>{contentBlog}</p>
             </div>
             <div className="line"></div>

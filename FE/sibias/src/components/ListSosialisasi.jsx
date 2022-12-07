@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React from 'react';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import CardSosialisasi from './CardSosialisasi';
 
@@ -22,7 +23,7 @@ export default class ListSosialisasi extends React.Component {
           this.state.Kebijakans
             .map(Kebijakan =>
                 <div className="col-md-4 col-sm-6 mb-3">
-                    <CardSosialisasi image={Kebijakan.foto_url} judul={Kebijakan.judul_kebijakan} isi={Kebijakan.isi_kebijakan} />
+                    <CardSosialisasi image={Kebijakan.foto_url} judul={Kebijakan.judul_kebijakan} isi={Kebijakan.isi_kebijakan} link={Kebijakan.kid} />
                 </div>
             )
         }

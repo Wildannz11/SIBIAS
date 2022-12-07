@@ -180,7 +180,7 @@ GET http://localhost:3000/diskusi
 
 // get search discussion by judul_diskusi
 ###
-GET http://localhost:3000/diskusii?judul_diskusi=pembahasan penyakit di indonesia
+GET http://localhost:3000/diskusii?judul_diskusi=penyakit
 
 
 // get discussion by id
@@ -211,7 +211,7 @@ GET http://localhost:3000/chatdiskusi/c3eeea8d-4702-4d6d-8391-23f7989e258b
 
 // Get chat diskusi by id
 ###
-GET http://localhost:3000/chatdiskusi/0f14908b-dd8b-4a85-b4c3-2ca738dc2ba2
+GET http://localhost:3000/chatdiskusii/0f14908b-dd8b-4a85-b4c3-2ca738dc2ba2
 
 // create chat diskusi
 ###
@@ -305,7 +305,7 @@ GET http://localhost:3000/kebijakan
 
 // get kebijakan by search judul_kebijakan
 ###
-GET http://localhost:3000/kebijakann?judul_kebijakan=pembahasan bbm 
+GET http://localhost:3000/kebijakann?judul_kebijakan=bbm 
 
 
 // get kebijakan by id

@@ -1,24 +1,31 @@
 import React, {useState, useEffect} from 'react'
 import "./css/CardDiskusi.css";
-import useToast from '../hooks/useToast';
 import CardDiskusi from "./CardDiskusi"
-import Data from "./ListData.json"
 import axios from 'axios';
 
 function FilterDiskusi(props) {
 
-    const filteredData = Data.filter((el) => {
-        if (props.input === '') {
-            return el;
+    const [dataes, setData] = useState([]);
+    const baseUrl = "http://localhost:3000";
+    const catchData = async (e) => {
+        try {
+            axios.get(`${baseUrl}/diskusii?judul_diskusi=${props.input}`)
+            .then(response => {
+                setData(response.data);
+            })
+          } catch (error) {
+            return error;
         }
-        else {
-            return el.judul.toLowerCase().includes(props.input)
-        }
-    })
+    }
+
+    useEffect(() => {
+    catchData()
+    }, []);
+
     return (
         <div className='container'>
-            {filteredData.map((item) => (
-              <CardDiskusi judul={item.judul} creator={item.nama} waktu={item.waktu} deskripsi={item.keterangan} lihat={item.lihat} komentar={item.komentar}/>
+            {dataes.map((Diskusi) => (
+              <CardDiskusi judul={Diskusi.judul_diskusi} creator={Diskusi.user.nama} foto={Diskusi.user.foto_url} lihat={Diskusi.jumlah_kunjungan} link={Diskusi.did} />
             ))}
         </div>
     )

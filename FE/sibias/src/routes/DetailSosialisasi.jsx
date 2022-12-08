@@ -77,7 +77,7 @@ function DetailSosialisasi () {
       <div className="blog-big-container">
         <div className="card blog-inner-container">
             <div className="title-blog-container">
-                <h1 className="title-blog font-color text-center mt-5 mb-3">{judul}</h1>
+                <h1 className="title-blog font-color text-center mt-5 mb-3">Sosialisasi Kebijakan <br/> {judul}</h1>
             </div>
             <div className="author-blog text-center">
                 <div className="text-center">

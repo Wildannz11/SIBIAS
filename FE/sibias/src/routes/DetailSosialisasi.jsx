@@ -6,6 +6,7 @@ import ChatBuble from '../components/ChatBuble';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios';
+import useToast from '../hooks/useToast';
 
 function DetailSosialisasi () {
     const { id } = useParams()
@@ -13,6 +14,11 @@ function DetailSosialisasi () {
     const [name, setName] = useState('');
     const [date, setDate] = useState('');
     const [foto, setFoto] = useState('');
+    // Ini untuk post
+    const [showToast] = useToast();
+    const [komentar, setKomentar] = useState('');
+    const [msgKomentar, setMsgKomentar] = useState('');
+
     const [fotoContent, setFotoKebijakan] = useState('');
     const [addComentValue, setAddComentValue] = useState('');
     const [contentBlog, setContentBlog] = useState('');
@@ -34,6 +40,31 @@ function DetailSosialisasi () {
           } catch (error) {
             return error;
         }
+    }
+
+    // Post Komentar
+    const addKomentar = async (e) => {
+        e.preventDefault();
+        let isValid = true;
+
+        if (!komentar) {
+            setMsgKomentar('Comment is required'); 
+        }else{
+            setMsgKomentar(''); 
+        }
+
+        if(isValid) {
+            try {
+              await axios.post(`${baseUrl}/commentkebijakan/${id}`, {
+                isi_comment : komentar,
+              });
+              showToast('Selamat Komentar Berhasil Ditambahkan', 'success');
+            } catch (error) {
+              if(error.response){
+                showToast(error.response.data.msg, 'fail');
+              }
+            }
+          }
     }
 
     useEffect(() => {
@@ -66,26 +97,18 @@ function DetailSosialisasi () {
                 <div className="comment-title mb-3">
                     <h3 className="title font-color">Berikan Komentar</h3>
                 </div>
-                <form action="">
+                <form onSubmit={addKomentar}>
                     <div className="mb-3">
                         <label className="form-label">Komentar Anda</label>
                         <textarea 
                         className="form-control coment-value" id="coment-value" 
                         rows="3"
-                        value={addComentValue}
-                        onChange={(e)=>setAddComentValue(e.target.value)}
+                        onChange={(e) => setKomentar(e.target.value)}
                         ></textarea>
-                    </div>
-                    <div className="mb-3 add-comentar-container">
-                        <label className="form-label">Tags</label>
-                        <input 
-                        type="text" 
-                        className="form-control tags-coment" id="tags-coment" 
-                        placeholder="#RecoverTogether"/>
                     </div>
                     <div className="add-comment-btn-container mt-5">
                         <button 
-                        type='submit' 
+                        type="" 
                         className="btn btn-primary mb-3 update-profile-btn">
                           Post
                         </button>

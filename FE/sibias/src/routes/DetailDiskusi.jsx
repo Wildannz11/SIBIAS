@@ -24,7 +24,6 @@ function DetailDiskusi () {
     const [addComentValue, setAddComentValue] = useState('');
     const baseUrl = "http://localhost:3000";
 
-    const[isiComent, setIsiComent] = useState('Capek banget ngerjain capstone, tugas mingguan kampus, tugas besar, proyek, laporan, presentasi, bikin web 3 macam itu harus combain ama machine learning and Decision suport System jugaa... Hadeuuhhhh Balaaa balaaa');
     const catchData = async (e) => {
         try {
             axios.get(`${baseUrl}/diskusi/${id}`)
@@ -39,6 +38,24 @@ function DetailDiskusi () {
             return error;
         }
     }
+
+    const [chats, setChats] = useState([]);
+    // Get Chat Diskusi
+    const catchChat = async (e) => {
+        try {
+            axios.get(`${baseUrl}/chatdiskusi/${id}`)
+            .then(response => {
+                setChats(response.data);
+            })
+          } catch (error) {
+            return error;
+        }
+    }
+
+    useEffect(() => {
+    catchData();
+    catchChat()
+    }, []);
 
     // Post Chat Diskusi
     const addChat = async (e) => {
@@ -56,6 +73,7 @@ function DetailDiskusi () {
               await axios.post(`${baseUrl}/chatdiskusi/${id}`, {
                 isi_chat : chat,
               });
+              catchChat();
               showToast('Selamat Chat Diskusi Anda Berhasil Masuk', 'success');
             } catch (error) {
               if(error.response){
@@ -65,9 +83,6 @@ function DetailDiskusi () {
           }
     }
 
-    useEffect(() => {
-    catchData()
-    }, []);
 
   return (
     <div>
@@ -113,18 +128,14 @@ function DetailDiskusi () {
             </div>
             <div className="line"></div>
             <div className="discussion-container">
+                {chats.map((chat) => (
                 <ChatBuble
-                name={name}
-                date={date}
-                valueComent={isiComent}
-                imageUser={avatar2}
+                name={chat.user.nama}
+                date={chat.createdAt}
+                valueComent={chat.isi_chat}
+                imageUser={chat.user.foto_url}
                 />
-                <ChatBuble
-                name={name}
-                date={date}
-                valueComent={isiComent}
-                imageUser={avatar2}
-                />
+              ))}
             </div>
         </div>
       </div>

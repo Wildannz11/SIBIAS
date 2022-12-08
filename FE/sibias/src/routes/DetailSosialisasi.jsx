@@ -102,7 +102,7 @@ function DetailSosialisasi () {
                     <div className="mb-3">
                         <label className="form-label">Komentar Anda</label>
                         <textarea 
-                        className="form-control coment-value" id="coment-value" 
+                        className="form-contro  l coment-value" id="coment-value" 
                         rows="3"
                         onChange={(e) => setKomentar(e.target.value)}
                         ></textarea>

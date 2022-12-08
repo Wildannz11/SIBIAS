@@ -6,13 +6,21 @@ import ChatBuble from '../components/ChatBuble';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios';
+import useToast from '../hooks/useToast';
 
 function DetailDiskusi () {
+
     const { id } = useParams()
     const [judul, setJudul] = useState('');
     const [name, setName] = useState('');
     const [date, setDate] = useState('');
     const [foto, setFoto] = useState('');
+
+    // Ini untuk post
+    const [showToast] = useToast();
+    const [chat, setChat] = useState('');
+    const [msgChat, setMsgChat] = useState('');
+
     const [addComentValue, setAddComentValue] = useState('');
     const baseUrl = "http://localhost:3000";
 
@@ -30,6 +38,31 @@ function DetailDiskusi () {
           } catch (error) {
             return error;
         }
+    }
+
+    // Post Chat Diskusi
+    const addChat = async (e) => {
+        e.preventDefault();
+        let isValid = true;
+
+        if (!chat) {
+            setMsgChat('Chats is required'); 
+        }else{
+            setMsgChat(''); 
+        }
+
+        if(isValid) {
+            try {
+              await axios.post(`${baseUrl}/chatdiskusi/${id}`, {
+                isi_chat : chat,
+              });
+              showToast('Selamat Chat Diskusi Anda Berhasil Masuk', 'success');
+            } catch (error) {
+              if(error.response){
+                showToast(error.response.data.msg, 'fail');
+              }
+            }
+          }
     }
 
     useEffect(() => {
@@ -59,26 +92,19 @@ function DetailDiskusi () {
                 <div className="comment-title mb-3">
                     <h3 className="title font-color">Tanggapan Diskusi</h3>
                 </div>
-                <form action="">
+                <form onSubmit={addChat}>
                     <div className="mb-3">
                         <label className="form-label">Tanggapan Anda</label>
                         <textarea 
                         className="form-control coment-value" id="coment-value" 
                         rows="3"
-                        value={addComentValue}
-                        onChange={(e)=>setAddComentValue(e.target.value)}
+                        onChange={(e) => setChat(e.target.value)}
+
                         ></textarea>
-                    </div>
-                    <div className="mb-3 add-comentar-container">
-                        <label className="form-label">Tags</label>
-                        <input 
-                        type="text" 
-                        className="form-control tags-coment" id="tags-coment" 
-                        placeholder="#RecoverTogether"/>
                     </div>
                     <div className="add-comment-btn-container mt-5">
                         <button 
-                        type='submit' 
+                        type="" 
                         className="btn btn-primary mb-3 update-profile-btn">
                           Post
                         </button>

@@ -18,13 +18,12 @@ function DetailSosialisasi () {
     const [showToast] = useToast();
     const [komentar, setKomentar] = useState('');
     const [msgKomentar, setMsgKomentar] = useState('');
-
     const [fotoContent, setFotoKebijakan] = useState('');
-    const [addComentValue, setAddComentValue] = useState('');
     const [contentBlog, setContentBlog] = useState('');
+    // Ini untuk coment
+    const [comments, setComments] = useState([]);
     const baseUrl = "http://localhost:3000";
 
-    const[isiComent, setIsiComent] = useState('Capek banget ngerjain capstone, tugas mingguan kampus, tugas besar, proyek, laporan, presentasi, bikin web 3 macam itu harus combain ama machine learning and Decision suport System jugaa... Hadeuuhhhh Balaaa balaaa');
     const catchData = async (e) => {
         try {
             axios.get(`${baseUrl}/kebijakan/${id}`)
@@ -36,11 +35,16 @@ function DetailSosialisasi () {
                 setFoto(Data.user.foto_url);
                 setFotoKebijakan(Data.foto_url);
                 setContentBlog(Data.isi_kebijakan);
+                setComments(Data.comment_kebijakans);
             })
           } catch (error) {
             return error;
         }
     }
+
+    useEffect(() => {
+      catchData()
+      }, []);
 
     // Post Komentar
     const addKomentar = async (e) => {
@@ -58,6 +62,7 @@ function DetailSosialisasi () {
               await axios.post(`${baseUrl}/commentkebijakan/${id}`, {
                 isi_comment : komentar,
               });
+              catchData();
               showToast('Selamat Komentar Berhasil Ditambahkan', 'success');
             } catch (error) {
               if(error.response){
@@ -66,10 +71,6 @@ function DetailSosialisasi () {
             }
           }
     }
-
-    useEffect(() => {
-    catchData()
-    }, []);
 
   return (
     <div>
@@ -117,18 +118,14 @@ function DetailSosialisasi () {
             </div>
             <div className="line"></div>
             <div className="discussion-container">
+              {comments.map((comment) => (
                 <ChatBuble
-                name={name}
-                date={date}
-                valueComent={isiComent}
-                imageUser={avatar2}
+                name={comment.user.nama}
+                date={comment.createdAt}
+                valueComent={comment.isi_comment}
+                imageUser={comment.user.foto_url}
                 />
-                <ChatBuble
-                name={name}
-                date={date}
-                valueComent={contentBlog}
-                imageUser={avatar2}
-                />
+              ))}
             </div>
         </div>
       </div>

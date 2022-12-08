@@ -1,5 +1,6 @@
 import Hero from "../components/Hero"
-import {React, useState} from "react"
+import {React, useState, useEffect} from "react"
+import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import FilterDiskusi from "../components/FilterDiskusi"
@@ -8,6 +9,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import axios from "axios";
 
 const theme = createTheme({
   status: {
@@ -25,26 +27,18 @@ const theme = createTheme({
   },
 });
 
-const DiskusiListSearch = props => (
-  <>
-    <div class="">
-      <div class="search">
-          <input type="text" class="searchTerm" />
-          <button type="submit" class="searchButton">
-            <i class="fa fa-search"></i>
-        </button>
-      </div>
-    </div>
-  </>
-);
-
 function Diskusi(){
-    const [inputText, setInputText] = useState("");
-    // let inputHandler = (e) => {
-    //     //convert input text to lower case
-    //     var lowerCase = e.target.value.toLowerCase();
-    //     setInputText(lowerCase);
-    // };
+  const [query, setQuery] = useState("");
+  const [data, setData] = useState([]);
+    
+    useEffect(() => {
+      const fetchData = async () => {
+        const res = await axios.get(`http://localhost:3000/diskusii?judul_diskusi=${query}`);
+        setData(res.data);
+      };
+      if (query.length === 0 || query.length > 2) fetchData();
+    }, [query]);
+
     return (
         <div>
             <Navbar />
@@ -57,10 +51,20 @@ function Diskusi(){
                         Buat Diskusi Baru
                     </Button>
                     </Link>
-                <DiskusiListSearch/>
+                <div className="search">
+                    <TextField
+                    id="outlined-basic"
+                    onChange={(e) => setQuery(e.target.value.toLowerCase())}
+                    variant="outlined"
+                    fullWidth
+                    label="Search"
+                    />
+                </div>
                 </ThemeProvider>
             </div>
-                <FilterDiskusi input={inputText} />
+            <div className="container">
+                <FilterDiskusi data={data} />
+            </div>
             <Footer/>
         </div>
   

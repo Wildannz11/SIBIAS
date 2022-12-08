@@ -9,7 +9,6 @@ import EditProfile from './components/EditProfile';
 import Blog from './components/Blog';
 import Home from "./routes/Home";
 import Diskusi from "./routes/Diskusi";
-import ShowDiskusi from "./routes/ShowDiskusi";
 import DetailSosialisasi from "./routes/DetailSosialisasi";
 import DetailDiskusi from "./routes/DetailDiskusi";
 import TambahDiskusi from "./routes/TambahDiskusi";
@@ -81,12 +80,10 @@ function App() {
         <Route path='/profile' element={<ShowProfile/>}/>
         <Route path='/editProfile' element={<EditProfile/>}/>
         <Route path='/diskusi' element={<Diskusi/>}/>
-        <Route path='/show_diskusi' element={<ShowDiskusi/>}/>
         <Route path='/tambah_diskusi' element={<TambahDiskusi/>}/>
-        <Route path='/sosialisasi' element={<Sosialisasi/>}/>
-        <Route path='/show_sosialisasi' element={<Blog/>}/>
-        <Route path='/detail_sosialisasi/:id' element={<DetailSosialisasi/>} />
         <Route path='/detail_diskusi/:id' element={<DetailDiskusi/>} />
+        <Route path='/sosialisasi' element={<Sosialisasi/>}/>
+        <Route path='/detail_sosialisasi/:id' element={<DetailSosialisasi/>} />
         <Route path='/' element={<Signin onLoginSuccess={onLoginSuccess}/>}/>
       </Routes>
     )}

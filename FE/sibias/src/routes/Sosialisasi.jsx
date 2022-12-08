@@ -1,5 +1,5 @@
 import Hero from "../components/Hero"
-import {React, useState} from "react"
+import {React, useState, useEffect} from "react"
 import TextField from "@mui/material/TextField";
 import FilterSosialisasi from "../components/FilterSosialisasi"
 import "./css/Diskusi.css";
@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import { Link } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import axios from "axios";
 
 const theme = createTheme({
   status: {
@@ -25,32 +26,39 @@ const theme = createTheme({
 });
 
 function Sosialisasi(){
-    const [inputText, setInputText] = useState("");
-    let inputHandler = (e) => {
-        var lowerCase = e.target.value.toLowerCase();
-        setInputText(lowerCase);
+  const [query, setQuery] = useState("");
+  const [data, setData] = useState([]);
+    
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(`http://localhost:3000/kebijakann?judul_kebijakan=${query}`);
+      setData(res.data);
     };
-    return (
-        <div>
-            <Navbar />
-            <Hero />
-            <div className="main container text-center">
-                <h1>Sosialisasi Kebijakan</h1>
-                <ThemeProvider theme={theme}>
-                <div className="search">
-                    <TextField
-                    id="outlined-basic"
-                    onChange={inputHandler}
-                    variant="outlined"
-                    fullWidth
-                    label="Search"
-                    />
-                </div>
-                </ThemeProvider>
-            </div>
-                  <FilterSosialisasi input={inputText}/>
-            <Footer/>
-        </div>
+    if (query.length === 0 || query.length > 2) fetchData();
+  }, [query]);
+  return (
+      <div>
+          <Navbar />
+          <Hero />
+          <div className="main container text-center">
+              <h1>Sosialisasi Kebijakan</h1>
+              <ThemeProvider theme={theme}>
+              <div className="search">
+                  <TextField
+                  id="outlined-basic"
+                  onChange={(e) => setQuery(e.target.value.toLowerCase())}
+                  variant="outlined"
+                  fullWidth
+                  label="Search"
+                  />
+              </div>
+              </ThemeProvider>
+          </div>
+          <div className="container row">
+            <FilterSosialisasi data={data}/>
+          </div>
+          <Footer/>
+      </div>
   
     )
 }

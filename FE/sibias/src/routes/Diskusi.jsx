@@ -1,6 +1,5 @@
 import Hero from "../components/Hero"
 import {React, useState} from "react"
-import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import FilterDiskusi from "../components/FilterDiskusi"
@@ -26,13 +25,26 @@ const theme = createTheme({
   },
 });
 
+const DiskusiListSearch = props => (
+  <>
+    <div class="">
+      <div class="search">
+          <input type="text" class="searchTerm" />
+          <button type="submit" class="searchButton">
+            <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </>
+);
+
 function Diskusi(){
     const [inputText, setInputText] = useState("");
-    let inputHandler = (e) => {
-        //convert input text to lower case
-        var lowerCase = e.target.value.toLowerCase();
-        setInputText(lowerCase);
-    };
+    // let inputHandler = (e) => {
+    //     //convert input text to lower case
+    //     var lowerCase = e.target.value.toLowerCase();
+    //     setInputText(lowerCase);
+    // };
     return (
         <div>
             <Navbar />
@@ -45,15 +57,7 @@ function Diskusi(){
                         Buat Diskusi Baru
                     </Button>
                     </Link>
-                <div className="search">
-                    <TextField
-                    id="outlined-basic"
-                    onChange={inputHandler}
-                    variant="outlined"
-                    fullWidth
-                    label="Search"
-                    />
-                </div>
+                <DiskusiListSearch/>
                 </ThemeProvider>
             </div>
                 <FilterDiskusi input={inputText} />

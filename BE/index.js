@@ -13,16 +13,19 @@ const app = express();
 const sessionStore = SequelizeStore(session.Store);
 
 const storedb = new sessionStore({
-    db: db
+    db: db,
+    
 });
 
 app.use(session({
     secret: process.env.SESS_SECRET,
     resave: false,
     saveUninitialized: true,
+    proxy: true,
     store: storedb,
     cookie: {
-        secure: 'auto'
+        secure: true,
+        httpOnly: false
     }
 }));
 
@@ -33,7 +36,7 @@ sync();
 
 app.use(cors({
     credentials: true,
-    origin: ['http://localhost:3000'], 
+    origin: ['http://localhost:3000','http://localhost:3001','http://localhost:3002','http://localhost:3003','http://localhost:3004','http://localhost:3005'], 
 }));
 
 // app.use(cors());

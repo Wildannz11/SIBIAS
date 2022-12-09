@@ -9,7 +9,21 @@
 .content-blog, .comment-blog, .discussion-container{
     width: 90%;
     margin: 10px auto;
+
 }
+
+.coment-value{
+    width: 100%;
+    min-height: 200px;
+    height: fit-content;
+}
+
+/* .kotak{
+    display: grid;
+    grid-template-rows: 2;
+} */
+
+
 
 .line{
     width: 90%;
@@ -33,6 +47,5 @@
 }
 
 .coment-value{
-    min-height: 500px;
-    height: fit-content;
+    
 }

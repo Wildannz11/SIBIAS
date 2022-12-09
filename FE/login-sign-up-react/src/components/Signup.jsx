@@ -5,6 +5,7 @@ import useToast from '../hooks/useToast';
 import logo from '../images/logo.png';
 import Input from './HidePasswordBtn';
 import mainStyle from "../styles/main.css";
+import CONFIG from '../utils/Config';
 
 function Signup() {
     const [showToast] = useToast();
@@ -22,8 +23,8 @@ function Signup() {
     const [msgPassword, setMsgPassword] = useState('');
     const [msgConfirmPassword, setMsgConfirmPassword] = useState('');
     const [msgPhotoProfile, setMsgPhotoProfile] = useState('');
-    // const baseUrl = 'https://sibias.up.railway.app'
-    const baseUrl = 'http://localhost:3000';
+    const baseUrl = CONFIG.BASE_URL;
+    // const baseUrl = 'http://localhost:3000';
 
     const Register = async (e) => {
         e.preventDefault();
@@ -122,7 +123,7 @@ function Signup() {
           <div className="text-center mb-4 title-signup-login-container">
             <img src={logo} alt="Logo SIBIAS" title="Logo SIBIAS" className='logo-sibias mb-3'/>
             <h3 className="title form-page-title">Sign Up</h3>
-            <p className="subtitle">Buat Akun Baru</p>
+            <p className="text-regist subtitle">Buat Akun Baru</p>
           </div>
           <div className="text-center">
           </div>
@@ -217,7 +218,7 @@ function Signup() {
           </form>
 
           <div className="text-center">
-            <p>Sudah Punya Akun? <Link to="/login">Login</Link></p>
+            <p className='text-regist'>Sudah Punya Akun? <Link to="/login">Login</Link></p>
           </div>
         </div>
       </div> 

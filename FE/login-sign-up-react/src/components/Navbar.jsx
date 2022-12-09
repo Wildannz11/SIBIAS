@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./css/Navbar.css";
-import Logo from "../images/logo-sibias.png";
+import Logo from "./../images/logo-sibias.png";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { IconContext } from "react-icons/lib";
 import { NavLink } from "react-router-dom";

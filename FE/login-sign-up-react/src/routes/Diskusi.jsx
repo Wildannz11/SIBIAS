@@ -1,12 +1,16 @@
-import Hero from "./../components/Hero"
-import {React, useState} from "react"
+import Hero from "../components/Hero"
+import {React, useState, useEffect} from "react"
 import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import List from "./../components/List"
+import FilterDiskusi from "../components/FilterDiskusi"
 import "./css/Diskusi.css";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import axios from "axios";
+import CONFIG from '../utils/Config';
 
 const theme = createTheme({
   status: {
@@ -25,14 +29,21 @@ const theme = createTheme({
 });
 
 function Diskusi(){
-    const [inputText, setInputText] = useState("");
-    let inputHandler = (e) => {
-        //convert input text to lower case
-        var lowerCase = e.target.value.toLowerCase();
-        setInputText(lowerCase);
-    };
+  const [query, setQuery] = useState("");
+  const [data, setData] = useState([]);
+  const baseUrl = CONFIG.BASE_URL;
+    
+    useEffect(() => {
+      const fetchData = async () => {
+        const res = await axios.get(`${baseUrl}/diskusii?judul_diskusi=${query}`);
+        setData(res.data);
+      };
+      if (query.length === 0 || query.length > 2) fetchData();
+    }, [query]);
+
     return (
         <div>
+            <Navbar />
             <Hero />
             <div className="main container text-center">
                 <h1>Diskusi Kebijakan</h1>
@@ -45,7 +56,7 @@ function Diskusi(){
                 <div className="search">
                     <TextField
                     id="outlined-basic"
-                    onChange={inputHandler}
+                    onChange={(e) => setQuery(e.target.value.toLowerCase())}
                     variant="outlined"
                     fullWidth
                     label="Search"
@@ -53,7 +64,10 @@ function Diskusi(){
                 </div>
                 </ThemeProvider>
             </div>
-                <List input={inputText} />
+            <div className="container">
+                <FilterDiskusi data={data} />
+            </div>
+            <Footer/>
         </div>
   
     )

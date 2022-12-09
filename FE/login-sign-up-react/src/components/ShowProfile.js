@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import useToast from '../hooks/useToast';
 import avatar2 from '../images/avatar2.png';
 import Navbar from './Navbar';
+import CONFIG from '../utils/Config';
 
 
 export default function ShowProfile() {
@@ -18,8 +19,8 @@ export default function ShowProfile() {
   const [imageUser, setImageUser] = useState();
   const navigate = useNavigate();
   const [showToast] = useToast();
-  const baseUrl = 'http://localhost:3000';
-
+  const baseUrl = CONFIG.BASE_URL;
+  // const baseUrl = 'https://sibias.up.railway.app';
 
 
   const catchData = async (e) => {

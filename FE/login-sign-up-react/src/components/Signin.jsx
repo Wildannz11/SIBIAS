@@ -12,6 +12,8 @@ import { FiEye, FiEyeOff } from 'react-icons/fi';
 import Input from './HidePasswordBtn';
 import { FaLock } from 'react-icons/fa';
 import mainStyle from "../styles/main.css";
+import responsive from "../styles/responsive.css";
+import CONFIG from '../utils/Config';
 
 function Signin({ onLoginSuccess }) {
   const navigate = useNavigate();
@@ -23,8 +25,8 @@ function Signin({ onLoginSuccess }) {
   const [msgPassword, setMsgPassword] = useState('');
   const [inputType, setInputType] = useState('');
   const [hidePassword, setHidePassword] = React.useState(false);
-  // const input = document.querySelector('.password').type;
-  const baseUrl = 'http://localhost:3000';
+  // const baseUrl = 'https://sibias.up.railway.app'
+  const baseUrl = CONFIG.BASE_URL;
   const validate = async (e) => {
     e.preventDefault();
     
@@ -104,7 +106,7 @@ function Signin({ onLoginSuccess }) {
           <div className="text-center mb-5 title-signup-login-container">
             <img src={logo} alt="Logo SIBIAS" title="Logo SIBIAS" className='logo-sibias mb-3'/>
             <h3 className="title  form-page-title">Hallo Sobat SIBIAS</h3>
-            <p className="subtitle text-muted">Sign In Untuk Melanjutkan</p>
+            <p className="text-regist text-muted">Sign In Untuk Melanjutkan</p>
           </div>
           <div className="text-center">
           <p className='has-text-centered warn-msg'>{msg}</p>
@@ -145,7 +147,7 @@ function Signin({ onLoginSuccess }) {
           </form>
 
           <div className="text-center">
-            <p>Belum Punya Akun? <Link to="/users">Daftar Akun</Link></p>
+            <p className='text-regist '>Belum Punya Akun? <Link to="/users">Daftar Akun</Link></p>
           </div>
         </div>
       </div>

@@ -1,22 +1,28 @@
 /* eslint-disable no-unused-vars */
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import React, { useEffect, useMemo, useState } from 'react';
+import Navbar from './components/Navbar';
 import Signin from './components/Signin';
 import Signup from './components/Signup';
-import Dashboard from './components/Dashboard';
 import ShowProfile from './components/ShowProfile';
 import EditProfile from './components/EditProfile';
 import Blog from './components/Blog';
-import Home from "../src/routes/Home";
-import Navbar from './components/Navbar';
+import Home from "./routes/Home";
+import Diskusi from "./routes/Diskusi";
+import DetailSosialisasi from "./routes/DetailSosialisasi";
+import DetailDiskusi from "./routes/DetailDiskusi";
+import TambahDiskusi from "./routes/TambahDiskusi";
+import Sosialisasi from "./routes/Sosialisasi";
 import axios from 'axios';
 import useToast from './hooks/useToast';
+import "./styles/main.css";
+import CONFIG from './utils/Config';
 
 function App() {
   const [authUser, setAuthUser] = useState(null)
   const [showToast] = useToast();
   // const baseUrl = 'https://sibias.up.railway.app/';
-  const baseUrl = 'http://localhost:3000';
+  const baseUrl = CONFIG.BASE_URL;
 
   useEffect(() => {
     const fetchGetUserLogged = () => {
@@ -75,19 +81,15 @@ function App() {
         <Route path='/dashboard' element={<Home/>}/>
         <Route path='/profile' element={<ShowProfile/>}/>
         <Route path='/editProfile' element={<EditProfile/>}/>
-        <Route path='/blog' element={<Blog/>}/>
+        <Route path='/diskusi' element={<Diskusi/>}/>
+        <Route path='/tambah_diskusi' element={<TambahDiskusi/>}/>
+        <Route path='/detail_diskusi/:id' element={<DetailDiskusi/>} />
+        <Route path='/sosialisasi' element={<Sosialisasi/>}/>
+        <Route path='/detail_sosialisasi/:id' element={<DetailSosialisasi/>} />
         <Route path='/' element={<Signin onLoginSuccess={onLoginSuccess}/>}/>
+        <Route path='/users' element={<Signup/>}/>
       </Routes>
     )}
-    {/* <Routes>
-      <Route path='/' element={<Signin/>}/>
-      <Route path='/login' element={<Signin/>}/>
-      <Route path='/users' element={<Signup/>}/>
-      <Route path='/dashboard' element={<Home/>}/>
-      <Route path='/profile' element={<ShowProfile/>}/>
-      <Route path='/editProfile' element={<EditProfile/>}/>
-      <Route path='/blog' element={<Blog/>}/>
-    </Routes> */}
     </BrowserRouter>
   );
 }

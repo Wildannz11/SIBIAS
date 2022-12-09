@@ -9,6 +9,8 @@ import Avatar from 'react-avatar-edit';
 import avatar2 from '../images/avatar2.png';
 import FormData from 'form-data';
 import Navbar from './Navbar';
+import CONFIG from '../utils/Config';
+import '../styles/main.css'
 
 
 export default function EditProfile() {
@@ -30,7 +32,8 @@ export default function EditProfile() {
   const [msgPassword, setMsgPassword] = useState('');
   const [msgConfirmPassword, setMsgConfirmPassword] = useState('');
   const [msgTelephone, setMsgTelephone] = useState('');
-  const baseUrl = 'http://localhost:3000';
+  // const baseUrl = 'http://localhost:3000';
+  const baseUrl = CONFIG.BASE_URL;
   const [src, setSrc] = useState(null);
   const [preview, setPreview] = useState(null);
 
@@ -351,12 +354,12 @@ export default function EditProfile() {
           </div>
           <div className="upload-img-container">
             <div className="card upload-img" id='upload-img'>
-              <div className="card-header ">
-                <h5 className="card-title text-center">Upload Foto Profile</h5>
+              <div className="card-header">
+                <p className="text-center text-upload-foto-profile">Upload Foto Profile</p>
               </div>
-              <div className="card-body text-center">
+              <div className="card-body text-center upload-image-container">
                 <form onSubmit={onUpload}>
-                  <label className="form-label">Small file input example</label>
+                  <label className="form-label label-input-img mb-3">Inputkan Foto Profile Anda</label>
                   <input className="form-control form-control-sm upload-image" id="formFileSm" type="file" onChange={(e) => setImages(e.target.files[0])}/>
 
                     <button type='submit' className="btn btn-primary mb-3 btn-upload mt-5">
